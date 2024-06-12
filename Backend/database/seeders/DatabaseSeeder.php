@@ -1,5 +1,7 @@
 <?php
+
 namespace Database\Seeders;
+
 use App\Domain\Admin\Models\Admin;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +19,5 @@ class DatabaseSeeder extends Seeder
         $this->call(PostSeeder::class);
         $this->call(PageSeeder::class);
         $this->call(MenuSeeder::class);
-        //factory(Admin::class, 50)->create();
-        Admin::factory()->count(50)->create();
     }
 }
