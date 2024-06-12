@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Domain\Taxonomy\Models\Taxonomy;
@@ -13,8 +14,8 @@ class TaxonomySeeder extends Seeder
      */
     public function run()
     {
-        $taxonomy = factory(Taxonomy::class)->create(['name' => 'Danh mục']);
-        $firstTaxon = factory(Taxon::class)->create(['name' => $taxonomy->name, 'taxonomy_id' => $taxonomy->id]);
+        $taxonomy = Taxonomy::create(['name' => 'Danh mục']);
+        $firstTaxon = Taxon::create(['name' => $taxonomy->name, 'taxonomy_id' => $taxonomy->id]);
         $taxonList = [
             ['name' => 'Danh mục 1', 'childs' => []],
             [
