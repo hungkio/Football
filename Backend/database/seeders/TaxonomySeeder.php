@@ -1,5 +1,5 @@
 <?php
-
+namespace Database\Seeders;
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Domain\Taxonomy\Models\Taxonomy;
 use Illuminate\Database\Seeder;

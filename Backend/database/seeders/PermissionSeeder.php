@@ -1,5 +1,5 @@
 <?php
-
+namespace Database\Seeders;
 use App\Domain\Acl\Models\Permission;
 use App\Domain\Acl\Models\Role;
 use App\Domain\Admin\Models\Admin;
