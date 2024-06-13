@@ -29,6 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return redirect()->route('admin.dashboard');
+
         $posts = Post::where('status', PostState::Active)->latest()->limit(3)->get();
         $homeSchemaMarkup = $this->schemaMarkup();
         return view('shop.home', compact('posts', 'homeSchemaMarkup'));

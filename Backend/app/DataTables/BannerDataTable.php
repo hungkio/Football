@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\DataTables\Core\BaseDatable;
 use App\DataTables\Export\BannerExportHandler;
 use App\Domain\Banner\Models\Banner;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -151,7 +152,7 @@ class BannerDataTable extends BaseDatable
         return new BannerExportHandler($source->get());
     }
 
-    public function printPreview()
+    public function printPreview(): Renderable
     {
         $this->request()->merge(['length' => -1]);
         $source = app()->call([$this, 'query']);

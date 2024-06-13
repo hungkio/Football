@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\DataTables\Core\BaseDatable;
 use App\DataTables\Export\PostExportHandler;
 use App\Domain\Post\Models\Post;
+use Illuminate\Contracts\Support\Renderable;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 
@@ -155,7 +156,7 @@ class PostDataTable extends BaseDatable
         return new PostExportHandler($source->get());
     }
 
-    public function printPreview()
+    public function printPreview(): Renderable
     {
         $this->request()->merge(['length' => -1]);
         $source = app()->call([$this, 'query']);

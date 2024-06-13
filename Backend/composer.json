@@ -26,7 +26,10 @@
         "spatie/laravel-sitemap": "^7.2",
         "spatie/once": "^3.1",
         "spatie/schema-org": "^3.23",
-        "staudenmeir/laravel-adjacency-list": "^1.20"
+        "staudenmeir/laravel-adjacency-list": "^1.20",
+        "yajra/laravel-datatables-buttons": "^10.0",
+        "yajra/laravel-datatables-html": "^10.12",
+        "yajra/laravel-datatables-oracle": "^10.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\DataTables\Core\BaseDatable;
 use App\DataTables\Export\PageExportHandler;
 use App\Domain\Page\Models\Page;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -94,7 +95,7 @@ class PageDataTable extends BaseDatable
         return new PageExportHandler($source->get());
     }
 
-    public function printPreview()
+    public function printPreview(): Renderable
     {
         $this->request()->merge(['length' => -1]);
         $source = app()->call([$this, 'query']);

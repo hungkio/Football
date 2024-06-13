@@ -7,11 +7,11 @@ use Yajra\DataTables\Services\DataTable;
 
 class BaseDatable extends DataTable
 {
-    protected $excludeFromExport = [''];
+    protected array $excludeFromExport = [];
 
-    protected $excludeFromPrint = [''];
+    protected array $excludeFromPrint = [];
 
-    protected $exportClass = TableExportHandler::class;
+    protected string $exportClass = TableExportHandler::class;
 
     public function htmlBuilder(): BaseBuilder
     {
@@ -40,9 +40,9 @@ class BaseDatable extends DataTable
                             dropdownAutoWidth: true,
                             width: \'auto\'
                         });
-                        
+
                         $("#"+setting.sTableId).unbind(\'click\');
-                        
+
                         $("#"+setting.sTableId).on("click", "th.select-checkbox", function() {
                             if ($("th.select-checkbox").hasClass("selected")) {
                                 api.rows().deselect();
