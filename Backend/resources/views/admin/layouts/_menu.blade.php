@@ -219,6 +219,14 @@
                         </span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.menus.index') }}"
+                               class="nav-link @if(request()->routeIs('admin.menus*'))active @endif">
+                                <span>
+                            {{ __("Quản lý link nội tuyến") }}
+                        </span>
+                            </a>
+                        </li>
                     @endcan
 
                     @can('log-activities.index')
