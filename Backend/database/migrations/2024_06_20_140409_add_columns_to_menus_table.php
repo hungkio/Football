@@ -9,14 +9,16 @@ return new class extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->text('url');
+            $table->text('external_url')->nullable();
+            $table->text('internal_url')->nullable();
         });
     }
 
     public function down()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('url');
+            $table->dropColumn('external_url');
+            $table->dropColumn('internal_url');
         });
     }
 };

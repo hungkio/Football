@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domain\Acl\Models\Role;
 use App\Domain\Admin\Models\Admin;
 use App\Domain\Banner\Models\Banner;
+use App\Domain\Menu\Models\InternalLink;
 use App\Domain\Option\Models\OptionType;
 use App\Domain\Page\Models\Page;
 use App\Domain\Post\Models\Post;
@@ -220,4 +221,14 @@ Breadcrumbs::for('admin.menus.index', function (BreadcrumbsGenerator $trail) {
 Breadcrumbs::for('admin.menus.edit', function (BreadcrumbsGenerator $trail, Menu $menu) {
     $trail->parent('admin.menus.index');
     $trail->push('Chỉnh sửa', route('admin.menus.edit', $menu));
+});
+
+Breadcrumbs::for('admin.internal-links', function (BreadcrumbsGenerator $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Quản lý link nội tuyến', route('admin.internal-links'), ['icon' => 'fal fa-bars']);
+});
+
+Breadcrumbs::for('admin.internal-links.edit', function (BreadcrumbsGenerator $trail, InternalLink $internalLink) {
+    $trail->parent('admin.internal-links');
+    $trail->push('Chỉnh sửa', route('admin.internal-links.edit', $internalLink));
 });

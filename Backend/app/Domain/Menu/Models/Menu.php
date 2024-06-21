@@ -18,7 +18,7 @@ class Menu extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'menus';
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'internal_url', 'external_link'];
 
     const STATUS_HIDE = 0;
     const STATUS_SHOW = 1;

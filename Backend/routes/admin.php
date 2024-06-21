@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Auth\VerificationController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InternalLinkController;
 use App\Http\Controllers\Admin\MostVisitedPageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\RoleController;
@@ -197,5 +198,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/menu-item/{menu_item}/edit', [MenuItemController::class, 'edit'])->name('menu-item.edit');
             Route::delete('/menu-item/{menu_item}', [MenuItemController::class, 'destroy'])->name('menu-item.destroy');
             Route::post('/menu-item/update', [MenuItemController::class, 'update'])->name('menu-item.update');
+            Route::get('/internal-links', [InternalLinkController::class, 'index'])->name('internal-links');
+            Route::post('/internal-links', [InternalLinkController::class, 'save'])->name('internal-links.save');
+            Route::get('/internal-links/{id}', [InternalLinkController::class, 'edit'])->name('internal-links.edit');
+            Route::delete('/internal-links/{id}', [InternalLinkController::class, 'delete'])->name('internal-links.destroy');
         });
 });

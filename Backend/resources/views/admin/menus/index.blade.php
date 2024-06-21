@@ -50,12 +50,12 @@
                             </div>
                         </div>
                         <div class="form-group internal-link" style="display: none">
-                            <select class="form-control" name="url" id="">
+                            <select class="form-control" name="internal_url" id="">
                                 <option value="">--Chọn link nội tuyến--</option>
                             </select>
                         </div>
                         <div class="form-group external-link" style="display: none">
-                            <input class="form-control" type="text" name="url" placeholder="Nhập link ngoại tuyến...">
+                            <input class="form-control" type="text" name="external_url" placeholder="Nhập link ngoại tuyến...">
                         </div>
                     </div>
                     <div class="modal-footer">

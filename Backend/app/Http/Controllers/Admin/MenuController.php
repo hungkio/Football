@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\MenuDataTable;
+use App\Domain\Menu\Models\InternalLink;
 use App\Domain\Menu\Models\Menu;
 use App\Domain\Menu\Models\MenuItem;
 use App\Domain\Page\Models\Page;
@@ -28,10 +29,10 @@ class MenuController
     public function edit(Menu $menu)
     {
         $this->authorize('update', $menu);
-
+        $internalLinks = InternalLink::all();
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
 
-        return view('admin.menus.edit', compact('menu', 'taxons'));
+        return view('admin.menus.edit', compact('menu', 'taxons', 'internalLinks'));
     }
 
     public function store(CreateMenuRequest $request)
@@ -42,6 +43,8 @@ class MenuController
             try{
                 $menu = [
                     'name' => $request->name,
+                    'external_url' => $request->external_url,
+                    'internal_url' => $request->internal_url,
                     'status' => Menu::STATUS_SHOW
                 ];
                 $menu_db = Menu::create($menu);
@@ -66,7 +69,9 @@ class MenuController
             try{
                 $menu->update($request->only('name'));
                 $menu->rootMenuItem()->update([
-                    'name' => $request->name
+                    'name' => $request->name,
+                    'internal_url' => $request->internal_url,
+                    'external_url' => $request->external_url
                 ]);
                 logActivity($menu, 'update');
                 logActivity($menu->rootMenuItem()->first(), 'update');
@@ -253,5 +258,10 @@ class MenuController
         }
 
         return response()->json(@$data);
+    }
+
+    public function getAll(){
+        $menus = Menu::all();
+        return response($menus, 200);
     }
 }
