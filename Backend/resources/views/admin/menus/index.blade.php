@@ -39,6 +39,24 @@
                                        class="form-control ">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Link Nội Tuyến</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                <label class="form-check-label" for="inlineRadio3">Link Ngoại Tuyến</label>
+                            </div>
+                        </div>
+                        <div class="form-group internal-link" style="display: none">
+                            <select class="form-control" name="internal_url" id="">
+                                <option value="">--Chọn link nội tuyến--</option>
+                            </select>
+                        </div>
+                        <div class="form-group external-link" style="display: none">
+                            <input class="form-control" type="text" name="external_url" placeholder="Nhập link ngoại tuyến...">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -133,4 +151,5 @@
             $('#name_menu-error').text('')
         })
     </script>
+    <script src="{{ asset('backend/js/admin.js') }}"></script>
 @endpush
