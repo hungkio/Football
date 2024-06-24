@@ -1,0 +1,8 @@
+export { default as Argentina } from '@/assets/icons/argentina.png'
+export { default as Australia } from '@/assets/icons/australia.png'
+export { default as Brazil } from '@/assets/icons/brazil.png'
+export { default as France } from '@/assets/icons/france.png'
+export { default as Germany } from '@/assets/icons/germany.png'
+export { default as Indonesia } from '@/assets/icons/indonesia.png'
+export { default as Italy } from '@/assets/icons/italy.png'
+export { default as WorldCup } from '@/assets/icons/world-cup.png'

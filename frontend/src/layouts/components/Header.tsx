@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Logo from '../../assets/images/logo.png'
+import Logo from '../../assets/images/Logo-No-slogan.png'
 import { ROUTES } from '@/resources/routes-constants'
 import { Search } from '@carbon/icons-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { getMenus } from '@/resources/api-constants'
+import { Menu } from '@/types/app-type'
 
 const navLink = [
   {
@@ -64,34 +66,48 @@ const navLink = [
   }
 ]
 
-const countries = [
-  {
-    label: 'Anh'
-  },
-  {
-    label: 'TBN'
-  },
-  {
-    label: 'Đức'
-  },
-  {
-    label: 'Pháp'
-  },
-  {
-    label: 'Italia'
-  },
-  {
-    label: 'Brazil'
-  },
-  {
-    label: 'Mỹ'
-  },
-  {
-    label: 'Mexico'
-  }
-]
+// const countries = [
+//   {
+//     label: 'Anh'
+//   },
+//   {
+//     label: 'TBN'
+//   },
+//   {
+//     label: 'Đức'
+//   },
+//   {
+//     label: 'Pháp'
+//   },
+//   {
+//     label: 'Italia'
+//   },
+//   {
+//     label: 'Brazil'
+//   },
+//   {
+//     label: 'Mỹ'
+//   },
+//   {
+//     label: 'Mexico'
+//   }
+// ]
 
 const Header = () => {
+  const [navLinks, setNavLinks] = useState<Menu[]>([])
+  const [countries, setCountries] = useState<Menu[]>([])
+  const fetchMenu = async () => {
+    try {
+      const result = await getMenus()
+      setCountries(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    fetchMenu()
+  }, [])
+
   return (
     <div>
       <div className="w-full bg-[#efefef]">
@@ -100,7 +116,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="float-left px-2.5 py-1.5 text-xs font-bold">
-                  <Link className="text-primary" to={item.url}>
+                  <Link className="text-primary hover:text-secondary" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -113,25 +129,28 @@ const Header = () => {
       <div className="mx-auto container">
         <div className="my-2.5">
           <Link to={ROUTES.HOMEPAGE_ROUTE}>
-            <img className="block" src={Logo} alt="Logo" />
+            <img className="block w-[206px]" src={Logo} alt="Logo" />
           </Link>
         </div>
       </div>
-      <div className="w-full bg-primary border-b-1.5 border-[#ce2b37] border-b-[3px]">
+      <div className="w-full bg-primary border-b-1.5 border-secondary border-b-[3px]">
         <div className="container mx-auto">
           <ul>
             {countries.map((item, index) => {
               return (
                 <li key={index}>
-                  <Link className="p-3 uppercase bg-primary hover:bg-red text-white block float-left border-r border-[#32ab69] font-bold text-[13px]" to={'/'}>
-                    {item.label}
+                  <Link
+                    className="p-3 uppercase bg-primary hover:bg-secondary text-white block float-left border-r border-[#32ab69] font-bold text-[13px]"
+                    to={item.external_url ?? item.internal_url}
+                  >
+                    {item.name}
                   </Link>
                 </li>
               )
             })}
           </ul>
           <div className="float-right">
-            <Link className="p-3.5 bg-red text-white block" to={'/'}>
+            <Link className="p-3.5 bg-secondary text-white block" to={'/'}>
               <Search />
             </Link>
           </div>
@@ -145,7 +164,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-red" to={item.url}>
+                  <Link className="text-primary hover:text-secondary" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -154,7 +173,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-red" to={item.url}>
+                  <Link className="text-primary hover:text-secondary" to={item.url}>
                     {item.label}
                   </Link>
                 </li>

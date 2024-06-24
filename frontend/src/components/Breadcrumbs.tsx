@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const Breadcrumbs = () => {
@@ -9,7 +9,9 @@ const Breadcrumbs = () => {
     <nav>
       <ul className="breadcrumbs">
         <li>
-          <Link to="/">Home</Link>
+          <Link className="text-primary hover:text-secondary text-xs" to="/">
+            Home
+          </Link>
         </li>
         {pathnames.map((value, index) => {
           const to = `/${pathnames.slice(0, index + 1).join('/')}`
@@ -18,7 +20,9 @@ const Breadcrumbs = () => {
             <li key={to}>{value}</li>
           ) : (
             <li key={to}>
-              <Link to={to}>{value}</Link>
+              <Link className="text-primary hover:text-secondary text-xs" to={to}>
+                » {value}
+              </Link>
             </li>
           )
         })}
@@ -27,4 +31,4 @@ const Breadcrumbs = () => {
   )
 }
 
-export default Breadcrumbs
+export default memo(Breadcrumbs)
