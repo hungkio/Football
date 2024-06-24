@@ -6,6 +6,9 @@ import { Search } from '@carbon/icons-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMenus } from '@/resources/api-constants'
 import { Menu } from '@/types/app-type'
+import { useAppDispatch } from '@/store/reducers/store'
+import { loadingAction } from '@/store/slice/loading.slice'
+import AdsHeader from '@/assets/images/ads-logo.gif'
 
 const navLink = [
   {
@@ -96,12 +99,16 @@ const navLink = [
 const Header = () => {
   const [navLinks, setNavLinks] = useState<Menu[]>([])
   const [countries, setCountries] = useState<Menu[]>([])
+  const dispatch = useAppDispatch()
   const fetchMenu = async () => {
+    dispatch(loadingAction.show())
     try {
       const result = await getMenus()
       setCountries(result)
     } catch (error) {
       console.log(error)
+    } finally {
+      dispatch(loadingAction.hide())
     }
   }
   useEffect(() => {
@@ -127,10 +134,11 @@ const Header = () => {
         </div>
       </div>
       <div className="mx-auto container">
-        <div className="my-2.5">
-          <Link to={ROUTES.HOMEPAGE_ROUTE}>
+        <div className="my-2.5 flex justify-between items-center">
+          <Link className="inline" to={ROUTES.HOMEPAGE_ROUTE}>
             <img className="block w-[206px]" src={Logo} alt="Logo" />
           </Link>
+          <img src={AdsHeader} alt="" />
         </div>
       </div>
       <div className="w-full bg-primary border-b-1.5 border-secondary border-b-[3px]">

@@ -3,28 +3,30 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage' // defaults to localStorage
 import data from './data'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { loadingReducer } from '../slice/loading.slice'
 
 const rootReducer = combineReducers({
-    data
+  loading: loadingReducer,
+  data
 })
 
 const persistedReducer = persistReducer(
-    {
-        key: 'root',
-        storage,
-        whitelist: ['data']
-    },
-    rootReducer
+  {
+    key: 'root',
+    storage,
+    whitelist: ['data']
+  },
+  rootReducer
 )
 
 export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-            }
-        })
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
+    })
 })
 
 export type RootState = ReturnType<typeof store.getState>
