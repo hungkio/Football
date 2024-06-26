@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('crawlFixtures', [CrawlApiController::class, 'crawlFixtures']);
+Route::get('crawlLiveFixtures', [CrawlApiController::class, 'crawlLiveFixtures']);

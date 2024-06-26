@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fixture;
+use App\Models\LiveFixtures;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -35,9 +36,34 @@ class CrawlApiController extends Controller
                 );
             }
 
-            $this->info('Data crawled and stored successfully.');
+            return 'Data crawled and stored successfully.';
         } else {
-            $this->error('Failed to fetch data from API.');
+            return 'Failed to fetch data from API.';
+        }
+    }
+
+    public function crawlLiveFixtures()
+    {
+        $data = $this->apiService->crawlLiveFixtures();
+        if ($data) {
+            foreach ($data['response'] as $item) {
+                LiveFixtures::updateOrInsert(
+                    ['fixture' => json_encode($item['fixture'])],
+                    [
+                        'fixture' => json_encode($item['fixture']),
+                        'league'     => json_encode($item['league']),
+                        'teams'      => json_encode($item['teams']),
+                        'goals'      => json_encode($item['goals']),
+                        'score'      => json_encode($item['score']),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+            }
+
+            return 'Data crawled and stored successfully.';
+        } else {
+            return 'Failed to fetch data from API.';
         }
     }
 }
