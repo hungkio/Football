@@ -19,4 +19,14 @@ class GetCrawledDataController extends Controller
         }
         return response()->json($arr);
     }
+
+    public function getLiveFixtures(){
+        $fixtures = Fixture::all();
+        $arr = [];
+        foreach ($fixtures as $fixture) {
+            $leagueName = $fixture->league['name'];
+            $arr[$leagueName][] = $fixture->toArray();
+        }
+        return response()->json($arr);
+    }
 }

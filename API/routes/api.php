@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('get-menus', [MenuController::class, 'getAll']);
 Route::get('fixtures', [GetCrawledDataController::class, 'getFixtures']);
+Route::get('live-fixtures', [GetCrawledDataController::class, 'getLiveFixtures']);
 
