@@ -1,17 +1,24 @@
+import { IMatch } from '@/types/app-type'
 import { Screen } from '@carbon/icons-react'
-import React, { memo } from 'react'
+import React, { memo, FC } from 'react'
 import { Link } from 'react-router-dom'
+import Match from './Match'
 
-const Tournament = () => {
+interface TournamentProps {
+  name: string
+  matches: IMatch[]
+}
+
+const Tournament: FC<TournamentProps> = ({ name, matches }) => {
   return (
     <div>
       <div className="pl-2.5 py-1.5 border-l-4 border-secondary bg-[#edf2f7] flex items-center justify-between">
         <div>
           <Link className="text-primary hover:text-secondary text-xs font-bold" to="/">
-            Iraq
+            {matches[0].league.country}
           </Link>
           <Link className="text-primary hover:text-secondary text-xs font-bold" to="/">
-            {' ⟩ '} Iraq
+            {' ⟩ '} {name}
           </Link>
         </div>
         <div className="ml-auto">
@@ -27,37 +34,9 @@ const Tournament = () => {
         </div>
         <div className="clear-both"></div>
       </div>
-      <div className="flex items-center text-xs py-1.5">
-        <div className="w-[65px]">
-          <span className="text-primary">45</span>
-        </div>
-        <div className="w-1/4 text-right">
-          <span>Đan Mạch</span>
-        </div>
-        <div className="w-[65px] text-center">
-          <Link className="text-primary hover:text-secondary text-xs font-bold" to={'/'}>
-            <span>1</span>
-            <span>-</span>
-            <span>2</span>
-          </Link>
-        </div>
-        <div className="w-1/4">
-          <span>Anh</span>
-        </div>
-        <div className="w-[65px]">
-          <Link className="text-primary hover:text-secondary text-xs font-bold" to={'/'}>
-            <span>1</span>
-            <span>-</span>
-            <span>2</span>
-          </Link>
-        </div>
-        <div className="px-2">
-          <Screen />
-        </div>
-        <div>
-          <span> Vòng Bảng / Bảng C </span>
-        </div>
-      </div>
+      {matches.map((item) => {
+        return <Match key={item.id} match={item} />
+      })}
     </div>
   )
 }

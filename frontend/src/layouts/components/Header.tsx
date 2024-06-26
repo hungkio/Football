@@ -5,7 +5,7 @@ import { ROUTES } from '@/resources/routes-constants'
 import { Search } from '@carbon/icons-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMenus } from '@/resources/api-constants'
-import { Menu } from '@/types/app-type'
+import { IMenu } from '@/types/app-type'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
 import AdsHeader from '@/assets/images/ads-logo.gif'
@@ -97,8 +97,8 @@ const navLink = [
 // ]
 
 const Header = () => {
-  const [navLinks, setNavLinks] = useState<Menu[]>([])
-  const [countries, setCountries] = useState<Menu[]>([])
+  const [navLinks, setNavLinks] = useState<IMenu[]>([])
+  const [countries, setCountries] = useState<IMenu[]>([])
   const dispatch = useAppDispatch()
   const fetchMenu = async () => {
     dispatch(loadingAction.show())
