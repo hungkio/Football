@@ -6,7 +6,8 @@ use App\Http\Requests\GetFixturesRequest;
 use App\Models\Fixture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 class GetCrawledDataController extends Controller
 {
     public function getFixtures(GetFixturesRequest $request){
@@ -17,7 +18,23 @@ class GetCrawledDataController extends Controller
             $leagueName = $fixture->league['name'];
             $arr[$leagueName][] = $fixture->toArray();
         }
-        return response()->json($arr);
+        $collection = collect($arr);
+
+        $perPage = $request->per_page;
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $offset = ($currentPage * $perPage) - $perPage;
+
+        $itemsForCurrentPage = $collection->slice($offset, $perPage)->values();
+
+        $paginator = new LengthAwarePaginator(
+            $itemsForCurrentPage,
+            $collection->count(),
+            $perPage,
+            $currentPage,
+        );
+        return response()->json($paginator);
     }
 
     public function getLiveFixtures(){
