@@ -20,7 +20,7 @@ class GetCrawledDataController extends Controller
         }
         $collection = collect($arr);
 
-        $perPage = $request->per_page;
+        $perPage = $request->per_page ?? 15;
 
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
