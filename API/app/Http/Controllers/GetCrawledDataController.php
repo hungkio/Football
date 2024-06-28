@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GetFixturesRequest;
 use App\Models\Fixture;
+use App\Models\LiveFixture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,7 +22,7 @@ class GetCrawledDataController extends Controller
     }
 
     public function getLiveFixtures(){
-        $fixtures = Fixture::all();
+        $fixtures = LiveFixture::all();
         $arr = [];
         foreach ($fixtures as $fixture) {
             $leagueName = $fixture->league['name'];
