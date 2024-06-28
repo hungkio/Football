@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fixture;
+use App\Models\LiveFixture;
 use App\Models\LiveFixtures;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class CrawlApiController extends Controller
 
     public function crawlLiveFixtures()
     {
+        LiveFixture::truncate();
         $data = $this->apiService->crawlLiveFixtures();
         if ($data) {
             foreach ($data['response'] as $item) {
