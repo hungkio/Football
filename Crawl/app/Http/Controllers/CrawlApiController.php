@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fixture;
 use App\Models\LiveFixture;
 use App\Models\LiveFixtures;
+use App\Models\Team;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -66,6 +67,34 @@ class CrawlApiController extends Controller
             return 'Data crawled and stored successfully.';
         } else {
             return 'Failed to fetch data from API.';
+        }
+    }
+
+    public function crawlTeams(Request $request){
+        try {
+            $league = $request->league;
+            $season = $request->season;
+            $data = $this->apiService->crawlTeams($league, $season);
+            if ($data) {
+                foreach ($data['response'] as $item) {
+                    Team::updateOrInsert(
+                        ['api_id' => $item['team']['id']],
+                        [
+                            'api_id'    => $item['team']['id'],
+                            'name'      => $item['team']['name'],
+                            'code'      => $item['team']['code'],
+                            'country'   => $item['team']['country'],
+                            'national'  => $item['team']['national'],
+                            'logo'      => $item['team']['logo'],
+                            'league_id' => $league,
+                            'season'    => $season,
+                        ]
+                    );
+                }
+            }
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
         }
     }
 }
