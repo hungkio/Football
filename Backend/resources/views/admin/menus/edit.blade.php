@@ -316,8 +316,6 @@
         })
 
     </script>
-    <script src="{{ asset('backend/js/admin.js') }}"></script>
-
 @endpush
 @section('page-content')
     <div class="modal fade" id="createMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -442,37 +440,6 @@
                                         required
                                     >
                                     </x-text-field>
-                                    <div class="row">
-                                        <div class="col-lg-2"></div>
-                                        <div class="col-lg-9">
-    
-                                            <div class="form-group">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                    <label class="form-check-label" for="inlineRadio2">Link Nội Tuyến</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                                    <label class="form-check-label" for="inlineRadio3">Link Ngoại Tuyến</label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group internal-link" style="display: none">
-                                                <select class="form-control" name="internal_url" id="">
-                                                    @if ($menu->internal_url)
-                                                        <option value="{{$menu->internal_url}}">{{$menu->internal_url}}</option>
-                                                    @else
-                                                        <option value="">--Chọn link nội tuyến--</option>
-                                                    @endif
-                                                    @foreach ($internalLinks as $item)
-                                                        <option value="{{$item->internal_url}}">{{$item->url}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group external-link" style="display: none">
-                                                <input class="form-control" type="text" name="external_url" placeholder="Nhập link ngoại tuyến..." value="{{$menu->url}}">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </fieldset>
                             <fieldset>
