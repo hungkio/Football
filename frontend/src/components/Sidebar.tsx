@@ -1,6 +1,6 @@
 import { WorldCup } from '@/assets'
 import { TrophyFilled } from '@carbon/icons-react'
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import AdsSidebar from '@/assets/images/ads-sidebar.gif'
 
@@ -96,4 +96,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default memo(Sidebar)

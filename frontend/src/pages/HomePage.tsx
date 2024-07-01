@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import Default from '@/layouts/Default'
 import { Helmet } from 'react-helmet'
 import Tournament from '@/components/Tournament'
 import { getFixtures } from '@/resources/api-constants'
-import { ILeagueMatches } from '@/types/app-type'
+import { ILeagueMatches, PaginationResponse } from '@/types/app-type'
 import { getPrevDate, getPrevDateWithYear } from '@/utility/date'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
 
 const HomePage: React.FC = () => {
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
   const [leagues, setLeagues] = useState<ILeagueMatches | null>(null)
   const numbers = Array.from({ length: 9 }, (_, i) => i)
   const [day, setDay] = useState(0)
@@ -22,6 +25,7 @@ const HomePage: React.FC = () => {
       const formattedDate = getPrevDateWithYear(day)
       const result = await getFixtures(formattedDate)
       setLeagues(result.data)
+      // setLeagues([...leagues, ...result.data ])
     } catch (error) {
       console.log(error)
     } finally {
@@ -49,6 +53,7 @@ const HomePage: React.FC = () => {
           </span>
         )
       })}
+
       {leagues &&
         Object.entries(leagues).map((item) => {
           return <Tournament key={item[0]} name={item[0]} matches={item[1]} />

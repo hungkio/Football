@@ -1,4 +1,5 @@
 export const ROUTES = {
   HOMEPAGE_ROUTE: '/',
-  LIVE_ROUTE: '/livescore'
+  LIVE_ROUTE: '/livescore',
+  NATIONAL: '/:id'
 }
