@@ -43,9 +43,7 @@ class CrawlLeaguesData extends Command
                         'name'         => $item['league']['name'],
                         'type'         => $item['league']['type'],
                         'logo'         => $item['league']['logo'],
-                        'country_name' => $item['country']['name'],
                         'country_code' => $item['country']['code'],
-                        'country_flag' => $item['country']['flag'],
                     ]
                 );
             }

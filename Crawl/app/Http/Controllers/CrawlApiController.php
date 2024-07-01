@@ -103,15 +103,16 @@ class CrawlApiController extends Controller
         try {
             $data = $this->apiService->crawlLeagues();
             foreach ($data['response'] as $item) {
-                $league = new League;
-                $league->api_id = $item['league']['id'];
-                $league->name = $item['league']['name'];
-                $league->type = $item['league']['type'];
-                $league->logo = $item['league']['logo'];
-                $league->country_name = $item['country']['name'];
-                $league->country_code = $item['country']['code'];
-                $league->country_flag = $item['country']['flag'];
-                $league->save();
+                League::updateOrInsert(
+                    ['api_id' => $item['league']['id']],
+                    [
+                        'api_id'       => $item['league']['id'],
+                        'name'         => $item['league']['name'],
+                        'type'         => $item['league']['type'],
+                        'logo'         => $item['league']['logo'],
+                        'country_code' => $item['country']['code'],
+                    ]
+                );
             }
             return 'Data crawled and stored successfully.';
         } catch (\Throwable $th) {

@@ -10,6 +10,6 @@ class League extends Model
     use HasFactory;
 
     protected $fillables = [
-        'api_id', 'name', 'type', 'logo', 'country_name', 'country_code', 'country_flag'
+        'api_id', 'name', 'type', 'logo', 'country_code'
     ];
 }

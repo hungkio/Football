@@ -14,9 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type')->nullable();
             $table->string('logo')->nullable();
-            $table->string('country_name')->nullable();
             $table->string('country_code')->nullable();
-            $table->string('country_flag')->nullable();
             $table->timestamps();
         });
     }
