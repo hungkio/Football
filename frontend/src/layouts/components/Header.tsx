@@ -17,7 +17,7 @@ const navLink = [
   },
   {
     label: 'Trực tuyến',
-    url: '/'
+    url: '/livescore'
   },
   {
     label: 'Nhận định',
@@ -104,7 +104,7 @@ const Header = () => {
     dispatch(loadingAction.show())
     try {
       const result = await getMenus()
-      setCountries(result)
+      setCountries(result.sort((a, b) => a.order_column - b.order_column))
     } catch (error) {
       console.log(error)
     } finally {

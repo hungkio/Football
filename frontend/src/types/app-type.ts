@@ -95,3 +95,13 @@ export interface IMatch {
 export interface ILeagueMatches {
   [leagueName: string]: IMatch[]
 }
+
+export interface PaginationResponse<T extends object> {
+  data: T
+  current_page: number
+  from: number
+  last_page: number
+  per_page: number
+  to: number
+  total: number
+}

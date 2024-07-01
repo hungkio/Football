@@ -2,6 +2,7 @@ import React, { memo, FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Screen } from '@carbon/icons-react'
 import { IMatch } from '@/types/app-type'
+import { getReadableDate } from '@/utility/date'
 
 interface MatchProps {
   match: IMatch
@@ -11,7 +12,8 @@ const Match: FC<MatchProps> = ({ match }) => {
   return (
     <div className="flex items-center text-xs py-1.5">
       <div className="w-[65px]">
-        {match.fixture.status.short === 'NS' || (match.fixture.status.short === 'FT' && <span className="text-primary">{match.fixture.date}</span>)}
+        {match.fixture.status.short === 'NS' ||
+          (match.fixture.status.short === 'FT' && <span className="text-primary">{getReadableDate(match.fixture.date)}</span>)}
         {match.fixture.status.short !== 'NS' && match.fixture.status.short !== 'FT' && (
           <span className="text-red">
             {match.fixture.status.elapsed}
