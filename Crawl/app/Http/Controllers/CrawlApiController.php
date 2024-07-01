@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fixture;
+use App\Models\League;
 use App\Models\LiveFixture;
 use App\Models\LiveFixtures;
 use App\Models\Team;
@@ -91,6 +92,26 @@ class CrawlApiController extends Controller
                         ]
                     );
                 }
+            }
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
+    }
+
+    public function crawlLeagues(){
+        try {
+            $data = $this->apiService->crawlLeagues();
+            foreach ($data['response'] as $item) {
+                $league = new League;
+                $league->api_id = $item['league']['id'];
+                $league->name = $item['league']['name'];
+                $league->type = $item['league']['type'];
+                $league->logo = $item['league']['logo'];
+                $league->country_name = $item['country']['name'];
+                $league->country_code = $item['country']['code'];
+                $league->country_flag = $item['country']['flag'];
+                $league->save();
             }
             return 'Data crawled and stored successfully.';
         } catch (\Throwable $th) {

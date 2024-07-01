@@ -10,9 +10,13 @@ return new class extends Migration
     {
         Schema::create('leagues', function (Blueprint $table) {
             $table->id();
-            $table->json('league');
-            $table->json('country');
-            $table->json('seasons');
+            $table->integer('api_id');
+            $table->string('name');
+            $table->string('type')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('country_name')->nullable();
+            $table->string('country_code')->nullable();
+            $table->string('country_flag')->nullable();
             $table->timestamps();
         });
     }
