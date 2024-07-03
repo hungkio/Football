@@ -123,7 +123,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="float-left px-2.5 py-1.5 text-xs font-bold">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -146,9 +146,9 @@ const Header = () => {
           <ul>
             {countries.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} className="border-r border-secondary last:border-none float-left">
                   <Link
-                    className="p-3 uppercase bg-primary hover:bg-secondary text-white block float-left border-r border-[#32ab69] font-bold text-[13px]"
+                    className="p-3 uppercase bg-primary hover:bg-secondary text-white hover:text-primary float-left font-bold text-[13px] inline-block"
                     to={item.external_url ?? item.internal_url}
                   >
                     {item.name}
@@ -172,7 +172,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -181,7 +181,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>

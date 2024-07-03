@@ -1,11 +1,211 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
     <div className="w-full py-[50px] pb-[180px] bg-black">
-      <div className="container mx-auto text-white text-xs">
-        <p>™Kqbd trực tuyến, kết quả bóng đá hôm nay NHANH và CHÍNH XÁC trên điện thoại và smartphone.</p>
-        <p>©Copyright 2024 | Liên hệ | Điều khoản | Chính sách riêng tư và cookie</p>
+      <div className="container mx-auto text-xs text-white">
+        <p className="my-3">
+          <strong>Partners: </strong>
+          <Link className="text-primary hover:text-red border-r border-secondary px-1 last:border-none last:pr-0" to={''}>
+            Clothes & Gifts Printeval
+          </Link>
+          <Link className="text-primary hover:text-red border-r border-secondary px-1 last:border-none last:pr-0" to={''}>
+            Clothes & Gifts Printeval
+          </Link>
+          <Link className="text-primary hover:text-red border-r border-secondary px-1 last:border-none last:pr-0" to={''}>
+            Clothes & Gifts Printeval
+          </Link>
+        </p>
+        <div className="mb-4">
+          <p className="text-center mb-4">Nhận dự đoán bóng đá mới nhất trong hộp thư của bạn! Đừng đăng ký nếu bạn chưa 18</p>
+          <div className="flex justify-center">
+            <input className="border-2 rounded-tl-[32px] rounded-bl-[32px] p-4 w-[400px]" placeholder="Enter your email address" type="text" />
+            <button className="p-4 rounded-tr-[32px] rounded-br-[32px] bg-primary border-2 border-primary">Đăng ký</button>
+          </div>
+        </div>
+        <div className="mx-auto text-xs grid grid-cols-6 gap-2">
+          <div className="col-2">
+            <p className="font-bold uppercase text-lg">Quick link</p>
+            <ul className="list-disc pl-4">
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-2">
+            <p className="font-bold uppercase text-lg">Quick link</p>
+            <ul className="list-disc pl-4">
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-2">
+            <p className="font-bold uppercase text-lg">Quick link</p>
+            <ul className="list-disc pl-4">
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-2">
+            <p className="font-bold uppercase text-lg">Quick link</p>
+            <ul className="list-disc pl-4">
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-2">
+            <p className="font-bold uppercase text-lg">Quick link</p>
+            <ul className="list-disc pl-4">
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-2">
+            <p className="font-bold uppercase text-lg">Quick link</p>
+            <ul className="list-disc pl-4">
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+              <li>
+                <Link className="text-primary hover:text-red" to={''}>
+                  Football Predictions
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   )

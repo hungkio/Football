@@ -81,7 +81,7 @@ const Sidebar = () => {
           {listTournament.map((item, index) => {
             return (
               <li className="inline-block w-[48%]" key={index}>
-                <Link to={item.url} className="inline-flex gap-1 text-primary hover:text-secondary">
+                <Link to={item.url} className="inline-flex gap-1 text-primary hover:text-red">
                   <div>
                     <img className="w-4" src={item.icon} alt={item.label} />
                   </div>

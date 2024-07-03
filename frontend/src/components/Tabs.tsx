@@ -23,13 +23,13 @@ const Tabs: FC<TabsProps> = ({ tabs }) => {
               {activeTab !== index ? (
                 <span
                   key={index}
-                  className="px-2.5 py-2 text-xs cursor-pointer bg-[#f0f0f0] text-primary hover:text-secondary mr-1.5 inline-block"
+                  className="px-2.5 py-2 text-xs cursor-pointer bg-[#f0f0f0] text-primary hover:text-red mr-1.5 inline-block"
                   onClick={() => handleTabClick(index)}
                 >
                   {tab.label}
                 </span>
               ) : (
-                <span key={index} className="px-2.5 py-2 text-xs cursor-pointer bg-secondary text-white mr-1.5 inline-block">
+                <span key={index} className="px-2.5 py-2 text-xs cursor-pointer bg-secondary text-primary mr-1.5 inline-block">
                   {tab.label}
                 </span>
               )}
