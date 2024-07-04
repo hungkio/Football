@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\League;
 use App\Models\LiveFixture;
@@ -111,6 +112,53 @@ class CrawlApiController extends Controller
                         'type'         => $item['league']['type'],
                         'logo'         => $item['league']['logo'],
                         'country_code' => $item['country']['code'],
+                    ]
+                );
+                Country::updateOrInsert(
+                    ['code' => $item['country']['code']],
+                    [
+                        'name'         => $item['country']['name'],
+                        'code'         => $item['country']['code'],
+                        'flag'         => $item['country']['flag'],
+                    ]
+                );
+            }
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
+    }
+
+    public function crawlCountries(){
+        try {
+            $data = $this->apiService->crawlCountries();
+            foreach ($data['response'] as $item) {
+                Country::updateOrInsert(
+                    ['code' => $item['code']],
+                    [
+                        'name'         => $item['name'],
+                        'code'         => $item['code'],
+                        'flag'         => $item['flag'],
+                    ]
+                );
+            }
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
+    }
+
+    public function crawlTeamsCountries(){
+        try {
+            $data = $this->apiService->crawlTeamsCountries();
+            foreach ($data['response'] as $item) {
+                Country::updateOrInsert(
+                    ['code' => $item['code']],
+                    [
+                        'name'         => $item['name'],
+                        'code'         => $item['code'],
+                        'flag'         => $item['flag'],
+                        'from_team'    => 1
                     ]
                 );
             }

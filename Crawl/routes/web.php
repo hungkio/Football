@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('crawlFixtures', [CrawlApiController::class, 'crawlFixtures']);
 Route::get('crawlLiveFixtures', [CrawlApiController::class, 'crawlLiveFixtures']);
 Route::get('crawlLeagues', [CrawlApiController::class, 'crawlLeagues']);
+Route::get('crawlCountries', [CrawlApiController::class, 'crawlCountries']);
+Route::get('crawlTeamsCountries', [CrawlApiController::class, 'crawlTeamsCountries']);

@@ -3,11 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\Country;
-use App\Models\League;
 use App\Services\ApiService;
 use Illuminate\Console\Command;
 
-class CrawlLeaguesData extends Command
+class CrawlTeamsCountriesData extends Command
 {
     protected $apiService;
     public function __construct(ApiService $apiService)
@@ -20,7 +19,7 @@ class CrawlLeaguesData extends Command
      *
      * @var string
      */
-    protected $signature = 'app:crawl-leagues-data';
+    protected $signature = 'app:crawl-teams-countries-data';
 
     /**
      * The console command description.
@@ -35,24 +34,15 @@ class CrawlLeaguesData extends Command
     public function handle()
     {
         try {
-            $data = $this->apiService->crawlLeagues();
+            $data = $this->apiService->crawlTeamsCountries();
             foreach ($data['response'] as $item) {
-                League::updateOrInsert(
-                    ['api_id' => $item['league']['id']],
-                    [
-                        'api_id'       => $item['league']['id'],
-                        'name'         => $item['league']['name'],
-                        'type'         => $item['league']['type'],
-                        'logo'         => $item['league']['logo'],
-                        'country_code' => $item['country']['code'],
-                    ]
-                );
                 Country::updateOrInsert(
-                    ['code' => $item['country']['code']],
+                    ['code' => $item['code']],
                     [
-                        'name'         => $item['country']['name'],
-                        'code'         => $item['country']['code'],
-                        'flag'         => $item['country']['flag'],
+                        'name'         => $item['name'],
+                        'code'         => $item['code'],
+                        'flag'         => $item['flag'],
+                        'from_team'    => 1
                     ]
                 );
             }
