@@ -42,9 +42,9 @@ class CrawlApiData extends Command
                 // dd($item['fixture']);
                 
                 Fixture::updateOrInsert(
-                    ['api_id' => json_encode($item['fixture']['id'])],
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'api_id'     => json_encode($item['fixture']['id']),
+                        'api_id'     => $item['fixture']['id'],
                         'referee'    => json_encode($item['fixture']['referee']),
                         'timezone'   => json_encode($item['fixture']['timezone']),
                         'date'       => Carbon::parse(trim(json_encode($item['fixture']['date']), '"')),
