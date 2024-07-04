@@ -9,9 +9,24 @@ class Fixture extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['fixture', 'league', 'teams', 'goals', 'score'];
+    protected $fillable = [
+        'api_id', 
+        'referee', 
+        'timezone', 
+        'date', 
+        'timestamp', 
+        'periods', 
+        'venue', 
+        'status', 
+        'league', 
+        'teams', 
+        'goals', 
+        'score'
+    ];
     protected $casts = [
-        'fixture' => 'array',
+        'periods' => 'array',
+        'venue' => 'array',
+        'status' => 'array',
         'league' => 'array',
         'teams' => 'array',
         'goals' => 'array',

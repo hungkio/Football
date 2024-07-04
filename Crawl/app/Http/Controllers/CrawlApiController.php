@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CrawlTeamsRequest;
 use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\League;
@@ -72,7 +73,7 @@ class CrawlApiController extends Controller
         }
     }
 
-    public function crawlTeams(Request $request){
+    public function crawlTeams(CrawlTeamsRequest $request){
         try {
             $league = $request->league;
             $season = $request->season;
