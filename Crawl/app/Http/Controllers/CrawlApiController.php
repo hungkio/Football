@@ -147,4 +147,24 @@ class CrawlApiController extends Controller
             return 'Failed to fetch data from API. ' . $th;
         }
     }
+
+    public function crawlTeamsCountries(){
+        try {
+            $data = $this->apiService->crawlTeamsCountries();
+            foreach ($data['response'] as $item) {
+                Country::updateOrInsert(
+                    ['code' => $item['code']],
+                    [
+                        'name'         => $item['name'],
+                        'code'         => $item['code'],
+                        'flag'         => $item['flag'],
+                        'from_team'    => 1
+                    ]
+                );
+            }
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
+    }
 }
