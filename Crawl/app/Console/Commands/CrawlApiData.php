@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Fixture;
 use App\Services\ApiService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CrawlApiData extends Command
@@ -38,16 +39,23 @@ class CrawlApiData extends Command
         $data = $this->apiService->crawlFixtures($today);
         if ($data) {
             foreach ($data['response'] as $item) {
+                // dd($item['fixture']);
+                
                 Fixture::updateOrInsert(
-                    ['fixture' => json_encode($item['fixture'])],
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'fixture' => json_encode($item['fixture']),
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
                         'league'     => json_encode($item['league']),
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'created_at' => now(),
-                        'updated_at' => now(),
                     ]
                 );
             }
