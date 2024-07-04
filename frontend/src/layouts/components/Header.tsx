@@ -119,10 +119,10 @@ const Header = () => {
     <div>
       <div className="w-full bg-[#efefef]">
         <div className="container mx-auto">
-          <ul className="py-2.5">
+          <ul className="py-2.5 text-nowrap whitespace-nowrap overflow-x-auto flex">
             {navLink.map((item, index) => {
               return (
-                <li key={index} className="float-left px-2.5 py-1.5 text-xs font-bold">
+                <li key={index} className="px-2.5 py-1.5 text-xs font-bold">
                   <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
