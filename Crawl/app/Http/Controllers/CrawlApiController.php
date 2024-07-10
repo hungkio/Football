@@ -8,6 +8,8 @@ use App\Models\Fixture;
 use App\Models\League;
 use App\Models\LiveFixture;
 use App\Models\LiveFixtures;
+use App\Models\Player;
+use App\Models\PlayerStatistic;
 use App\Models\Team;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
@@ -167,5 +169,70 @@ class CrawlApiController extends Controller
         } catch (\Throwable $th) {
             return 'Failed to fetch data from API. ' . $th;
         }
+    }
+
+    public function crawlPlayersByLeague(Request $request){
+        try {
+            $league = $request->league;
+            $season = $request->season;
+            $page = 1;
+            $totalPages = 1;
+            while ($page <= $totalPages) {
+                $data = $this->apiService->crawlPlayersByLeague($league, $season, $page);
+                if ($data) {
+                    foreach ($data['response'] as $item) {
+                        Player::updateOrCreate(
+                            ['api_id' => $item['player']['id']],
+                            [
+                                'api_id'         => $item['player']['id'],
+                                'name'           => $item['player']['name'],
+                                'first_name'      => $item['player']['firstname'],
+                                'last_name'       => $item['player']['lastname'],
+                                'age'            => $item['player']['age'],
+                                'date_of_birth'  => $item['player']['birth']['date'],
+                                'place_of_birth' => $item['player']['birth']['place'],
+                                'country'        => $item['player']['birth']['country'],
+                                'nationality'    => $item['player']['nationality'],
+                                'height'         => $item['player']['height'],
+                                'weight'         => $item['player']['weight'],
+                                'injured'        => $item['player']['injured'],
+                                'photo'          => $item['player']['photo'],
+                            ]
+                        );
+                        foreach ($item['statistics'] as $statistic) {
+                            PlayerStatistic::updateOrCreate(
+                                [
+                                    'player_id'      => $item['player']['id'],
+                                    'team_id'     => $statistic['team']['id'],
+                                    'league_id'   => $statistic['league']['id'],
+                                ],
+                                [
+                                    'player_id'      => $item['player']['id'],
+                                    'team_id'     => $statistic['team']['id'],
+                                    'league_id'   => $statistic['league']['id'],
+                                    'games'       => $statistic['games'],
+                                    'substitutes' => $statistic['substitutes'],
+                                    'shots'       => $statistic['shots'],
+                                    'goals'       => $statistic['goals'],
+                                    'passes'      => $statistic['passes'],
+                                    'tackles'     => $statistic['tackles'],
+                                    'duels'       => $statistic['duels'],
+                                    'dribbles'    => $statistic['dribbles'],
+                                    'fouls'       => $statistic['fouls'],
+                                    'cards'       => $statistic['cards'],
+                                    'penalty'     => $statistic['penalty'],
+                                ]
+                            );
+                        }
+                    }
+                }
+                $totalPages = $data['paging']['total'];
+                $page++;
+            }
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return $th;
+        }
+
     }
 }
