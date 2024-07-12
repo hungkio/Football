@@ -167,4 +167,26 @@ class ApiService
 
         return null;
     }
+
+    public function crawlPlayersByTeam($team, $season, $page)
+    {
+        $response = $this->client->request('GET', 'players', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ],
+            'query' => [
+                'league' => $team,
+                'season' => $season,
+                'page'   => $page
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
 }
