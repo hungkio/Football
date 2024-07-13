@@ -189,4 +189,24 @@ class ApiService
 
         return null;
     }
+
+    public function crawlVenues($country)
+    {
+        $response = $this->client->request('GET', 'venues', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ],
+            'query' => [
+                'country' => $country,
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
 }
