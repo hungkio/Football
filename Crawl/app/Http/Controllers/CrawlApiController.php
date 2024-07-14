@@ -12,6 +12,7 @@ use App\Models\Player;
 use App\Models\PlayerStatistic;
 use App\Models\Team;
 use App\Services\ApiService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 class CrawlApiController extends Controller
@@ -290,5 +291,24 @@ class CrawlApiController extends Controller
             return $th;
         }
 
+    }
+
+    public function crawlStandings(){
+        try {
+            $thisSeason = Carbon::now()->year;
+            $leagues = League::all();
+            foreach ($leagues as $league) {
+                $data = $this->apiService->crawlStandings($league->api_id, $thisSeason);
+                // dd($data['response'][0]['league']);
+                foreach ($data['response'] as $groups) {
+                    if (!$data['response'][0]) {
+                        dd($data['response']);
+                    }
+                }
+            }
+            return $this->info('Data crawled and stored successfully.');
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
     }
 }
