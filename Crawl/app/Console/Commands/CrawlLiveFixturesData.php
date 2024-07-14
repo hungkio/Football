@@ -83,11 +83,13 @@ class CrawlLiveFixturesData extends Command
                                             'player_id'   => $playerItem['player']['id'],
                                             'team_id'     => $statistic['team']['id'],
                                             'league_id'   => $statistic['league']['id'],
+                                            'season'      => $statistic['league']['season'],
                                         ],
                                         [
                                             'player_id'   => $playerItem['player']['id'],
                                             'team_id'     => $statistic['team']['id'],
                                             'league_id'   => $statistic['league']['id'],
+                                            'season'      => $statistic['league']['season'],
                                             'games'       => $statistic['games'],
                                             'substitutes' => $statistic['substitutes'],
                                             'shots'       => $statistic['shots'],

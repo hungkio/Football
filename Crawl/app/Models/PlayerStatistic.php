@@ -13,6 +13,7 @@ class PlayerStatistic extends Model
         'player_id',
         'team_id',
         'league_id',
+        'season',
         'games',
         'substitutes',
         'shots',
