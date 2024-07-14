@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Country;
+use App\Models\Venue;
 use App\Services\ApiService;
 use Illuminate\Console\Command;
 
@@ -44,6 +45,22 @@ class CrawlCountriesData extends Command
                         'flag'         => $item['flag'],
                     ]
                 );
+                $venueData = $this->apiService->crawlVenues($item['name']);
+                foreach ($venueData['response'] as $venueItem) {
+                    Venue::updateOrInsert(
+                        ['api_id' => $venueItem['id']],
+                        [
+                            'api_id' => $venueItem['id'],
+                            'name' => $venueItem['name'],
+                            'address' => $venueItem['address'],
+                            'city' => $venueItem['city'],
+                            'country' => $venueItem['country'],
+                            'capacity' => $venueItem['capacity'],
+                            'surface' => $venueItem['surface'],
+                            'image' => $venueItem['image'],
+                        ]
+                    );
+                }
             }
             return $this->info('Data crawled and stored successfully.');
         } catch (\Throwable $th) {

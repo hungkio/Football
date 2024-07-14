@@ -13,6 +13,7 @@ return new class extends Migration
             $table->integer('player_id');
             $table->integer('team_id');
             $table->integer('league_id');
+            $table->integer('season');
             $table->json('games')->nullable();
             $table->json('substitutes')->nullable();
             $table->json('shots')->nullable();
