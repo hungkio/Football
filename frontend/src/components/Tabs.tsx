@@ -29,7 +29,7 @@ const Tabs: FC<TabsProps> = ({ tabs }) => {
                   {tab.label}
                 </span>
               ) : (
-                <span key={index} className="px-2.5 py-2 text-xs cursor-pointer bg-secondary text-white mr-1.5 inline-block">
+                <span key={index} className="px-2.5 py-2 text-xs cursor-pointer bg-secondary text-primary mr-1.5 inline-block">
                   {tab.label}
                 </span>
               )}

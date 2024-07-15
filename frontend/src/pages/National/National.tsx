@@ -57,6 +57,7 @@ const tabs = [
 const National = () => {
   return (
     <Default>
+      <h1 className="py-1 px-2.5 bg-[#f9f9f9] mb-2.5 border border-[#eee] font-bold text-secondary">Bóng đá Anh</h1>
       <Tabs tabs={tabs}></Tabs>
     </Default>
   )

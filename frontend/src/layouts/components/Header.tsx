@@ -119,10 +119,10 @@ const Header = () => {
     <div>
       <div className="w-full bg-[#efefef]">
         <div className="container mx-auto">
-          <ul className="py-2.5">
+          <ul className="py-2.5 text-nowrap whitespace-nowrap overflow-x-auto flex">
             {navLink.map((item, index) => {
               return (
-                <li key={index} className="float-left px-2.5 py-1.5 text-xs font-bold">
+                <li key={index} className="px-2.5 py-1.5 text-xs font-bold">
                   <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
@@ -146,9 +146,9 @@ const Header = () => {
           <ul>
             {countries.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} className="border-r border-secondary last:border-none float-left">
                   <Link
-                    className="p-3 uppercase bg-primary hover:bg-secondary text-white block float-left border-r border-[#32ab69] font-bold text-[13px]"
+                    className="p-3 uppercase bg-primary hover:bg-secondary text-white hover:text-primary float-left font-bold text-[13px] inline-block"
                     to={item.external_url ?? item.internal_url}
                   >
                     {item.name}
