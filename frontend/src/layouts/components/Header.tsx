@@ -123,7 +123,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="float-left px-2.5 py-1.5 text-xs font-bold">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -172,7 +172,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -181,7 +181,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>

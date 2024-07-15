@@ -26,7 +26,7 @@ const Match: FC<MatchProps> = ({ match }) => {
         <span>{match.teams.away.name}</span>
       </div>
       <div className="w-[65px] text-center">
-        <Link className="text-primary hover:text-secondary text-xs font-bold" to={'/'}>
+        <Link className="text-primary hover:text-red text-xs font-bold" to={'/'}>
           <span>{match.goals.away}</span>
           <span>-</span>
           <span>{match.goals.home}</span>
@@ -37,7 +37,7 @@ const Match: FC<MatchProps> = ({ match }) => {
         <span>{match.teams.home.name}</span>
       </div>
       {/* <div className="w-[65px]">
-        <Link className="text-primary hover:text-secondary text-xs font-bold" to={'/'}>
+        <Link className="text-primary hover:text-red text-xs font-bold" to={'/'}>
           <span>1</span>
           <span>-</span>
           <span>2</span>

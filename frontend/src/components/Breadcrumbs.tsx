@@ -9,7 +9,7 @@ const Breadcrumbs = () => {
     <nav>
       <ul className="breadcrumbs flex items-center">
         <li>
-          <Link className="text-primary hover:text-secondary text-xs block" to="/">
+          <Link className="text-primary hover:text-red text-xs block" to="/">
             Home
           </Link>
         </li>
@@ -22,7 +22,7 @@ const Breadcrumbs = () => {
             </li>
           ) : (
             <li key={to}>
-              <Link className="text-primary hover:text-secondary text-xs block" to={to}>
+              <Link className="text-primary hover:text-red text-xs block" to={to}>
                 » {value}
               </Link>
             </li>

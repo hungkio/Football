@@ -43,10 +43,7 @@ const HomePage: React.FC = () => {
             {day === number ? (
               <span className="px-3 py-1 bg-secondary rounded text-white  hover:cursor-pointer text-xs mr-2">{getPrevDate(number)}</span>
             ) : (
-              <span
-                className="px-3 py-1 bg-[#dce0e4] rounded text-primary hover:text-secondary hover:cursor-pointer text-xs mr-2"
-                onClick={() => setDay(number)}
-              >
+              <span className="px-3 py-1 bg-[#dce0e4] rounded text-primary hover:text-red hover:cursor-pointer text-xs mr-2" onClick={() => setDay(number)}>
                 {getPrevDate(number)}
               </span>
             )}
