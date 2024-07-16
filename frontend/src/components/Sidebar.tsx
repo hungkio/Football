@@ -1,6 +1,6 @@
 import { WorldCup } from '@/assets'
 import { TrophyFilled } from '@carbon/icons-react'
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import AdsSidebar from '@/assets/images/ads-sidebar.gif'
 
@@ -81,7 +81,7 @@ const Sidebar = () => {
           {listTournament.map((item, index) => {
             return (
               <li className="inline-block w-[48%]" key={index}>
-                <Link to={item.url} className="inline-flex gap-1 text-primary hover:text-secondary">
+                <Link to={item.url} className="inline-flex gap-1 text-primary hover:text-red">
                   <div>
                     <img className="w-4" src={item.icon} alt={item.label} />
                   </div>
@@ -96,4 +96,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default memo(Sidebar)

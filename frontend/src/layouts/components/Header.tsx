@@ -5,7 +5,7 @@ import { ROUTES } from '@/resources/routes-constants'
 import { Search } from '@carbon/icons-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { getMenus } from '@/resources/api-constants'
-import { Menu } from '@/types/app-type'
+import { IMenu } from '@/types/app-type'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
 import AdsHeader from '@/assets/images/ads-logo.gif'
@@ -17,7 +17,7 @@ const navLink = [
   },
   {
     label: 'Trực tuyến',
-    url: '/'
+    url: '/livescore'
   },
   {
     label: 'Nhận định',
@@ -97,14 +97,14 @@ const navLink = [
 // ]
 
 const Header = () => {
-  const [navLinks, setNavLinks] = useState<Menu[]>([])
-  const [countries, setCountries] = useState<Menu[]>([])
+  const [navLinks, setNavLinks] = useState<IMenu[]>([])
+  const [countries, setCountries] = useState<IMenu[]>([])
   const dispatch = useAppDispatch()
   const fetchMenu = async () => {
     dispatch(loadingAction.show())
     try {
       const result = await getMenus()
-      setCountries(result)
+      setCountries(result.sort((a, b) => a.order_column - b.order_column))
     } catch (error) {
       console.log(error)
     } finally {
@@ -119,11 +119,11 @@ const Header = () => {
     <div>
       <div className="w-full bg-[#efefef]">
         <div className="container mx-auto">
-          <ul className="py-2.5">
+          <ul className="py-2.5 text-nowrap whitespace-nowrap overflow-x-auto flex">
             {navLink.map((item, index) => {
               return (
-                <li key={index} className="float-left px-2.5 py-1.5 text-xs font-bold">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                <li key={index} className="px-2.5 py-1.5 text-xs font-bold">
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -146,9 +146,9 @@ const Header = () => {
           <ul>
             {countries.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} className="border-r border-secondary last:border-none float-left">
                   <Link
-                    className="p-3 uppercase bg-primary hover:bg-secondary text-white block float-left border-r border-[#32ab69] font-bold text-[13px]"
+                    className="p-3 uppercase bg-primary hover:bg-secondary text-white hover:text-primary float-left font-bold text-[13px] inline-block"
                     to={item.external_url ?? item.internal_url}
                   >
                     {item.name}
@@ -172,7 +172,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
@@ -181,7 +181,7 @@ const Header = () => {
             {navLink.map((item, index) => {
               return (
                 <li key={index} className="inline-block px-1.5 text-xs border-r border-[#d6d6d6]">
-                  <Link className="text-primary hover:text-secondary" to={item.url}>
+                  <Link className="text-primary hover:text-red" to={item.url}>
                     {item.label}
                   </Link>
                 </li>
