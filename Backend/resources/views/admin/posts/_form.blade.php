@@ -19,8 +19,12 @@
                             </div>
                             <div class="col-md-4">
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item active"><a data-toggle="tab" href="#vi">Tiếng Việt</a></li>
-                                    <li class="nav-item"><a data-toggle="tab" href="#en">Tiếng Anh</a></li>
+                                    <li class="nav-item">
+                                      <a class="nav-link active" aria-current="page" data-toggle="tab" href="#vi">Tiếng Việt</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link"  data-toggle="tab" href="#en">Tiếng Anh</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -28,7 +32,7 @@
                         <div class="tab-content">
                             <div id="vi" class="tab-pane fade in active show">
                                 <fieldset>
-
+                                    <legend class="font-weight-semibold text-uppercase font-size-sm"></legend>
                                     <div class="collapse show" id="general">
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
@@ -206,7 +210,7 @@
                             </div>
                             <div id="en" class="tab-pane fade">
                                 <fieldset>
-
+                                    <legend class="font-weight-semibold text-uppercase font-size-sm"></legend>
                                     <div class="collapse show" id="general">
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
