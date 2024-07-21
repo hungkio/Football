@@ -80,6 +80,15 @@
                     </li>
                 @endcan
 
+                @can('taxonomies.view')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.comments') }}"
+                           class="nav-link {{ request()->routeIs('admin.comments*') ? 'active' : null }}">
+                            <i class="fal fa-comment"></i>
+                            <span>{{ __('Bình luận') }}</span></a>
+                    </li>
+                @endcan
+
                 @can('pages.view')
                     <li class="nav-item">
                         <a href="{{ route('admin.pages.index') }}"
