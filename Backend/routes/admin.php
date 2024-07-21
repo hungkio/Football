@@ -209,14 +209,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Comments
             Route::get('/comments', [CommentController::class, 'index'])->name('comments');
             Route::delete('/comments/delete/{id}', [CommentController::class, 'delete'])->name('comments.destroy');
-            Route::get('/comments/{id}', [CommentController::class, 'edit'])->name('comments.edit');
-            Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
 
             //Api
             Route::get('/api/countries', [CountryController::class, 'index'])->name('api.countries');
             
             Route::delete('/api/country/{id}', [CountryController::class, 'delete'])->name('api.countries.destroy');
-            Route::get('/api/country/{id}', [CountryController::class, 'edit'])->name('api.countries.edit');
-            Route::post('/api/country', [CountryController::class, 'update'])->name('api.countries.update');
+            Route::get('/api/country/{country}', [CountryController::class, 'edit'])->name('api.countries.edit');
+            Route::put('/api/country/{country}', [CountryController::class, 'update'])->name('api.countries.update');
         });
 });

@@ -18,19 +18,20 @@
                                         <div id="thumbnail">
                                             <div class="single-image clearfix">
                                                 <div class="image-holder" onclick="document.getElementById('image').click();">
-                                                    @if ($country->flag)
+                                                    @if ($country->getFirstMediaUrl('country'))
                                                         <img id="image_url"
-                                                            src="{{ $country->flag}}"
+                                                            src="{{ $country->getFirstMediaUrl('country') ??
+                                                             '/backend/global_assets/images/placeholders/placeholder.jpg'}}"
                                                         />
                                                     @else
                                                         <img id="image_url"
-                                                            src="{{ $country->getFirstMediaUrl('country') ?? '/backend/global_assets/images/placeholders/placeholder.jpg'}}"
+                                                            src="{{ $country->flag }}"
                                                         />
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="file" name="image" id="image"
+                                        <input type="file" name="flag" id="image"
                                                class="form-control inputfile hide"
                                                onchange="document.getElementById('image_url').src = window.URL.createObjectURL(this.files[0])"
                                                accept="image/*"
