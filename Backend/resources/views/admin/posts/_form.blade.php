@@ -13,111 +13,13 @@
                                 <fieldset>
                                     <legend class="font-weight-semibold text-uppercase font-size-sm">
                                         @if($post->id)
-                                            <a href="{{ $post->url() }}" class="text-primary font-weight-semibold" target="_blank">{{ Str::limit($post->title, 20) }}</a>
+                                            Chỉnh sửa bài viết: <a href="{{ $post->url() }}" class="text-primary font-weight-semibold" target="_blank">{{ Str::limit($post->title, 20) }}</a>
                                         @else
                                         Thêm bài viết mới
                                         @endif
                                     </legend>
                                     <div class="collapse show" id="general">
-                                        <h4>{{ __('Thông tin chung') }}</h4>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
-                                            <div class="col-lg-9">
-                                                <div id="thumbnail">
-                                                    <div class="single-image">
-                                                        <div class="image-holder" onclick="document.getElementById('image').click();">
-                                                            <img id="image_url" width="170" height="170" src="{{ $post->getFirstMediaUrl('image') ?? '/backend/global_assets/images/placeholders/placeholder.jpg'}}" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <input type="file" name="image" id="image"
-                                                    class="form-control inputfile hide"
-                                                    onchange="document.getElementById('image_url').src = window.URL.createObjectURL(this.files[0])">
-                                                @error('image')
-                                                <span class="form-text text-danger">
-                                                            {{ $message }}
-                                                        </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="select-taxon" class="col-lg-2 text-lg-right col-form-label">
-                                                <span class="text-danger">*</span> {{ __('Danh mục') }}
-                                            </label>
-                                            <div class="col-lg-9" id="select2">
-                                                <select name="category[]" class="form-control select2" data-width="100%"
-                                                        multiple>
-                                                    <option value="">
-                                                        {{ __('Chọn danh mục') }}
-                                                    </option>
-                                                    @foreach($taxons as $taxon)
-                                                        <option value="{{ $taxon->id }}"
-                                                                @if(in_array($taxon->id, $post->taxons->pluck('id')->toArray())) selected @endif>
-                                                            {{ $taxon->selectText() }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="clearfix"></div>
-                                                @error('category')
-                                                    <span class="form-text text-danger">
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label text-lg-right col-form-label">
-                                                {{ __('Bài viết liên quan:') }}
-                                            </label>
-                                            <div class="col-lg-9">
-                                                <select id="related_posts" name="related_posts[]" class="form-control select2"
-                                                        multiple>
-                                                    @foreach($relatedPosts as $relatedPost)
-                                                        <option
-                                                            value="{{ $relatedPost->id }}" {{ \in_array($relatedPost->id, $selectedRelatePost) ? 'selected' : null }}>
-                                                            {{ $relatedPost->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="select-taxon" class="col-lg-2 text-lg-right col-form-label">
-                                                <span class="text-danger">*</span> {{ __('Trạng thái') }}:
-                                            </label>
-                                            <div class="col-lg-9">
-                                                <select class="form-control" name="status">
-                                                    <option
-                                                        value="{{ \App\Enums\PostState::Pending }}" {{ $post->status == \App\Enums\PostState::Pending ? 'selected' : '' }}>{{ __('Chờ phê duyệt') }}</option>
-                                                    <option
-                                                        value="{{ \App\Enums\PostState::Active }}" {{ $post->status == \App\Enums\PostState::Active ? 'selected' : '' }}>{{ __('Hoạt động') }}</option>
-                                                    <option
-                                                        value="{{ \App\Enums\PostState::Disabled }}" {{ $post->status == \App\Enums\PostState::Disabled ? 'selected' : '' }} >{{ __('Hủy') }}</option>
-                                                </select>
-                                                @error('status')
-                                                    <span class="form-text text-danger">
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="$post->slug" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label text-lg-right">
-                                                Đường dẫn thực tế:
-                                            </label>
-                                            <div class="col-lg-9">
-                                                <div style="line-height: 36px;">
-                                                    <span id="slug-value" class="text-primary">
-                                                        @if($post->id)
-                                                            {{route('post.show', $post->slug)}}
-                                                        @else
-                                                            {{route('post.show')}}/
-                                                        @endif
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item">
                                               <a class="nav-link active" aria-current="page" data-toggle="tab" href="#vi">Tiếng Việt</a>
@@ -204,6 +106,89 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <h4>{{ __('Thông tin chung') }}</h4>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
+                                            <div class="col-lg-9">
+                                                <div id="thumbnail">
+                                                    <div class="single-image">
+                                                        <div class="image-holder" onclick="document.getElementById('image').click();">
+                                                            <img id="image_url" width="170" height="170" src="{{ $post->getFirstMediaUrl('image') ?? '/backend/global_assets/images/placeholders/placeholder.jpg'}}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="file" name="image" id="image"
+                                                    class="form-control inputfile hide"
+                                                    onchange="document.getElementById('image_url').src = window.URL.createObjectURL(this.files[0])">
+                                                @error('image')
+                                                <span class="form-text text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="select-taxon" class="col-lg-2 text-lg-right col-form-label">
+                                                <span class="text-danger">*</span> {{ __('Danh mục') }}
+                                            </label>
+                                            <div class="col-lg-9" id="select2">
+                                                <select name="category[]" class="form-control select2" data-width="100%"
+                                                        multiple>
+                                                    <option value="">
+                                                        {{ __('Chọn danh mục') }}
+                                                    </option>
+                                                    @foreach($taxons as $taxon)
+                                                        <option value="{{ $taxon->id }}"
+                                                                @if(in_array($taxon->id, $post->taxons->pluck('id')->toArray())) selected @endif>
+                                                            {{ $taxon->selectText() }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="clearfix"></div>
+                                                @error('category')
+                                                    <span class="form-text text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label text-lg-right col-form-label">
+                                                {{ __('Bài viết liên quan:') }}
+                                            </label>
+                                            <div class="col-lg-9">
+                                                <select id="related_posts" name="related_posts[]" class="form-control select2"
+                                                        multiple>
+                                                    @foreach($relatedPosts as $relatedPost)
+                                                        <option
+                                                            value="{{ $relatedPost->id }}" {{ \in_array($relatedPost->id, $selectedRelatePost) ? 'selected' : null }}>
+                                                            {{ $relatedPost->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="select-taxon" class="col-lg-2 text-lg-right col-form-label">
+                                                <span class="text-danger">*</span> {{ __('Trạng thái') }}:
+                                            </label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" name="status">
+                                                    <option
+                                                        value="{{ \App\Enums\PostState::Pending }}" {{ $post->status == \App\Enums\PostState::Pending ? 'selected' : '' }}>{{ __('Chờ phê duyệt') }}</option>
+                                                    <option
+                                                        value="{{ \App\Enums\PostState::Active }}" {{ $post->status == \App\Enums\PostState::Active ? 'selected' : '' }}>{{ __('Hoạt động') }}</option>
+                                                    <option
+                                                        value="{{ \App\Enums\PostState::Disabled }}" {{ $post->status == \App\Enums\PostState::Disabled ? 'selected' : '' }} >{{ __('Hủy') }}</option>
+                                                </select>
+                                                @error('status')
+                                                    <span class="form-text text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="$post->slug" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
                                     </div>
                                 </fieldset>
 
