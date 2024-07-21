@@ -18,9 +18,6 @@
                                         <div id="thumbnail">
                                             <div class="single-image clearfix">
                                                 <div class="image-holder" onclick="document.getElementById('image').click();">
-                                                    @php
-                                                        dd($country);
-                                                    @endphp
                                                     @if ($country->flag)
                                                         <img id="image_url"
                                                             src="{{ $country->flag}}"
@@ -67,12 +64,12 @@
 
                     </x-card>
                     <div class="d-flex justify-content-center align-items-center action" id="action-form">
-                        <a href="{{ route('admin.banners.index') }}" class="btn btn-light">{{ __('Trở lại') }}</a>
+                        <a href="{{ route('admin.api.countries') }}" class="btn btn-light">{{ __('Trở lại') }}</a>
                         <div class="btn-group ml-3">
                             <button class="btn btn-primary btn-block" data-loading>{{ __('Lưu') }}</button>
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="javascript:void(0)" class="dropdown-item submit-type" data-redirect="{{ route('admin.banners.index') }}">{{ __('Lưu và thoát') }}</a>
+                                <a href="javascript:void(0)" class="dropdown-item submit-type" data-redirect="{{ route('admin.api.countries') }}">{{ __('Lưu và thoát') }}</a>
                                 <a href="javascript:void(0)" class="dropdown-item submit-type" data-redirect="{{ route('admin.banners.create') }}">{{ __('Lưu và tạo mới') }}</a>
                             </div>
                         </div>
