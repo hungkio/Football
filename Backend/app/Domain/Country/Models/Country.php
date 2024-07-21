@@ -22,7 +22,6 @@ class Country extends Model implements HasMedia
     {
         $this
             ->addMediaCollection('country')
-            ->singleFile()
-            ->useFallbackUrl('/backend/global_assets/images/placeholders/placeholder.jpg');
+            ->singleFile();
     }
 }

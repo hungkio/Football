@@ -47,6 +47,6 @@ class CountryController
 
         logActivity($country, 'update'); // log activity
 
-        return intended($request, route('admin.countries.index'));
+        return intended($request, route('admin.api.countries'));
     }
 }
