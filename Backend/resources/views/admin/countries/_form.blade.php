@@ -59,18 +59,18 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div id="en" class="tab-pane fade in active show">
-                                        <x-text-field name="meta_title" :label="__('Tiêu đề')" type="text" :value="$post->meta_title" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
+                                        <x-text-field name="meta_title" :label="__('Tiêu đề')" type="text" :value="$country->meta_title" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
 
-                                        <x-text-field name="meta_description" :label="__('Mô tả')" type="text" :value="$post->meta_description" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
+                                        <x-text-field name="meta_description" :label="__('Mô tả')" type="text" :value="$country->meta_description" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
 
-                                        <x-text-field name="meta_keywords" :label="__('Từ khóa')" type="text" :value="$post->meta_keywords" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
+                                        <x-text-field name="meta_keywords" :label="__('Từ khóa')" type="text" :value="$country->meta_keywords" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
                                     </div>
                                     <div id="vi" class="tab-pane">
-                                        <x-text-field name="meta_title_vi" :label="__('Tiêu đề')" type="text" :value="$post->meta_title" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
+                                        <x-text-field name="meta_title_vi" :label="__('Tiêu đề')" type="text" :value="$country->meta_title" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
 
-                                        <x-text-field name="meta_description_vi" :label="__('Mô tả')" type="text" :value="$post->meta_description" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
+                                        <x-text-field name="meta_description_vi" :label="__('Mô tả')" type="text" :value="$country->meta_description" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
 
-                                        <x-text-field name="meta_keywords_vi" :label="__('Từ khóa')" type="text" :value="$post->meta_keywords" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
+                                        <x-text-field name="meta_keywords_vi" :label="__('Từ khóa')" type="text" :value="$country->meta_keywords" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
                                     </div>
                                 </div>
                             </div>
