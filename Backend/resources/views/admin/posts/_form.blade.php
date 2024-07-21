@@ -9,19 +9,27 @@
             <div class="row">
                 <div class="col-md-12">
                     <x-card>
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#vi">Tiếng Việt</a></li>
-                            <li><a data-toggle="tab" href="#en">Tiếng Anh</a></li>
-                        </ul>
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ __('Chung') }}
+                                @if($post->id)
+                                    | <a href="{{ $post->url() }}" class="text-primary font-weight-semibold"
+                                        target="_blank">{{ Str::limit($post->title, 20) }}</a>
+                                @endif
+                            </div>
+                            <div class="col-md-4">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#vi">Tiếng Việt</a></li>
+                                    <li><a data-toggle="tab" href="#en">Tiếng Anh</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <div class="tab-content">
                             <div id="vi" class="tab-pane fade in active show">
                                 <fieldset>
                                     <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                        {{ __('Chung') }}
-                                        @if($post->id)
-                                            | <a href="{{ $post->url() }}" class="text-primary font-weight-semibold"
-                                                target="_blank">{{ Str::limit($post->title, 20) }}</a>
-                                        @endif
+
                                     </legend>
                                     <div class="collapse show" id="general">
                                         <div class="form-group row">
