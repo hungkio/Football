@@ -125,7 +125,7 @@
                     @endif
                 @endcan
                 <li class="nav-item nav-item-submenu {{ request()->routeIs('admin.admins*') || request()->routeIs('admin.roles*') ? 'nav-item-expanded nav-item-open' : null }}">
-                    <a href="#" class="nav-link"><i class="fal fa-edit"></i> <span>{{ __('Api') }}</span></a>
+                    <a href="#" class="nav-link"><i class="fal fa-edit"></i> <span>{{ __('Q.lý nội dung') }}</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="{{ __('Q.lý nội dung') }}">
                         @can('admins.view')
                             <li class="nav-item">
