@@ -21,7 +21,7 @@ return new class extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->string('title_vi')->nullable();
             $table->string('description_vi')->nullable();
-            $table->string('body_vi')->nullable();
+            $table->longText('body_vi')->nullable();
             $table->string('meta_title_vi')->nullable();
             $table->string('meta_description_vi')->nullable();
             $table->string('meta_keywords_vi')->nullable();
