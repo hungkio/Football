@@ -126,7 +126,7 @@
                 @endcan
                 <li class="nav-item nav-item-submenu {{ request()->routeIs('admin.admins*') || request()->routeIs('admin.roles*') ? 'nav-item-expanded nav-item-open' : null }}">
                     <a href="#" class="nav-link"><i class="fal fa-user"></i> <span>{{ __('Api') }}</span></a>
-                    <ul class="nav nav-group-sub" data-submenu-title="{{ __('Api') }}">
+                    <ul class="nav nav-group-sub" data-submenu-title="{{ __('Q.lý nội dung') }}">
                         @can('admins.view')
                             <li class="nav-item">
                                 <a href="{{ route('admin.api.countries') }}"
@@ -135,7 +135,7 @@
                                 </a>
                             </li>
                         @endcan
-                        
+
                     </ul>
                 </li>
                 @canany(['contacts.view', 'log-search.view', 'subscribe-email.view', 'mail-settings.view'])
