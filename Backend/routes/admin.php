@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\Auth\VerificationController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InternalLinkController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\Admin\LogActivityController;
 use App\Http\Controllers\Admin\MailSettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -202,5 +204,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/internal-links', [InternalLinkController::class, 'save'])->name('internal-links.save');
             Route::get('/internal-links/{id}', [InternalLinkController::class, 'edit'])->name('internal-links.edit');
             Route::delete('/internal-links/{id}', [InternalLinkController::class, 'delete'])->name('internal-links.destroy');
+
+            //Comments
+            Route::get('/comments', [CommentController::class, 'index'])->name('comments');
+            Route::delete('/comments/delete/{id}', [CommentController::class, 'delete'])->name('comments.destroy');
+            Route::get('/comments/{id}', [CommentController::class, 'edit'])->name('comments.edit');
+            Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
         });
 });

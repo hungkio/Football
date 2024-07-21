@@ -232,3 +232,28 @@ Breadcrumbs::for('admin.internal-links.edit', function (BreadcrumbsGenerator $tr
     $trail->parent('admin.internal-links');
     $trail->push('Chỉnh sửa', route('admin.internal-links.edit', $internalLink));
 });
+
+// Home > Pages
+Breadcrumbs::for('admin.comments', function (BreadcrumbsGenerator $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push(__('Bình luận'), route('admin.comments'), ['icon' => 'fal fa-file']);
+});
+
+// Home > Pages > Create
+
+// Breadcrumbs::for('admin.comments.create', function (BreadcrumbsGenerator $trail) {
+//     $trail->parent('admin.pages.index');
+//     $trail->push(__('Tạo'), route('admin.comments.create'));
+// });
+
+// // Home > Admins > [admin] > Edit
+// Breadcrumbs::for('admin.comments.edit', function (BreadcrumbsGenerator $trail, Page $page) {
+//     $trail->parent('admin.pages.index');
+//     $trail->push(__('Chỉnh sửa'), route('admin.comments.edit', $page));
+// });
+
+// // Home > Admins > [admin] > Update
+// Breadcrumbs::for('admin.comments.update', function (BreadcrumbsGenerator $trail, Page $page) {
+//     $trail->parent('admin.comments.index');
+//     $trail->push(__('Cập nhật'), route('admin.pages.update', $page));
+// });
