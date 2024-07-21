@@ -39,6 +39,7 @@ class CommentDataTable extends BaseDatable
             Column::checkbox(''),
             Column::make('id')->title(__('STT'))->data('DT_RowIndex')->searchable(false),
             Column::make('user_id')->title(__('ID Tài khoản')),
+            Column::make('post_id')->title(__('ID bài đăng')),
             Column::make('content')->title(__('Nội Dung')),
             Column::make('created_at')->title(__('Thời gian tạo'))->searchable(false),
             Column::computed('action')
