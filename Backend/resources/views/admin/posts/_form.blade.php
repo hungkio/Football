@@ -14,7 +14,7 @@
                             <li><a data-toggle="tab" href="#en">Tiếng Anh</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div id="vi" class="tab-pane fade in active">
+                            <div id="vi" class="tab-pane fade in active show">
                                 <fieldset>
                                     <legend class="font-weight-semibold text-uppercase font-size-sm">
                                         {{ __('Chung') }}
