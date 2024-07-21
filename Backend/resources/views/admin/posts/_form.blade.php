@@ -13,8 +13,9 @@
                                 <fieldset>
                                     <legend class="font-weight-semibold text-uppercase font-size-sm">
                                         @if($post->id)
-                                            <a href="{{ $post->url() }}" class="text-primary font-weight-semibold"
-                                                target="_blank">{{ Str::limit($post->title, 20) }}</a>
+                                            <a href="{{ $post->url() }}" class="text-primary font-weight-semibold" target="_blank">{{ Str::limit($post->title, 20) }}</a>
+                                        @else
+                                        Thêm bài viết mới
                                         @endif
                                     </legend>
                                     <div class="collapse show" id="general">
