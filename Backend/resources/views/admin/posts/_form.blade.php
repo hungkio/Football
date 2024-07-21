@@ -28,16 +28,15 @@
                                               <a class="nav-link"  data-toggle="tab" href="#en">Tiếng Anh</a>
                                             </li>
                                         </ul>
+                                        <h5>{{ __('Nội dung') }}</h5>
                                         <div class="tab-content">
                                             <div id="vi" class="tab-pane fade in active show">
-                                                <h4>{{ __('Nội dung') }}</h4>
                                                 <x-text-field name="title" :placeholder="__('Tiêu đề ')" :label="__('Tiêu đề')" :value="$post->title" required></x-text-field>
-
                                                 <x-text-field name="description" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description" required>
                                                     {!! $post->description ?? null !!}
                                                 </x-text-field>
                                                 <x-textarea-field name="body" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body" class="wysiwyg" required></x-textarea-field>
-                                                <h4>{{ __('SEO') }}</h4>
+                                                <h5>{{ __('SEO') }}</h5>
                                                 <div class="collapse show" id="seo">
                                                     <x-text-field
                                                         name="meta_title"
@@ -69,12 +68,11 @@
                                             </div>
                                             <div id="en" class="tab-pane">
                                                 <x-text-field name="title" :placeholder="__('Tiêu đề ')" :label="__('Tiêu đề')" :value="$post->title" required></x-text-field>
-
                                                 <x-text-field name="description" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description" required>
                                                     {!! $post->description ?? null !!}
                                                 </x-text-field>
                                                 <x-textarea-field name="body" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body" class="wysiwyg" required></x-textarea-field>
-                                                <h4>{{ __('SEO') }}</h4>
+                                                <h5>{{ __('SEO') }}</h5>
                                                 <div class="collapse show" id="seo">
                                                     <x-text-field
                                                         name="meta_title"
@@ -106,7 +104,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4>{{ __('Thông tin chung') }}</h4>
+                                        <h5>{{ __('Thông tin chung') }}</h5>
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
                                             <div class="col-lg-9">
