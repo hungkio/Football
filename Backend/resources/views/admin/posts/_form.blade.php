@@ -12,13 +12,13 @@
 
                                 <fieldset>
                                     <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                        {{ __('Chung') }}
                                         @if($post->id)
-                                            | <a href="{{ $post->url() }}" class="text-primary font-weight-semibold"
+                                            <a href="{{ $post->url() }}" class="text-primary font-weight-semibold"
                                                 target="_blank">{{ Str::limit($post->title, 20) }}</a>
                                         @endif
                                     </legend>
                                     <div class="collapse show" id="general">
+                                        <h4>{{ __('Thông tin chung') }}</h4>
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
                                             <div class="col-lg-9">
@@ -100,6 +100,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="$post->slug" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right">
                                                 Đường dẫn thực tế:
@@ -126,6 +127,7 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div id="vi" class="tab-pane fade in active show">
+                                                <h4>{{ __('Nội dung') }}</h4>
                                                 <x-text-field name="title" :placeholder="__('Tiêu đề ')" :label="__('Tiêu đề')" :value="$post->title" required></x-text-field>
 
                                                 <x-text-field name="description" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description" required>
@@ -160,17 +162,6 @@
                                                         :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')"
                                                     >
                                                     </x-text-field>
-
-                                                    <x-text-field
-                                                        name="slug"
-                                                        :label="__('Đường dẫn')"
-                                                        type="text"
-                                                        :value="$post->slug"
-                                                        :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')"
-                                                    >
-                                                    </x-text-field>
-
-
                                                 </div>
                                             </div>
                                             <div id="en" class="tab-pane">
@@ -208,16 +199,6 @@
                                                         :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')"
                                                     >
                                                     </x-text-field>
-
-                                                    <x-text-field
-                                                        name="slug"
-                                                        :label="__('Đường dẫn')"
-                                                        type="text"
-                                                        :value="$post->slug"
-                                                        :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')"
-                                                    >
-                                                    </x-text-field>
-
 
                                                 </div>
                                             </div>
