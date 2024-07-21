@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Auth\VerificationController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InternalLinkController;
 use App\Http\Controllers\Admin\MostVisitedPageController;
@@ -210,5 +211,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/comments/delete/{id}', [CommentController::class, 'delete'])->name('comments.destroy');
             Route::get('/comments/{id}', [CommentController::class, 'edit'])->name('comments.edit');
             Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
+
+            //Api
+            Route::get('/api/countries', [CountryController::class, 'index'])->name('api.countries');
+            
+            Route::delete('/api/country/{id}', [CountryController::class, 'delete'])->name('api.countries.destroy');
+            Route::get('/api/country/{id}', [CountryController::class, 'edit'])->name('api.countries.edit');
+            Route::post('/api/country', [CountryController::class, 'update'])->name('api.countries.update');
         });
 });
