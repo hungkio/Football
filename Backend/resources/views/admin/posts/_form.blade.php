@@ -22,57 +22,60 @@
 
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item">
-                                              <a class="nav-link active" aria-current="page" data-toggle="tab" href="#vi">Tiếng Việt</a>
+                                                <a class="nav-link active"  data-toggle="tab" href="#en">Tiếng Anh</a>
                                             </li>
                                             <li class="nav-item">
-                                              <a class="nav-link"  data-toggle="tab" href="#en">Tiếng Anh</a>
+                                                <a class="nav-link" aria-current="page" data-toggle="tab" href="#vi">Tiếng Việt</a>
                                             </li>
                                         </ul>
                                         <h5>{{ __('Nội dung') }}</h5>
+                                        <hr>
                                         <div class="tab-content">
-                                            <div id="vi" class="tab-pane fade in active show">
-                                                <x-text-field name="title" :placeholder="__('Tiêu đề ')" :label="__('Tiêu đề')" :value="$post->title" required></x-text-field>
-                                                <x-text-field name="description" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description" required>
-                                                    {!! $post->description ?? null !!}
+                                            <div id="vi" class="tab-pane ">
+                                                <x-text-field name="title_vi" :placeholder="__('Tiêu đề ')" :label="__('Tiêu đề')" :value="$post->title_vi" required></x-text-field>
+                                                <x-text-field name="description_vi" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description_vi" required>
+                                                    {!! $post->description_vi ?? null !!}
                                                 </x-text-field>
-                                                <x-textarea-field name="body" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body" class="wysiwyg" required></x-textarea-field>
+                                                <x-textarea-field name="body_vi" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body_vi" class="wysiwyg" required></x-textarea-field>
                                                 <h5>{{ __('SEO') }}</h5>
+                                                <hr>
                                                 <div class="collapse show" id="seo">
                                                     <x-text-field
-                                                        name="meta_title"
+                                                        name="meta_title_vi"
                                                         :label="__('Tiêu đề')"
                                                         type="text"
-                                                        :value="$post->meta_title"
+                                                        :value="$post->meta_title_vi"
                                                         :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')"
                                                     >
                                                     </x-text-field>
 
                                                     <x-text-field
-                                                        name="meta_description"
+                                                        name="meta_description_vi"
                                                         :label="__('Mô tả')"
                                                         type="text"
-                                                        :value="$post->meta_description"
+                                                        :value="$post->meta_description_vi"
                                                         :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')"
                                                     >
                                                     </x-text-field>
 
                                                     <x-text-field
-                                                        name="meta_keywords"
+                                                        name="meta_keywords_vi"
                                                         :label="__('Từ khóa')"
                                                         type="text"
-                                                        :value="$post->meta_keywords"
+                                                        :value="$post->meta_keywords_vi"
                                                         :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')"
                                                     >
                                                     </x-text-field>
                                                 </div>
                                             </div>
-                                            <div id="en" class="tab-pane">
+                                            <div id="en" class="tab-pane fade in active show">
                                                 <x-text-field name="title" :placeholder="__('Tiêu đề ')" :label="__('Tiêu đề')" :value="$post->title" required></x-text-field>
                                                 <x-text-field name="description" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description" required>
                                                     {!! $post->description ?? null !!}
                                                 </x-text-field>
                                                 <x-textarea-field name="body" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body" class="wysiwyg" required></x-textarea-field>
                                                 <h5>{{ __('SEO') }}</h5>
+                                                <hr>
                                                 <div class="collapse show" id="seo">
                                                     <x-text-field
                                                         name="meta_title"
@@ -105,6 +108,7 @@
                                             </div>
                                         </div>
                                         <h5>{{ __('Thông tin chung') }}</h5>
+                                        <hr>
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right"><span class="text-danger">*</span> {{ __('Ảnh') }}:</label>
                                             <div class="col-lg-9">

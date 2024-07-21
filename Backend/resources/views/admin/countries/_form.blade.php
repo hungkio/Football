@@ -9,7 +9,11 @@
                     <x-card>
                         <fieldset>
                             <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                {{ __('Countries') }}
+                                @if($country->id)
+                                    Cập nhật thông tin quốc gia: {{ $country->name }}
+                                @else
+                                    Thêm mới quốc gia
+                                @endif
                             </legend>
                             <div class="collapse show" id="general">
                                 <div class="form-group row">
@@ -19,23 +23,14 @@
                                             <div class="single-image clearfix">
                                                 <div class="image-holder" onclick="document.getElementById('image').click();">
                                                     @if ($country->getFirstMediaUrl('country'))
-                                                        <img id="image_url"
-                                                            src="{{ $country->getFirstMediaUrl('country') ??
-                                                             '/backend/global_assets/images/placeholders/placeholder.jpg'}}"
-                                                        />
+                                                        <img id="image_url" src="{{ $country->getFirstMediaUrl('country') ?? '/backend/global_assets/images/placeholders/placeholder.jpg'}}" />
                                                     @else
-                                                        <img id="image_url"
-                                                            src="{{ $country->flag }}"
-                                                        />
+                                                        <img id="image_url" src="{{ $country->flag }}" />
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="file" name="flag" id="image"
-                                               class="form-control inputfile hide"
-                                               onchange="document.getElementById('image_url').src = window.URL.createObjectURL(this.files[0])"
-                                               accept="image/*"
-                                        >
+                                        <input type="file" name="flag" id="image" class="form-control inputfile hide" onchange="document.getElementById('image_url').src = window.URL.createObjectURL(this.files[0])" accept="image/*" >
                                         @error('image')
                                             <span class="form-text text-danger">
                                                 {{ $message }}
@@ -43,23 +38,41 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <x-text-field name="code" :placeholder="__('Mã Quốc Gia')" :label="__('Mã Quốc Gia')" :value="$country->code" required > </x-text-field>
+                                <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="$country->slug" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
+                                <div class="row">
+                                    <div class="col">
+                                        <x-text-field name="name" :placeholder="__('Tên tiếng anh')" :label="__('Tên tiếng anh')" :value="$country->name" required> </x-text-field>
+                                    </div>
+                                    <div class="col">
+                                        <x-text-field name="name_vi" :placeholder="__('Tên tiếng việt')" :label="__('Tên tiếng việt')" :value="$country->name_vi" required> </x-text-field>
+                                    </div>
+                                </div>
+                                <h5>{{ __('SEO') }}</h5>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                      <a class="nav-link active" aria-current="page" data-toggle="tab" href="#en">Tiếng Anh</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link"  data-toggle="tab" href="#vi">Tiếng Việt</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="en" class="tab-pane fade in active show">
+                                        <x-text-field name="meta_title" :label="__('Tiêu đề')" type="text" :value="$post->meta_title" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
 
-                                <x-text-field
-                                    name="name"
-                                    :placeholder="__('Tên')"
-                                    :label="__('Tên')"
-                                    :value="$country->name"
-                                    required
-                                >
-                                </x-text-field>
-                                <x-text-field
-                                    name="code"
-                                    :placeholder="__('Mã Quốc Gia')"
-                                    :label="__('Mã Quốc Gia')"
-                                    :value="$country->code"
-                                    required
-                                >
-                                </x-text-field>
+                                        <x-text-field name="meta_description" :label="__('Mô tả')" type="text" :value="$post->meta_description" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
+
+                                        <x-text-field name="meta_keywords" :label="__('Từ khóa')" type="text" :value="$post->meta_keywords" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
+                                    </div>
+                                    <div id="vi" class="tab-pane">
+                                        <x-text-field name="meta_title_vi" :label="__('Tiêu đề')" type="text" :value="$post->meta_title" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
+
+                                        <x-text-field name="meta_description_vi" :label="__('Mô tả')" type="text" :value="$post->meta_description" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
+
+                                        <x-text-field name="meta_keywords_vi" :label="__('Từ khóa')" type="text" :value="$post->meta_keywords" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
 
