@@ -35,14 +35,19 @@ class MenuItem extends Model implements HasMedia
     const TYPE_PAGE = 2;
     const TYPE_LINK = 3;
     const TYPE_POST = 4;
+    const TYPE_LEAGUE = 5;
+    const TYPE_COUNTY = 6;
     const STATUS_HIDE = 0;
     const STATUS_SHOW = 1;
 
     const TYPE = [
-        self::TYPE_CATEGORY => 'Danh mục bài viết',
+        self::TYPE_LEAGUE => 'Giải đấu',
+        self::TYPE_COUNTY => 'Quốc gia',
         self::TYPE_PAGE => 'Trang',
-        self::TYPE_LINK => 'Đường dẫn',
+        self::TYPE_CATEGORY => 'Danh mục bài viết',
         self::TYPE_POST => 'Bài viết',
+        self::TYPE_LINK => 'Đường dẫn',
+
     ];
     const STATUS = [
         self::STATUS_HIDE => 'Ẩn',

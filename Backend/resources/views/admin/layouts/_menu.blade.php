@@ -243,7 +243,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.internal-links') }}"
-                               class="nav-link @if(request()->routeIs('admin.menus*'))active @endif">
+                               class="nav-link @if(request()->routeIs('admin.internal-links*'))active @endif">
                                 <span>
                             {{ __("Quản lý link nội tuyến") }}
                         </span>

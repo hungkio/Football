@@ -11,6 +11,8 @@ use App\Domain\Post\Models\Post;
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Http\Requests\Admin\CreateMenuRequest;
 use App\Http\Requests\Admin\MenuBulkDeleteRequest;
+use App\Models\Country;
+use App\Models\League;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,8 +33,9 @@ class MenuController
         $this->authorize('update', $menu);
         $internalLinks = InternalLink::all();
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
+        $leagues = League::all();
 
-        return view('admin.menus.edit', compact('menu', 'taxons', 'internalLinks'));
+        return view('admin.menus.edit', compact('menu', 'taxons', 'internalLinks', 'leagues'));
     }
 
     public function store(CreateMenuRequest $request)
@@ -96,6 +99,12 @@ class MenuController
                     $taxon->name = $taxon->selectText();
                 }
             }
+            if ($type == MenuItem::TYPE_LEAGUE) {
+                $data = League::select('id', 'name')->paginate();
+            }
+            if ($type == MenuItem::TYPE_COUNTY) {
+                $data = Country::select('id', 'name')->paginate();
+            }
             if ($type == MenuItem::TYPE_POST) {
                 $data = Post::select('id', 'title')->paginate();
             }
@@ -121,6 +130,14 @@ class MenuController
                 foreach ($data as &$taxon) {
                     $taxon->name = $taxon->selectText();
                 }
+                $data = $data->getCollection();
+            }
+            if ($type == MenuItem::TYPE_LEAGUE) {
+                $data = League::select('id', 'name')->paginate();
+                $data = $data->getCollection();
+            }
+            if ($type == MenuItem::TYPE_COUNTY) {
+                $data = Country::select('id', 'name')->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_POST) {
