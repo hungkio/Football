@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function getPostsOnPage(GetPostsOnpageRequest $request){
-        $posts = Post::whereJsonContains('on_pages', $request->page_id)->get();
+        $posts = Post::whereJsonContains('on_pages', $request->page_id)->paginate($request->per_page);
         
         return response()->json([
             'status' => true,
