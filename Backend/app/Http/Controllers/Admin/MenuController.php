@@ -274,6 +274,28 @@ class MenuController
             });
         }
 
+        if ($request->menu_type == MenuItem::TYPE_LEAGUE) {
+            $data = League::where('name', 'LIKE', $request->query('q').'%')->paginate();
+            $data->getCollection()->transform(function ($personal) {
+                $result = [
+                    'id' => @$personal->id,
+                ];
+                $result['pretty_name'] = @$personal->name;
+                return $result;
+            });
+        }
+
+        if ($request->menu_type == MenuItem::TYPE_COUNTY) {
+            $data = Country::where('name', 'LIKE', $request->query('q').'%')->paginate();
+            $data->getCollection()->transform(function ($personal) {
+                $result = [
+                    'id' => @$personal->id,
+                ];
+                $result['pretty_name'] = @$personal->name;
+                return $result;
+            });
+        }
+
         return response()->json(@$data);
     }
 
