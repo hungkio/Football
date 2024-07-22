@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const TopGoal = () => {
+const TopScores = () => {
   return (
     <div>
       <h2 className="py-2.5 pl-1 border-l-[5px] border-secondary text-sm font-bold text-primary my-2.5">TOP GHI BÀN BÓNG ĐÁ ANH MỚI NHẤT</h2>
@@ -35,4 +35,4 @@ const TopGoal = () => {
   )
 }
 
-export default TopGoal
+export default TopScores

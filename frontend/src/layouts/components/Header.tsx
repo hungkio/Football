@@ -21,7 +21,7 @@ const navLink = [
   },
   {
     label: 'Nhận định',
-    url: '/'
+    url: '/analysis'
   },
   {
     label: 'Dự đoán',
