@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\PostDataTable;
 use App\Domain\Menu\Models\MenuItem;
+use App\Domain\Page\Models\Page;
 use App\Domain\Post\Models\Post;
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Http\Requests\Admin\PostBulkDeleteRequest;
@@ -32,10 +33,11 @@ class PostController
         $this->authorize('create', Post::class);
         $selectedRelatePost = [];
         $relatedPosts = Post::get(['id', 'title']);
-
+        $selectedPages = [];
+        $pagesOptions = Page::get(['id', 'title']);
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
 
-        return view('admin.posts.create', compact('relatedPosts', 'taxons', 'selectedRelatePost'));
+        return view('admin.posts.create', compact('relatedPosts', 'taxons', 'selectedRelatePost', 'pagesOptions', 'selectedPages'));
     }
 
     public function store(PostStoreRequest $request)
@@ -78,7 +80,15 @@ class PostController
         }
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->orWhereIn('id', $post->taxons->pluck('id'))->get();
 
-        return view('admin.posts.edit', compact('post', 'relatedPosts', 'taxons', 'selectedRelatePost'));
+        $selectedPages = [];
+        if (!empty($post->on_pages)){
+            $selectedPages = Page::query()
+                ->whereIntegerInRaw('id', $post->on_pages)
+                ->pluck('id')
+                ->toArray();
+        }
+        $pagesOptions = Page::get(['id', 'title']);
+        return view('admin.posts.edit', compact('post', 'relatedPosts', 'taxons', 'selectedRelatePost', 'selectedPages', 'pagesOptions'));
     }
 
     public function update(Post $post, PostUpdateRequest $request)

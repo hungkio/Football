@@ -156,6 +156,22 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-lg-right col-form-label">
+                                                {{ __('Hiển thị trên trang:') }}
+                                            </label>
+                                            <div class="col-lg-9">
+                                                <select id="on_pages" name="on_pages[]" class="form-control select2"
+                                                        multiple>
+                                                    @foreach($pagesOptions as $pageOption)
+                                                        <option
+                                                            value="{{ $pageOption->id }}" {{ \in_array($pageOption->id, $selectedPages) ? 'selected' : null }}>
+                                                            {{ $pageOption->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label text-lg-right col-form-label">
                                                 {{ __('Bài viết liên quan:') }}
                                             </label>
                                             <div class="col-lg-9">
