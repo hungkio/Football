@@ -173,6 +173,22 @@
                 }).appendTo('#create-menu');
                 $('#createMenu').modal('show')
             })
+            .on('move_node.jstree', function (e, data) {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: Admin.adminUrl('menus/' + data.node.id + '/sort'),
+                    data: {
+                        parent_id: data.node.parent,
+                        position: data.position
+                    },
+                    success: function (data) {
+                        showMessage('success', '{{ __('Bạn đã chuyển vị trí menu thành công !') }}');
+                    }
+                }).fail(function () {
+                    data.instance.refresh();
+                });
+            });
 
         $('.list_category').change(function () {
             var el = $(this)

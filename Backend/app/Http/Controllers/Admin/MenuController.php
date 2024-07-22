@@ -264,4 +264,19 @@ class MenuController
         $menus = Menu::all();
         return response($menus, 200);
     }
+
+    public function sort(Request $request, MenuItem $menu) {
+        $newSiblings = MenuItem::whereParentId($request->input('parent_id'))->where('id', '<>', $menu->id)
+            ->ordered()
+            ->pluck('id')
+            ->toArray();
+
+        $menu->update(['parent_id' => $request->input('parent_id'), 'order_column' => $request->input('position')]);
+        array_splice($newSiblings, (int)$request->input('position'), 0, $menu->id);
+
+        MenuItem::setNewOrder($newSiblings);
+
+        return response()->json(['status' => true]);
+
+    }
 }

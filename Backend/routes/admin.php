@@ -196,6 +196,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
             Route::post('/menus/bulk-delete', [MenuController::class, 'bulkDelete'])->name('menus.bulk-delete');
             Route::get('/menus/search-data', [MenuController::class, 'searchData'])->name('menus.search-data');
+            Route::post('/menus/{menu}/sort', [MenuController::class, 'sort'])->name('menus.sort');
 
             Route::post('/menu-item', [MenuItemController::class, 'store'])->name('menu-item.store');
             Route::get('/menu-item/{menu_item}/edit', [MenuItemController::class, 'edit'])->name('menu-item.edit');
@@ -212,7 +213,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             //Api
             Route::get('/api/countries', [CountryController::class, 'index'])->name('api.countries');
-            
+
             Route::delete('/api/country/{id}', [CountryController::class, 'delete'])->name('api.countries.destroy');
             Route::get('/api/country/{country}', [CountryController::class, 'edit'])->name('api.countries.edit');
             Route::put('/api/country/{country}', [CountryController::class, 'update'])->name('api.countries.update');

@@ -74,6 +74,7 @@ class MenuItemController
     {
         $tree = $menuItem->children()
             ->withCount('children')
+            ->ordered()
             ->get()
             ->map(function ($child) {
                 return ['id' => $child->id, 'text' => $child->name, 'children' => $child->children_count > 0];
