@@ -9,7 +9,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->longText('body_vi')->nullable()->change();
+            $table->json('on_pages')->nullable();
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('on_pages');
         });
     }
 };
