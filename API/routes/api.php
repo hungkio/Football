@@ -30,5 +30,6 @@ Route::get('live-fixtures', [GetCrawledDataController::class, 'getLiveFixtures']
 //client api
 Route::get('get-menus', [MenuController::class, 'getAll']);
 Route::get('posts', [PostController::class, 'getPostsOnPage']);
+Route::get('getPostsByCategory', [PostController::class, 'getPostsByCategory']);
 Route::get('comments', [CommentController::class, 'getCommentsFromPost']);
 Route::get('categories', [CategoryController::class, 'getPostCategories']);
