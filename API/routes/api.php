@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GetCrawledDataController;
 use App\Http\Controllers\MenuController;
@@ -30,3 +31,4 @@ Route::get('live-fixtures', [GetCrawledDataController::class, 'getLiveFixtures']
 Route::get('get-menus', [MenuController::class, 'getAll']);
 Route::get('posts', [PostController::class, 'getPostsOnPage']);
 Route::get('comments', [CommentController::class, 'getCommentsFromPost']);
+Route::get('categories', [CategoryController::class, 'getPostCategories']);
