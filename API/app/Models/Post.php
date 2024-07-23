@@ -31,6 +31,7 @@ class Post extends Model
 
     protected $casts = [
         'related_posts' => 'array',
+        'tags' => 'array',
         'on_pages' => 'array'
     ];
 

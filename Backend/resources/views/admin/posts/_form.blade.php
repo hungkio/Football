@@ -186,6 +186,32 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        {{-- tag --}}
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label text-lg-right col-form-label">
+                                                {{ __('Tags:') }}
+                                            </label>
+                                            <div class="col-lg-9">
+                                                <select id="select-tags" class="form-control" style="margin-bottom: 10px">
+                                                    <option value="">Usable tags</option>
+                                                    @foreach ($tags as $tag)
+                                                        <option value="{{$tag->tag}}">{{$tag->tag}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="tags d-flex flex-column" style="row-gap: 10px">
+                                                    {{-- js append here --}}
+                                                    @if ($post->tags)
+                                                        @foreach ($post->tags as $key => $tag)
+                                                            <input class='form-control' value="{{$tag}}" type='text' name='tags[{{$key}}]' />
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-3" style="padding: 0; margin-top: 10px">
+                                                    <a id="add-tag" class="btn btn-primary btn-block" href="javascript:void(0)">Thêm tag</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- end tag --}}
                                         <div class="form-group row">
                                             <label for="select-taxon" class="col-lg-2 text-lg-right col-form-label">
                                                 <span class="text-danger">*</span> {{ __('Trạng thái') }}:
@@ -238,6 +264,18 @@
             let slug = $('#slug').val()
             let fullLink = '{{route('post.show')}}' +'/'+ slug;
             $('#slug-value').html(fullLink);
+        })
+        let count = $('.tags input').length;
+        $('#add-tag').on('click', function () {
+            const inputElelemt = "<input class='form-control' type='text' name='tags["+count+"]' />"
+            $('.tags').append(inputElelemt);
+            count++;
+        })
+        $('#select-tags').on('change', function () {
+            const thisValue = $(this).val();
+            const inputElelemt = "<input class='form-control' type='text' name='tags["+count+"]' value="+thisValue+" />"
+            $('.tags').append(inputElelemt);
+            count++;
         })
     </script>
 @endpush()

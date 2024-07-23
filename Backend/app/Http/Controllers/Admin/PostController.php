@@ -8,6 +8,7 @@ use App\DataTables\PostDataTable;
 use App\Domain\Menu\Models\MenuItem;
 use App\Domain\Page\Models\Page;
 use App\Domain\Post\Models\Post;
+use App\Domain\Tag\Models\Tag;
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Http\Requests\Admin\PostBulkDeleteRequest;
 use App\Http\Requests\Admin\PostStoreRequest;
@@ -31,22 +32,31 @@ class PostController
     public function create(): View
     {
         $this->authorize('create', Post::class);
+        $tags = Tag::all();
         $selectedRelatePost = [];
         $relatedPosts = Post::get(['id', 'title']);
         $selectedPages = [];
         $pagesOptions = Page::get(['id', 'title']);
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
 
-        return view('admin.posts.create', compact('relatedPosts', 'taxons', 'selectedRelatePost', 'pagesOptions', 'selectedPages'));
+        return view('admin.posts.create', compact('relatedPosts', 'taxons', 'selectedRelatePost', 'pagesOptions', 'selectedPages', 'tags'));
     }
 
     public function store(PostStoreRequest $request)
     {
         $this->authorize('create', Post::class);
         $data = $request->except(['category', 'image', 'proengsoft_jsvalidation', 'redirect_url']);
+        $tagsRequest = array_filter($request->tags, function($value) {
+            return $value !== null;
+        });
+        $data['tags'] = $tagsRequest;
         $data['user_id'] = auth('admins')->user()->id;
         $post = Post::create($data);
-
+        foreach ($tagsRequest as $tag) {
+            Tag::updateOrCreate(
+                ['tag' => $tag]
+            );
+        }
         if ($request->hasFile('image')) {
             $post->addMedia($request->image)->toMediaCollection('image');
         }
@@ -62,6 +72,7 @@ class PostController
     public function edit(Post $post): View
     {
         $this->authorize('update', $post);
+        $tags = Tag::all();
         $post->load([
             'taxons' => function ($query) {
                 $query->with(['ancestors' => function ($q) {
@@ -88,7 +99,7 @@ class PostController
                 ->toArray();
         }
         $pagesOptions = Page::get(['id', 'title']);
-        return view('admin.posts.edit', compact('post', 'relatedPosts', 'taxons', 'selectedRelatePost', 'selectedPages', 'pagesOptions'));
+        return view('admin.posts.edit', compact('post', 'relatedPosts', 'taxons', 'selectedRelatePost', 'selectedPages', 'pagesOptions', 'tags'));
     }
 
     public function update(Post $post, PostUpdateRequest $request)
@@ -98,9 +109,20 @@ class PostController
         if ($request->hasFile('image')) {
             $post->addMedia($request->image)->toMediaCollection('image');
         }
+        $tagsRequest = array_filter($request->tags, function($value) {
+            return $value !== null;
+        });
+        foreach ($tagsRequest as $tag) {
+            if ($tag != null) {
+                Tag::updateOrCreate(
+                    ['tag' => $tag]
+                );
+            }
+        }
+        $post->update($request->except(['category', 'image', 'proengsoft_jsvalidation', 'redirect_url', 'tags']));
 
-        $post->update($request->except(['category', 'image', 'proengsoft_jsvalidation', 'redirect_url']));
-
+        $post->tags = $tagsRequest;
+        $post->save();
         $post->taxons()->sync($request->input('category'));
 
         flash()->success(__('Bài viết ":model" đã được cập nhật !', ['model' => $post->title]));

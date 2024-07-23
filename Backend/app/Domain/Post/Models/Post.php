@@ -21,6 +21,7 @@ class Post extends Model implements HasMedia
     protected $casts = [
         'related_posts' => 'array',
         'on_pages' => 'array',
+        'tags' => 'array'
     ];
 
     protected $guarded = [];

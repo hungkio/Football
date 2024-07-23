@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
-class GetPostsOnpageRequest extends FormRequest
+class GetPostsByCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class GetPostsOnpageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page_id' => 'integer|required',
-            'date' => 'date_format:Y-m-d|nullable'
+            'category_id' => 'integer|required'
         ];
     }
 
