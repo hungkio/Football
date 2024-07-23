@@ -16,7 +16,7 @@ class PostController extends Controller
     public function getPostsOnPage(GetPostsOnpageRequest $request){
         $posts = Post::whereJsonContains('on_pages', $request->page_id)
         ->when($request->date, function($query) use ($request){
-            $query->where('created_at', $request->date);
+            $query->whereDate('created_at', $request->date);
         })
         ->paginate($request->per_page);
         
@@ -37,7 +37,7 @@ class PostController extends Controller
             }
             $posts = Post::whereIn('id', $postIds)
             ->when($request->date, function($query) use ($request){
-                $query->where('created_at', $request->date);
+                $query->whereDate('created_at', $request->date);
             })
             ->paginate($request->per_page);
     
@@ -73,7 +73,7 @@ class PostController extends Controller
         try {
             $posts = Post::whereJsonContains('tags', $request->tag)
                     ->when($request->date, function($query) use ($request){
-                        $query->where('created_at', $request->date);
+                        $query->whereDate('created_at', $request->date);
                     })
                     ->paginate($request->per_page);
             return response()->json([
