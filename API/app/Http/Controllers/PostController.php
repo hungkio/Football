@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GetPostByIdRequest;
 use App\Http\Requests\GetPostsByCategoryRequest;
+use App\Http\Requests\GetPostsByTagRequest;
 use App\Http\Requests\GetPostsOnpageRequest;
 use App\Models\Post;
 use App\Models\Taxonable;
@@ -55,6 +56,7 @@ class PostController extends Controller
     public function getPostById(GetPostByIdRequest $request){
         try {
             $post = Post::find($request->post_id);
+            $post->related_posts = Post::whereIn('id', $post->related_posts)->get();
             return response()->json([
                 'status' => true,
                 'data' => $post,
@@ -63,6 +65,25 @@ class PostController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th,
+            ]);
+        }
+    }
+
+    public function getPostsByTag(GetPostsByTagRequest $request){
+        try {
+            $posts = Post::whereJsonContains('tags', $request->tag)
+                    ->when($request->date, function($query) use ($request){
+                        $query->where('created_at', $request->date);
+                    })
+                    ->paginate($request->per_page);
+            return response()->json([
+                'status' => true,
+                'data' => $posts
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th
             ]);
         }
     }
