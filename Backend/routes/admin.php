@@ -220,6 +220,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/api/country/{country}', [CountryController::class, 'update'])->name('api.countries.update');
 
             Route::get('/api/teams', [TeamController::class, 'index'])->name('api.teams');
+            Route::get('/api/teams/create', [TeamController::class, 'create'])->name('api.team.create');
+            Route::post('/api/teams/store', [TeamController::class, 'store'])->name('api.team.store');
             Route::get('/api/team/{team}', [TeamController::class, 'edit'])->name('api.team.edit');
             Route::put('/api/team/{team}', [TeamController::class, 'update'])->name('api.team.update');
             Route::delete('/api/team/{id}', [TeamController::class, 'delete'])->name('api.team.destroy');
