@@ -38,13 +38,30 @@ class GetCrawledDataController extends Controller
         return response()->json($paginator);
     }
 
-    public function getLiveFixtures(){
+    public function getLiveFixtures(Request $request){
         $fixtures = LiveFixture::all();
         $arr = [];
         foreach ($fixtures as $fixture) {
             $leagueName = $fixture->league['name'];
             $arr[$leagueName][] = $fixture->toArray();
         }
-        return response()->json($arr);
+
+        $collection = collect($arr);
+
+        $perPage = $request->per_page ?? 15;
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $offset = ($currentPage * $perPage) - $perPage;
+
+        $itemsForCurrentPage = $collection->slice($offset, $perPage)->values();
+
+        $paginator = new LengthAwarePaginator(
+            $itemsForCurrentPage,
+            $collection->count(),
+            $perPage,
+            $currentPage,
+        );
+        return response()->json($paginator);
     }
 }

@@ -124,14 +124,20 @@
                         </li>
                     @endif
                 @endcan
-                <li class="nav-item nav-item-submenu {{ request()->routeIs('admin.admins*') || request()->routeIs('admin.roles*') ? 'nav-item-expanded nav-item-open' : null }}">
+                <li class="nav-item nav-item-submenu {{ request()->routeIs('admin.api*') ? 'nav-item-expanded nav-item-open' : null }}">
                     <a href="#" class="nav-link"><i class="fal fa-edit"></i> <span>{{ __('Q.lý nội dung') }}</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="{{ __('Q.lý nội dung') }}">
                         @can('admins.view')
                             <li class="nav-item">
                                 <a href="{{ route('admin.api.countries') }}"
-                                    class="nav-link @if(request()->routeIs('admin.api*'))active @endif">
+                                    class="nav-link @if(request()->routeIs('admin.api.countries'))active @endif">
                                     {{ __('Quốc gia') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.teams') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.teams'))active @endif">
+                                    {{ __('Đội tuyển') }}
                                 </a>
                             </li>
                         @endcan
