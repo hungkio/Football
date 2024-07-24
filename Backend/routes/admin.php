@@ -44,6 +44,7 @@ use App\Http\Controllers\Admin\LogActivityController;
 use App\Http\Controllers\Admin\MailSettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
+use App\Http\Controllers\Admin\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -217,5 +218,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/api/country/{id}', [CountryController::class, 'delete'])->name('api.countries.destroy');
             Route::get('/api/country/{country}', [CountryController::class, 'edit'])->name('api.countries.edit');
             Route::put('/api/country/{country}', [CountryController::class, 'update'])->name('api.countries.update');
+
+            Route::get('/api/teams', [TeamController::class, 'index'])->name('api.teams');
+            Route::get('/api/team/{team}', [TeamController::class, 'edit'])->name('api.team.edit');
+            Route::put('/api/team/{team}', [TeamController::class, 'update'])->name('api.team.update');
+            Route::delete('/api/team/{id}', [TeamController::class, 'delete'])->name('api.team.destroy');
         });
 });
