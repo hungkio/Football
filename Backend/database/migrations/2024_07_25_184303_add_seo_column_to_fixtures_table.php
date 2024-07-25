@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('players', function (Blueprint $table) {
+        Schema::table('fixtures', function (Blueprint $table) {
             $table->integer('api_id')->unique()->nullable()->change();
             $table->string('slug')->nullable();
             $table->string('meta_title')->nullable();
@@ -22,7 +22,7 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::table('players', function (Blueprint $table) {
+        Schema::table('fixtures', function (Blueprint $table) {
             $table->dropColumn('slug')->nullable();
             $table->dropColumn('meta_title')->nullable();
             $table->dropColumn('meta_description')->nullable();
