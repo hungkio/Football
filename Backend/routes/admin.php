@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FixtureController;
 use App\Http\Controllers\Admin\InternalLinkController;
+use App\Http\Controllers\Admin\LeagueController;
 use App\Http\Controllers\Admin\MostVisitedPageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\RoleController;
@@ -241,5 +242,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/api/fixture/{fixture}', [FixtureController::class, 'edit'])->name('api.fixture.edit');
             Route::put('/api/fixture/{fixture}', [FixtureController::class, 'update'])->name('api.fixture.update');
             Route::delete('/api/fixture/{id}', [FixtureController::class, 'delete'])->name('api.fixture.destroy');
+
+            Route::get('/api/leagues', [LeagueController::class, 'index'])->name('api.leagues');
+            Route::post('/api/leagues/store', [LeagueController::class, 'store'])->name('api.league.store');
+            Route::get('/api/leagues/create', [LeagueController::class, 'create'])->name('api.league.create');
+            Route::get('/api/league/{league}', [LeagueController::class, 'edit'])->name('api.league.edit');
+            Route::put('/api/league/{league}', [LeagueController::class, 'update'])->name('api.league.update');
+            Route::delete('/api/league/{id}', [LeagueController::class, 'delete'])->name('api.league.destroy');
         });
 });
