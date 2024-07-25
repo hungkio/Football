@@ -152,6 +152,12 @@
                                     {{ __('Các trận đấu') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.leagues') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.leagues'))active @endif">
+                                    {{ __('Các giải đấu') }}
+                                </a>
+                            </li>
                         @endcan
 
                     </ul>
