@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Admin\CoachController;
 use App\Http\Controllers\Admin\AccountSettingController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AnalyticsController;
@@ -249,5 +250,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/api/league/{league}', [LeagueController::class, 'edit'])->name('api.league.edit');
             Route::put('/api/league/{league}', [LeagueController::class, 'update'])->name('api.league.update');
             Route::delete('/api/league/{id}', [LeagueController::class, 'delete'])->name('api.league.destroy');
+
+            Route::get('/api/coaches', [CoachController::class, 'index'])->name('api.coaches');
+            Route::post('/api/coaches/store', [CoachController::class, 'store'])->name('api.coach.store');
+            Route::get('/api/coaches/create', [CoachController::class, 'create'])->name('api.coach.create');
+            Route::get('/api/coach/{coach}', [CoachController::class, 'edit'])->name('api.coach.edit');
+            Route::put('/api/coach/{coach}', [CoachController::class, 'update'])->name('api.coach.update');
+            Route::delete('/api/coach/{id}', [CoachController::class, 'delete'])->name('api.coach.destroy');
         });
 });
