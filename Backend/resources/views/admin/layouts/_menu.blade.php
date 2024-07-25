@@ -140,6 +140,12 @@
                                     {{ __('Đội tuyển') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.players') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.players'))active @endif">
+                                    {{ __('Cầu thủ') }}
+                                </a>
+                            </li>
                         @endcan
 
                     </ul>
