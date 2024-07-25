@@ -23,13 +23,13 @@ return new class extends Migration
     public function down()
     {
         Schema::table('players', function (Blueprint $table) {
-            $table->dropColumn('slug')->nullable();
-            $table->dropColumn('meta_title')->nullable();
-            $table->dropColumn('meta_description')->nullable();
-            $table->dropColumn('meta_keywords')->nullable();
-            $table->dropColumn('meta_title_vi')->nullable();
-            $table->dropColumn('meta_description_vi')->nullable();
-            $table->dropColumn('meta_keywords_vi')->nullable();
+            $table->dropColumn('slug');
+            $table->dropColumn('meta_title');
+            $table->dropColumn('meta_description');
+            $table->dropColumn('meta_keywords');
+            $table->dropColumn('meta_title_vi');
+            $table->dropColumn('meta_description_vi');
+            $table->dropColumn('meta_keywords_vi');
         });
     }
 };

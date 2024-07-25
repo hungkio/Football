@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', __('Cầu thủ'))
+@section('title', __('Các trận đấu'))
 {{-- @section('page-header')
     <x-page-header>
         {{ Breadcrumbs::render() }}

@@ -78,12 +78,12 @@ class FixtureDataTable extends BaseDatable
             Column::make('api_id')->title(__('Mã trận')),
             Column::make('referee')->title(__('Trọng tài')),
             Column::make('date')->title(__('Bắt đầu')),
-            Column::make('periods')->title(__('Hiệp 1')),
-            Column::make('periods2')->title(__('Hiệp 2')),
+            Column::make('periods')->title(__('Hiệp 1'))->searchable(false),
+            Column::make('periods2')->title(__('Hiệp 2'))->searchable(false),
             Column::make('venue')->title(__('Sân')),
             Column::make('league')->title(__('Giải')),
-            Column::make('team_away')->title(__('Đội khách')),
-            Column::make('team_home')->title(__('Đội nhà')),
+            Column::make('team_away')->title(__('Đội khách'))->searchable(false),
+            Column::make('team_home')->title(__('Đội nhà'))->searchable(false),
             Column::make('goals')->title(__('tỉ số (Đội nhà - đội khách)' )),
             Column::computed('action')
                 ->title(__('Tác vụ'))

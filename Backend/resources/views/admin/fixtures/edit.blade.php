@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', __('Chỉnh sửa :model', ['model' => $player->name]))
+@section('title', __('Chỉnh sửa :model', ['model' => $fixture->name]))
 @section('page-header')
     {{-- <x-page-header>
         {{ Breadcrumbs::render('admin.country.edit', $country) }}
@@ -8,9 +8,8 @@
 @stop
 
 @section('page-content')
-    @include('admin.players._form', [
-        'url' =>  route('admin.api.player.update', $player),
-        'banner' => $player ?? new \App\Domain\Team\Models\Team,
+    @include('admin.fixtures._form', [
+        'url' =>  route('admin.api.fixture.update', $fixture),
         'method' => 'PUT'
     ])
 @stop

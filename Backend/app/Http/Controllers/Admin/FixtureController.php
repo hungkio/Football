@@ -40,35 +40,36 @@ class FixtureController
             'api_id' => $request->api_id,
             'referee' => $request->referee,
             'date' => $request->date,
-            'periods' => [
+            'periods' => json_encode([
                 'first' => $request->round_1,
                 'second' => $request->round_2
-            ],
-            'venue' => [
-                'id' => $request->venue_id
-            ],
-            'league' => [
+            ]),
+            'venue' => json_encode(
+                [
+                    'id' => $request->venue_id
+                ]),
+            'league' => json_encode([
                 'id' => $request->league_id
-            ],
-            'teams' => [
+            ]),
+            'teams' => json_encode([
                 'home' => [
                     'id'=> $request->team_home
                 ],
                 'away' => [
                     'id'=> $request->team_away
                 ],
-            ],
-            'goals' => [
+            ]),
+            'goals' => json_encode([
                 'home' => $request->goals_home,
                 'away' => $request->goals_away,
-            ]
+            ])
         ];
         
         $fixture = Fixture::create($data);
         if ($request->hasFile('photo')) {
             $fixture->addMedia($request->file('photo'))->toMediaCollection('fixture');
         }
-        flash()->success(__('Đội tuyển ":model" đã tạo thành công !', ['model' => $fixture->name]));
+        flash()->success(__('Trận đấu ":model" đã tạo thành công !', ['model' => $fixture->api_id]));
 
         logActivity($fixture, 'create'); // log activity
 
@@ -78,11 +79,36 @@ class FixtureController
     public function update(Fixture $fixture, Request $request)
     {
         $this->authorize('update', $fixture);
-        $fixture->update($request->except('photo'));
-        if ($request->hasFile('photo')) {
-            $fixture->addMedia($request->file('photo'))->toMediaCollection('fixture');
-        }
-        flash()->success(__('Fixture ":model" đã được cập nhật thành công!', ['model' => $fixture->name]));
+        $data = [
+            'api_id' => $request->api_id,
+            'referee' => $request->referee,
+            'date' => $request->date,
+            'periods' => json_encode([
+                'first' => $request->round_1,
+                'second' => $request->round_2
+            ]),
+            'venue' => json_encode(
+                [
+                    'id' => $request->venue_id
+                ]),
+            'league' => json_encode([
+                'id' => $request->league_id
+            ]),
+            'teams' => json_encode([
+                'home' => [
+                    'id'=> $request->team_home
+                ],
+                'away' => [
+                    'id'=> $request->team_away
+                ],
+            ]),
+            'goals' => json_encode([
+                'home' => $request->goals_home,
+                'away' => $request->goals_away,
+            ])
+        ];
+        $fixture->update($data);
+        flash()->success(__('Trận đấu ":model" đã được cập nhật thành công!', ['model' => $fixture->api_id]));
 
         logActivity($fixture, 'update'); // log activity
 
@@ -95,7 +121,7 @@ class FixtureController
 
         return response()->json([
             'success' => true,
-            'message' => __('Cầu thủ đã được xóa thành công!'),
+            'message' => __('Trận đấu đã được xóa thành công!'),
         ]);
     }
 }
