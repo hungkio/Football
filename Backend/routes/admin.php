@@ -44,6 +44,7 @@ use App\Http\Controllers\Admin\LogActivityController;
 use App\Http\Controllers\Admin\MailSettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
+use App\Http\Controllers\Admin\PlayerController;
 use App\Http\Controllers\Admin\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -225,5 +226,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/api/team/{team}', [TeamController::class, 'edit'])->name('api.team.edit');
             Route::put('/api/team/{team}', [TeamController::class, 'update'])->name('api.team.update');
             Route::delete('/api/team/{id}', [TeamController::class, 'delete'])->name('api.team.destroy');
+
+            Route::get('/api/players', [PlayerController::class, 'index'])->name('api.players');
+            Route::post('/api/players/store', [PlayerController::class, 'store'])->name('api.player.store');
+            Route::get('/api/players/create', [PlayerController::class, 'create'])->name('api.player.create');
+            Route::get('/api/player/{player}', [PlayerController::class, 'edit'])->name('api.player.edit');
+            Route::put('/api/player/{player}', [PlayerController::class, 'update'])->name('api.player.update');
+            Route::delete('/api/player/{id}', [PlayerController::class, 'delete'])->name('api.player.destroy');
         });
 });
