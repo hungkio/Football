@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FixtureController;
 use App\Http\Controllers\Admin\InternalLinkController;
 use App\Http\Controllers\Admin\MostVisitedPageController;
 use App\Http\Controllers\Admin\PageController;
@@ -233,5 +234,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/api/player/{player}', [PlayerController::class, 'edit'])->name('api.player.edit');
             Route::put('/api/player/{player}', [PlayerController::class, 'update'])->name('api.player.update');
             Route::delete('/api/player/{id}', [PlayerController::class, 'delete'])->name('api.player.destroy');
+
+            Route::get('/api/fixtures', [FixtureController::class, 'index'])->name('api.fixtures');
+            Route::post('/api/fixtures/store', [FixtureController::class, 'store'])->name('api.fixture.store');
+            Route::get('/api/fixtures/create', [FixtureController::class, 'create'])->name('api.fixture.create');
+            Route::get('/api/fixture/{fixture}', [FixtureController::class, 'edit'])->name('api.fixture.edit');
+            Route::put('/api/fixture/{fixture}', [FixtureController::class, 'update'])->name('api.fixture.update');
+            Route::delete('/api/fixture/{id}', [FixtureController::class, 'delete'])->name('api.fixture.destroy');
         });
 });

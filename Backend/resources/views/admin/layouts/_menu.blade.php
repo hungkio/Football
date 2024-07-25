@@ -146,6 +146,12 @@
                                     {{ __('Cầu thủ') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.fixtures') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.fixtures'))active @endif">
+                                    {{ __('Các trận đấu') }}
+                                </a>
+                            </li>
                         @endcan
 
                     </ul>

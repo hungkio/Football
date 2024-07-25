@@ -8,8 +8,15 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('players', function (Blueprint $table) {
-            $table->integer('api_id')->unique()->nullable()->change();
+        Schema::table('fixtures', function (Blueprint $table) {
+            // $table->integer('api_id')->unique()->nullable()->change();
+            $table->json('periods')->nullable()->change();
+            $table->json('venue')->nullable()->change();
+            $table->json('status')->nullable()->change();
+            $table->json('league')->nullable()->change();
+            $table->json('teams')->nullable()->change();
+            $table->json('goals')->nullable()->change();
+            $table->json('score')->nullable()->change();
             $table->string('slug')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
@@ -22,7 +29,7 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::table('players', function (Blueprint $table) {
+        Schema::table('fixtures', function (Blueprint $table) {
             $table->dropColumn('slug');
             $table->dropColumn('meta_title');
             $table->dropColumn('meta_description');

@@ -37,10 +37,7 @@ class TeamController
     {
         $this->authorize('create', Team::class);
         $data = $request->all();
-        $data['api_id'] = Carbon::now()->timestamp;
         $team = Team::create($data);
-        $team->api_id = $team->id;
-        $team->save();
         if ($request->hasFile('logo')) {
             $team->addMedia($request->file('logo'))->toMediaCollection('team');
         }
