@@ -158,6 +158,12 @@
                                     {{ __('Các giải đấu') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.coaches') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.coaches'))active @endif">
+                                    {{ __('Huấn luyện viên') }}
+                                </a>
+                            </li>
                         @endcan
 
                     </ul>
