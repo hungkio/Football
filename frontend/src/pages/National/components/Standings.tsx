@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Chart = () => {
+const Standings = () => {
   return (
     <div>
       <h2 className="py-2.5 pl-1 border-l-[5px] border-secondary text-sm font-bold text-primary my-2.5">BXH NGOẠI HẠNG ANH MÙA GIẢI 2024-2025</h2>
@@ -92,4 +92,4 @@ const Chart = () => {
   )
 }
 
-export default Chart
+export default Standings

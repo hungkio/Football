@@ -21,11 +21,11 @@ const navLink = [
   },
   {
     label: 'Nhận định',
-    url: '/'
+    url: '/analysis'
   },
   {
     label: 'Dự đoán',
-    url: '/'
+    url: '/predictions'
   },
   {
     label: 'Lịch thi đấu',
@@ -33,11 +33,11 @@ const navLink = [
   },
   {
     label: 'Kèo bóng đá',
-    url: '/'
+    url: '/betting-odds'
   },
   {
     label: 'Tin tức',
-    url: '/'
+    url: '/news'
   },
   {
     label: 'Lịch phát sóng',
@@ -49,7 +49,7 @@ const navLink = [
   },
   {
     label: 'BXH',
-    url: '/'
+    url: '/standings'
   },
   {
     label: 'BXH FIFA',
