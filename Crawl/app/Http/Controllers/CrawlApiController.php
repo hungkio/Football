@@ -99,11 +99,13 @@ class CrawlApiController extends Controller
                                             'player_id'   => $playerItem['player']['id'],
                                             'team_id'     => $statistic['team']['id'],
                                             'league_id'   => $statistic['league']['id'],
+                                            'season'      => $statistic['league']['season'],
                                         ],
                                         [
                                             'player_id'   => $playerItem['player']['id'],
                                             'team_id'     => $statistic['team']['id'],
                                             'league_id'   => $statistic['league']['id'],
+                                            'season'      => $statistic['league']['season'],
                                             'games'       => $statistic['games'],
                                             'substitutes' => $statistic['substitutes'],
                                             'shots'       => $statistic['shots'],
@@ -175,7 +177,10 @@ class CrawlApiController extends Controller
                     ]
                 );
                 Country::updateOrInsert(
-                    ['name' => $item['country']['name']],
+                    [
+                        'code' => $item['country']['code'],
+                        'name' => $item['country']['name'],
+                    ],
                     [
                         'name'         => $item['country']['name'],
                         'code'         => $item['country']['code'],
@@ -194,7 +199,10 @@ class CrawlApiController extends Controller
             $data = $this->apiService->crawlCountries();
             foreach ($data['response'] as $item) {
                 Country::updateOrInsert(
-                    ['name' => $item['name']],
+                    [
+                        'name' => $item['name'],
+                        'code' => $item['code'],
+                    ],
                     [
                         'name'         => $item['name'],
                         'code'         => $item['code'],
@@ -213,7 +221,10 @@ class CrawlApiController extends Controller
             $data = $this->apiService->crawlTeamsCountries();
             foreach ($data['response'] as $item) {
                 Country::updateOrInsert(
-                    ['name' => $item['name']],
+                    [
+                        'code' => $item['code'],
+                        'name' => $item['name']
+                    ],
                     [
                         'name'         => $item['name'],
                         'code'         => $item['code'],
@@ -259,14 +270,16 @@ class CrawlApiController extends Controller
                         foreach ($item['statistics'] as $statistic) {
                             PlayerStatistic::updateOrCreate(
                                 [
-                                    'player_id'      => $item['player']['id'],
+                                    'player_id'   => $item['player']['id'],
                                     'team_id'     => $statistic['team']['id'],
                                     'league_id'   => $statistic['league']['id'],
+                                    'season'      => $statistic['league']['season'],
                                 ],
                                 [
                                     'player_id'      => $item['player']['id'],
                                     'team_id'     => $statistic['team']['id'],
                                     'league_id'   => $statistic['league']['id'],
+                                    'season'      => $statistic['league']['season'],
                                     'games'       => $statistic['games'],
                                     'substitutes' => $statistic['substitutes'],
                                     'shots'       => $statistic['shots'],
