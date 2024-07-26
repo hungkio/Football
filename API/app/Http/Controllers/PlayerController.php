@@ -29,4 +29,13 @@ class PlayerController extends Controller
             ]);
         }
     }
+
+    public function details($player){
+        $player = Player::find($player);
+        $player->statistics = PlayerStatistic::where('player_id', $player->api_id)->get()->toArray();
+        return response()->json([
+            'status' => true,
+            'data' => $player
+        ]);
+    }
 }
