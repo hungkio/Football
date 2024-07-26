@@ -38,7 +38,10 @@ class CrawlCountriesData extends Command
             $data = $this->apiService->crawlCountries();
             foreach ($data['response'] as $item) {
                 Country::updateOrInsert(
-                    ['code' => $item['code']],
+                    [
+                        'code' => $item['code'],
+                        'name' => $item['name']
+                    ],
                     [
                         'name'         => $item['name'],
                         'code'         => $item['code'],

@@ -12,7 +12,7 @@ class TeamController extends Controller
         try {
             $teams = Team::when(isset($request->keyword), function($query) use ($request){
                 $query->where('name','like', $request->keyword . '%')
-                      ->orWhere('code', 'like', $request->keyword . '%');
+                      ->orWhere('api_id', 'like', $request->keyword . '%');
             })
             ->when(isset($request->national), function($query) use ($request){
                 $query->where('national', $request->national);

@@ -48,7 +48,10 @@ class CrawlLeaguesData extends Command
                     ]
                 );
                 Country::updateOrInsert(
-                    ['code' => $item['country']['code']],
+                    [
+                        'code' => $item['country']['code'],
+                        'name' => $item['country']['name'],
+                    ],
                     [
                         'name'         => $item['country']['name'],
                         'code'         => $item['country']['code'],

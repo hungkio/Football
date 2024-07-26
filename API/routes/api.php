@@ -41,3 +41,4 @@ Route::get('categories', [CategoryController::class, 'getPostCategories']);
 Route::get('countries', [CountryController::class, 'index']);
 Route::get('teams', [TeamController::class, 'index']);
 Route::get('players', [PlayerController::class, 'index']);
+Route::get('player/{player}', [PlayerController::class, 'details']);
