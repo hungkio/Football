@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\GetCrawledDataController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +38,6 @@ Route::get('getPostById', [PostController::class, 'getPostById']);
 Route::get('getPostsByTag', [PostController::class, 'getPostsByTag']);
 Route::get('comments', [CommentController::class, 'getCommentsFromPost']);
 Route::get('categories', [CategoryController::class, 'getPostCategories']);
+Route::get('countries', [CountryController::class, 'index']);
+Route::get('teams', [TeamController::class, 'index']);
+Route::get('players', [PlayerController::class, 'index']);

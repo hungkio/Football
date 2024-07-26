@@ -5,6 +5,8 @@ namespace App\DataTables;
 use App\DataTables\Core\BaseDatable;
 use App\Domain\Country\Models\Country;
 use App\Domain\Player\Models\Player;
+use App\Domain\PlayerStatistic\Models\PlayerStatistic;
+use App\Domain\Team\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -23,8 +25,22 @@ class PlayerDataTable extends BaseDatable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('photo', fn (Player $player) => view('admin.players._tablePhoto', compact('player')))
+            ->editColumn('teams', function(Player $player) {
+                $statistics = PlayerStatistic::where('player_id', $player->api_id)->get();
+                $team_ids = [];
+                foreach ($statistics as $statistic) {
+                    # code...
+                    $team_ids[] = $statistic->team_id;
+                }
+                return $team_ids;
+                // $teams = Team::whereIn('api_id', $team_ids)->get();
+                // $team_names = [];
+                // foreach ($teams as $team) {
+                //     $team_names[] = $team->name;
+                // }
+                // return $team_names;
+            })
             ->addColumn('action', 'admin.players._tableAction');
-            // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
             // ->rawColumns(['action']);
     }
 
@@ -51,6 +67,7 @@ class PlayerDataTable extends BaseDatable
             Column::make('weight')->title(__('Cân nặng')),
             Column::make('injured')->title(__('Chấn thương')),
             Column::make('photo')->title(__('Ảnh')),
+            Column::make('teams')->title(__('Đội tham gia'))->searchable(false),
             Column::computed('action')
                 ->title(__('Tác vụ'))
                 ->exportable(false)
