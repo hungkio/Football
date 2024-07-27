@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetPostByIdRequest;
+use App\Http\Requests\GetPostBySlugRequest;
 use App\Http\Requests\GetPostsByCategoryRequest;
 use App\Http\Requests\GetPostsByTagRequest;
 use App\Http\Requests\GetPostsOnpageRequest;
@@ -19,7 +20,7 @@ class PostController extends Controller
             $query->whereDate('created_at', $request->date);
         })
         ->paginate($request->per_page);
-        
+
         return response()->json([
             'status' => true,
             'data' => $posts
@@ -40,7 +41,7 @@ class PostController extends Controller
                 $query->whereDate('created_at', $request->date);
             })
             ->paginate($request->per_page);
-    
+
             return response()->json([
                 'status' => true,
                 'data' => $posts
@@ -56,6 +57,21 @@ class PostController extends Controller
     public function getPostById(GetPostByIdRequest $request){
         try {
             $post = Post::find($request->post_id);
+            $post->related_posts = Post::whereIn('id', $post->related_posts)->get();
+            return response()->json([
+                'status' => true,
+                'data' => $post,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th,
+            ]);
+        }
+    }
+    public function getPostBySlug(GetPostBySlugRequest $request){
+        try {
+            $post = Post::find($request->slug);
             $post->related_posts = Post::whereIn('id', $post->related_posts)->get();
             return response()->json([
                 'status' => true,
