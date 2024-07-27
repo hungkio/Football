@@ -46,7 +46,7 @@ class PostController
     {
         $this->authorize('create', Post::class);
         $data = $request->except(['category', 'image', 'proengsoft_jsvalidation', 'redirect_url']);
-        $tagsRequest = array_filter($request->tags, function($value) {
+        $tagsRequest = array_filter(explode(',',$request->tags), function($value) {
             return $value !== null;
         });
         $data['tags'] = $tagsRequest;
@@ -109,7 +109,7 @@ class PostController
         if ($request->hasFile('image')) {
             $post->addMedia($request->image)->toMediaCollection('image');
         }
-        $tagsRequest = array_filter($request->tags, function($value) {
+        $tagsRequest = array_filter(explode(',',$request->tags), function($value) {
             return $value !== null;
         });
         foreach ($tagsRequest as $tag) {

@@ -192,23 +192,7 @@
                                                 {{ __('Tags:') }}
                                             </label>
                                             <div class="col-lg-9">
-                                                <select id="select-tags" class="form-control" style="margin-bottom: 10px">
-                                                    <option value="">Usable tags</option>
-                                                    @foreach ($tags as $tag)
-                                                        <option value="{{$tag->tag}}">{{$tag->tag}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="tags d-flex flex-column" style="row-gap: 10px">
-                                                    {{-- js append here --}}
-                                                    @if ($post->tags)
-                                                        @foreach ($post->tags as $key => $tag)
-                                                            <input class='form-control' value="{{$tag}}" type='text' name='tags[{{$key}}]' />
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-3" style="padding: 0; margin-top: 10px">
-                                                    <a id="add-tag" class="btn btn-primary btn-block" href="javascript:void(0)">Thêm tag</a>
-                                                </div>
+                                                <input type="text" value="@if ($post->tags) {{implode(',',$post->tags)}} @endif" name="tags" data-role="tagsinput">
                                             </div>
                                         </div>
                                         {{-- end tag --}}

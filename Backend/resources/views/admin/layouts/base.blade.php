@@ -20,6 +20,7 @@
     <link href="{{ asset('/backend/css/colors.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/backend/css/theme.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/backend/fontawesome/css/all.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/backend/css/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     @stack('css')
 </head>
@@ -56,6 +57,7 @@
 @stack('vendor-js')
 <script src="{{ asset('/backend/js/app.js') }}"></script>
 <script src="{{ asset('/backend/js/custom.js') }}"></script>
+<script src="{{ asset('/backend/js/bootstrap-tagsinput.js') }}"></script>
 @stack('js')
 </body>
 </html>
