@@ -17,6 +17,7 @@ import BettingOdds from './pages/BettingOdds'
 import News from './pages/News'
 import Predictions from './pages/Predictions'
 import Standings from './pages/Standings'
+import FIFAStandings from './pages/Rankings/FIFAStandings'
 
 const RootComponent: React.FC = () => {
   return (
@@ -28,7 +29,9 @@ const RootComponent: React.FC = () => {
         <Route path={ROUTES.ANALYTICS} element={<Analysis />} />
         <Route path={ROUTES.PREDICTIONS} element={<Predictions />} />
         <Route path={ROUTES.STANDINGS} element={<Standings />} />
+        <Route path={ROUTES.FIFA_STANDINGS} element={<FIFAStandings />} />
         <Route path={ROUTES.BETTING_ODDS} element={<BettingOdds />} />
+        <Route path={ROUTES.FIXTURES} element={<HomePage />} />
         <Route path={ROUTES.NEWS} element={<News />} />
         <Route path={ROUTES.TOURNAMENT} element={<National />}>
           <Route path={ROUTES.TOURNAMENT_RESULTS} element={<Result />}></Route>

@@ -96,6 +96,31 @@ export interface ILeagueMatches {
   [leagueName: string]: IMatch[]
 }
 
+export interface IPost {
+  id: number
+  user_id: number
+  title: string
+  description: string
+  status: string
+  slug: string
+  body: string
+  view: number
+  meta_title: string
+  meta_description: string
+  meta_keywords: string
+  created_at: string
+  updated_at: string
+  related_posts: string[]
+  title_vi: string | null
+  description_vi: string | null
+  body_vi: string
+  meta_title_vi: string | null
+  meta_description_vi: string | null
+  meta_keywords_vi: string | null
+  on_pages: string[]
+  tags: string[]
+}
+
 export interface PaginationResponse<T extends object> {
   data: T
   current_page: number
