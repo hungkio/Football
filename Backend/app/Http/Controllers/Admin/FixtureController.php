@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\DataTables\FixtureDataTable;
 use App\Domain\Fixture\Models\Fixture;
+use App\Domain\Post\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
@@ -29,8 +30,9 @@ class FixtureController
     public function edit(Fixture $fixture): View
     {
         $this->authorize('update', $fixture);
+        $posts = Post::all();
 
-        return view('admin.fixtures.edit', compact('fixture'));
+        return view('admin.fixtures.edit', compact('fixture', 'posts'));
     }
 
     public function store(Request $request)
@@ -40,9 +42,11 @@ class FixtureController
             'api_id' => $request->api_id,
             'referee' => $request->referee,
             'date' => $request->date,
+            'content' => $request->content,
+            'vi_content' => $request->vi_content,
             'periods' => json_encode([
-                'first' => $request->round_1,
-                'second' => $request->round_2
+                'first' => Carbon::createFromFormat('Y-m-d', $request->round_1)->timestamp,
+                'second' => Carbon::createFromFormat('Y-m-d', $request->round_2)->timestamp
             ]),
             'venue' => json_encode(
                 [
@@ -53,10 +57,10 @@ class FixtureController
             ]),
             'teams' => json_encode([
                 'home' => [
-                    'id'=> $request->team_home
+                    'name'=> $request->team_home
                 ],
                 'away' => [
-                    'id'=> $request->team_away
+                    'name'=> $request->team_away
                 ],
             ]),
             'goals' => json_encode([
@@ -83,25 +87,28 @@ class FixtureController
             'api_id' => $request->api_id,
             'referee' => $request->referee,
             'date' => $request->date,
+            'content' => $request->content,
+            'vi_content' => $request->vi_content,
+            'related_posts' => $request->related_posts,
             'periods' => json_encode([
-                'first' => $request->round_1,
-                'second' => $request->round_2
+                'first' => $request->round_1 ? Carbon::createFromFormat('Y-m-d', $request->round_1)->timestamp : null,
+                'second' => $request->round_2 ? Carbon::createFromFormat('Y-m-d', $request->round_2)->timestamp : null
             ]),
-            'venue' => json_encode(
-                [
-                    'id' => $request->venue_id
-                ]),
-            'league' => json_encode([
-                'id' => $request->league_id
-            ]),
-            'teams' => json_encode([
-                'home' => [
-                    'id'=> $request->team_home
-                ],
-                'away' => [
-                    'id'=> $request->team_away
-                ],
-            ]),
+            // 'venue' => json_encode(
+            //     [
+            //         'id' => $request->venue_id
+            //     ]),
+            // 'league' => json_encode([
+            //     'id' => $request->league_id
+            // ]),
+            // 'teams' => json_encode([
+            //     'home' => [
+            //         'name'=> $request->team_home
+            //     ],
+            //     'away' => [
+            //         'name'=> $request->team_away
+            //     ],
+            // ]),
             'goals' => json_encode([
                 'home' => $request->goals_home,
                 'away' => $request->goals_away,

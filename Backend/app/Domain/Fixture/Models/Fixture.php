@@ -22,14 +22,9 @@ class Fixture extends Model implements HasMedia
 
     protected $table = 'fixtures';
     
-    // protected $casts = [
-    //     'periods' => 'array',
-    //     'venue' => 'array',
-    //     'league' => 'array',
-    //     'teams' => 'array',
-    //     'goals' => 'array',
-    //     'goals' => 'array',
-    // ];
+    protected $casts = [
+        'related_posts' => 'array'
+    ];
     /**
      * @inheritDoc
      */

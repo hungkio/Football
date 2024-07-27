@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class PostController extends Controller
 {
     public function getPostsOnPage(GetPostsOnpageRequest $request){
-        $posts = Post::whereJsonContains('on_pages', $request->page_id)
+        $posts = Post::whereJsonContains('on_pages', $request->page_slug)
         ->when($request->date, function($query) use ($request){
             $query->whereDate('created_at', $request->date);
         })

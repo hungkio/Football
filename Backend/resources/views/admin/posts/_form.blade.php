@@ -163,7 +163,7 @@
                                                         multiple>
                                                     @foreach($pagesOptions as $pageOption)
                                                         <option
-                                                            value="{{ $pageOption->id }}" {{ \in_array($pageOption->id, $selectedPages) ? 'selected' : null }}>
+                                                            value="{{ $pageOption->slug }}" {{ \in_array($pageOption->slug, $selectedPages) ? 'selected' : null }}>
                                                             {{ $pageOption->title }}
                                                         </option>
                                                     @endforeach
