@@ -47,9 +47,12 @@ class PostController
     {
         $this->authorize('create', Post::class);
         $data = $request->except(['category', 'image', 'proengsoft_jsvalidation', 'redirect_url']);
-        $tagsRequest = array_filter(explode(',',$request->tags), function($value) {
-            return $value !== null;
-        });
+        $tagsRequest = array();
+        if($request->tags){
+            $tagsRequest = array_filter(explode(',',$request->tags), function($value) {
+                return $value !== null;
+            });
+        }
         $data['tags'] = $tagsRequest;
         $data['user_id'] = auth('admins')->user()->id;
         $post = Post::create($data);
@@ -113,9 +116,12 @@ class PostController
         if ($request->hasFile('image')) {
             $post->addMedia($request->image)->toMediaCollection('image');
         }
-        $tagsRequest = array_filter(explode(',',$request->tags), function($value) {
-            return $value !== null;
-        });
+        $tagsRequest = array();
+        if($request->tags){
+            $tagsRequest = array_filter(explode(',',$request->tags), function($value) {
+                return $value !== null;
+            });
+        }
         foreach ($tagsRequest as $tag) {
             if ($tag != null) {
                 Tag::updateOrCreate(
