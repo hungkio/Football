@@ -1,4 +1,4 @@
-<form action="{{ $url }}" method="POST" data-block enctype="multipart/form-data" id="post-form">
+<form action="{{ $url }}" method="POST" data-block enctype="multipart/form-data" id="post-form" >
     @csrf
     @method($method ?? 'POST')
 
@@ -244,12 +244,17 @@
 </form>
 @push('js')
     <script>
+        $("#post-form").bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        });
         $(document).on('keyup', '#slug', function () {
             let slug = $('#slug').val()
             let fullLink = '{{route('post.show')}}' +'/'+ slug;
             $('#slug-value').html(fullLink);
         })
-        let count = $('.tags input').length;
+        /*let count = $('.tags input').length;
         $('#add-tag').on('click', function () {
             const inputElelemt = "<input class='form-control' type='text' name='tags["+count+"]' />"
             $('.tags').append(inputElelemt);
@@ -260,6 +265,6 @@
             const inputElelemt = "<input class='form-control' type='text' name='tags["+count+"]' value="+thisValue+" />"
             $('.tags').append(inputElelemt);
             count++;
-        })
+        })*/
     </script>
 @endpush()

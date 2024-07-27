@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class PostController
 {
@@ -54,7 +55,10 @@ class PostController
         $post = Post::create($data);
         foreach ($tagsRequest as $tag) {
             Tag::updateOrCreate(
-                ['tag' => $tag]
+                [
+                    'tag' => $tag,
+                    'tag_slug' => Str::slug($tag)
+                ]
             );
         }
         if ($request->hasFile('image')) {
@@ -115,7 +119,10 @@ class PostController
         foreach ($tagsRequest as $tag) {
             if ($tag != null) {
                 Tag::updateOrCreate(
-                    ['tag' => $tag]
+                    [
+                        'tag' => $tag,
+                        'tag_slug' => Str::slug($tag)
+                    ]
                 );
             }
         }
