@@ -40,11 +40,32 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <x-text-field name="api_id" :placeholder="__('Mã giải')" :label="__('Mã giải')" :value="isset($league) ? $league->api_id : ''" required > </x-text-field>
+                                <x-text-field name="api_id" :placeholder="__('Mã giải')" :label="__('Mã giải')" :value="isset($league) ? $league->api_id : ''" :readonly > </x-text-field>
                                 <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="isset($league) ? $league->slug : ''" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
                                 <x-text-field name="name" :placeholder="__('Tên')" :label="__('Tên')" :value="isset($league) ? $league->name : ''" required> </x-text-field>
-                                <x-text-field name="type" :placeholder="__('Phân loại')" :label="__('Phân loại')" :value="isset($league) ? $league->type : ''" required> </x-text-field>
-                                <x-text-field name="country_code" :placeholder="__('Mã quốc gia')" :label="__('Mã quốc gia')" :value="isset($league) ? $league->country_code : ''" required> </x-text-field>
+                                {{-- <x-text-field name="type" :placeholder="__('Phân loại')" :label="__('Phân loại')" :value="isset($league) ? $league->type : ''" required> </x-text-field> --}}
+                                <div class="form-group row">
+                                    <label for="type" class="col-lg-2 col-form-label text-right"> {{ __("Phân loại") }} :</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control" name="type">
+                                            <option>{{ __('Chọn phân loại') }}</option>
+                                            <option value="league">{{ __('League') }}</option>
+                                            <option value="cup" >{{ __('Cup') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="country_code" class="col-lg-2 col-form-label text-right"> {{ __("Mã quốc gia") }} :</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control" name="country_code">
+                                            <option>{{ __('Chọn mã quốc gia') }}</option>
+                                            @foreach ($country_codes as $country_code)
+                                                <option value="{{$country_code}}">{{$country_code}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                {{-- <x-text-field name="country_code" :placeholder="__('Mã quốc gia')" :label="__('Mã quốc gia')" :value="isset($league) ? $league->country_code : ''" required> </x-text-field> --}}
                                 <h5>{{ __('SEO') }}</h5>
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">

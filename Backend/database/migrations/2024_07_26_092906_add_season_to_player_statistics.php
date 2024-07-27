@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('player_statistics', function (Blueprint $table) {
-            $table->integer('season')->nullable();
-        });
+        // Schema::table('player_statistics', function (Blueprint $table) {
+        //     $table->integer('season')->nullable();
+        // });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('player_statistics', function (Blueprint $table) {
-            $table->dropColumn('season');
-        });
+        // Schema::table('player_statistics', function (Blueprint $table) {
+        //     $table->dropColumn('season');
+        // });
     }
 };
