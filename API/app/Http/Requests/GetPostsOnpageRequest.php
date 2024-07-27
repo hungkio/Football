@@ -25,7 +25,7 @@ class GetPostsOnpageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page_id' => 'integer|required',
+            'page_slug' => 'string|required',
             'date' => 'date_format:Y-m-d|nullable'
         ];
     }

@@ -37,7 +37,7 @@ class PostController
         $selectedRelatePost = [];
         $relatedPosts = Post::get(['id', 'title']);
         $selectedPages = [];
-        $pagesOptions = Page::get(['id', 'title']);
+        $pagesOptions = Page::get(['slug', 'title']);
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
 
         return view('admin.posts.create', compact('relatedPosts', 'taxons', 'selectedRelatePost', 'pagesOptions', 'selectedPages', 'tags'));
@@ -98,11 +98,11 @@ class PostController
         $selectedPages = [];
         if (!empty($post->on_pages)){
             $selectedPages = Page::query()
-                ->whereIntegerInRaw('id', $post->on_pages)
-                ->pluck('id')
+                ->whereIntegerInRaw('slug', $post->on_pages)
+                ->pluck('slug')
                 ->toArray();
         }
-        $pagesOptions = Page::get(['id', 'title']);
+        $pagesOptions = Page::get(['slug', 'title']);
         return view('admin.posts.edit', compact('post', 'relatedPosts', 'taxons', 'selectedRelatePost', 'selectedPages', 'pagesOptions', 'tags'));
     }
 

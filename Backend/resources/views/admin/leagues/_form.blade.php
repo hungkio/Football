@@ -40,7 +40,12 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <x-text-field name="api_id" :placeholder="__('Mã giải')" :label="__('Mã giải')" :value="isset($league) ? $league->api_id : ''" :readonly > </x-text-field>
+                                <div class="form-group row">
+                                    <label for="type" class="col-lg-2 col-form-label text-right"> {{ __("Mã giải") }} :</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" name="api_id" placeholder="Mã giải" value="{{isset($league) ? $league->api_id : ''}}" readonly>
+                                    </div>
+                                </div>
                                 <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="isset($league) ? $league->slug : ''" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
                                 <x-text-field name="name" :placeholder="__('Tên')" :label="__('Tên')" :value="isset($league) ? $league->name : ''" required> </x-text-field>
                                 {{-- <x-text-field name="type" :placeholder="__('Phân loại')" :label="__('Phân loại')" :value="isset($league) ? $league->type : ''" required> </x-text-field> --}}
