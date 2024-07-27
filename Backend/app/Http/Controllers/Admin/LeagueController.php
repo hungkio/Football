@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\LeagueDataTable;
+use App\Domain\Country\Models\Country;
 use App\Domain\League\Models\League;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -21,7 +22,14 @@ class LeagueController
     public function create(): View
     {
         $this->authorize('create', League::class);
-        return view('admin.leagues.create');
+        $countries = Country::all();
+        $country_codes = [];
+        foreach ($countries as $country) {
+            if ($country->code) {
+                $country_codes[] = $country->code;
+            }
+        }
+        return view('admin.leagues.create', compact('country_codes'));
     }
     public function delete($id){
         $league = League::find($id);
@@ -51,8 +59,14 @@ class LeagueController
     public function edit(League $league): View
     {
         $this->authorize('update', $league);
-
-        return view('admin.leagues.edit', compact('league'));
+        $countries = Country::all();
+        $country_codes = [];
+        foreach ($countries as $country) {
+            if ($country->code) {
+                $country_codes[] = $country->code;
+            }
+        }
+        return view('admin.leagues.edit', compact('league', 'country_codes'));
     }
 
     public function update(League $league, Request $request)
