@@ -8,5 +8,5 @@ class Tag extends Model
 {
     public $guarded = [];
 
-    protected $fillable = ['tag'];
+    protected $fillable = ['tag','tag_slug'];
 }
