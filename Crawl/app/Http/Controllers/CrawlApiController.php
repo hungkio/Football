@@ -329,14 +329,27 @@ class CrawlApiController extends Controller
             $data = $this->apiService->crawlFifaRank();
             if ($data) {
                 foreach ($data['ranking'] as $item) {
-                    Country::where('name', 'like', str_replace(' ','-',substr($item['name'], 0, 4)).'%')->update(
-                        [
-                            'rank'         => $item['rank'],
-                            'points'         => $item['points'],
-                            'previous_rank'         => $item['previous_rank'],
-                            'previous_points'         => $item['previous_points']
-                        ]
-                    );
+                    $count = Country::where('name', 'like', str_replace(' ', '-', substr($item['name'], 0, 5)).'%')->get()->count();
+                    if($count==1){
+                        Country::where('name', 'like', str_replace(' ', '-', substr($item['name'], 0, 5)).'%')->update(
+                            [
+                                'rank'         => $item['rank'],
+                                'points'         => $item['points'],
+                                'previous_rank'         => $item['previous_rank'],
+                                'previous_points'         => $item['previous_points']
+                            ]
+                        );
+                    }else{
+                        $update = Country::where('name', '=', str_replace(' ','-',$item['name']))->update(
+                            [
+                                'rank'         => $item['rank'],
+                                'points'         => $item['points'],
+                                'previous_rank'         => $item['previous_rank'],
+                                'previous_points'         => $item['previous_points']
+                            ]
+                        );
+                    }
+
                 }
             }
             return 'Data crawled and stored successfully.';
