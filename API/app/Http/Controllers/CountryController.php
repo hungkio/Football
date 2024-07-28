@@ -10,7 +10,7 @@ class CountryController extends Controller
 {
     public function index(Request $request){
         try {
-            $countries = Country::select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')->when($request->keyword, function($query) use ($request){
+            $countries = Country::select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')->when($request->keyword, function($query) use ($request){
                 $query->where('name', 'like', $request->keyword . '%')
                       ->orWhere('code', 'like', $request->keyword . '%');
             })
@@ -35,7 +35,7 @@ class CountryController extends Controller
         $data[0]['name'] = 'Europe';
         $data[0]['name_vi'] = 'Châu Âu';
         $europe = DB::table('countries')
-        ->select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')
+        ->select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
         ->join('regions', 'countries.region_id', '=', 'regions.id')
         ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
         ->where('countries.region_id', '4')
@@ -45,7 +45,7 @@ class CountryController extends Controller
         $data[1]['name'] = 'Africa';
         $data[1]['name_vi'] = 'Châu Phi';
         $africa = DB::table('countries')
-        ->select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')
+        ->select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
         ->join('regions', 'countries.region_id', '=', 'regions.id')
         ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
         ->where('countries.region_id', '1')
@@ -55,7 +55,7 @@ class CountryController extends Controller
         $data[2]['name'] = 'Asia';
         $data[2]['name_vi'] = 'Châu Á';
         $asia = DB::table('countries')
-        ->select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')
+        ->select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
         ->join('regions', 'countries.region_id', '=', 'regions.id')
         ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
         ->where('countries.region_id', '3')
@@ -65,7 +65,7 @@ class CountryController extends Controller
         $data[3]['name'] = 'Oceania';
         $data[3]['name_vi'] = 'Châu Đại Dương';
         $oceania = DB::table('countries')
-        ->select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')
+        ->select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
         ->join('regions', 'countries.region_id', '=', 'regions.id')
         ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
         ->where('countries.region_id', '5')
@@ -75,7 +75,7 @@ class CountryController extends Controller
         $data[4]['name'] = 'Northern & Central America';
         $data[4]['name_vi'] = 'Bắc & Trung Mỹ';
         $nca = DB::table('countries')
-        ->select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')
+        ->select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
         ->join('regions', 'countries.region_id', '=', 'regions.id')
         ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
         ->whereIn('countries.subregion_id', array(6,9))
@@ -85,7 +85,7 @@ class CountryController extends Controller
         $data[5]['name'] = 'South America';
         $data[5]['name_vi'] = 'Nam Mỹ';
         $sa = DB::table('countries')
-        ->select('countries.*, regions.name_vi region_vi, subregions.name_vi subregion_vi')
+        ->select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
         ->join('regions', 'countries.region_id', '=', 'regions.id')
         ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
         ->whereIn('countries.subregion_id', array(8))
