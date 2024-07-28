@@ -100,7 +100,7 @@ class CountryController extends Controller
     public function listRegions(){
         $regions = DB::table('regions')->get();
         foreach ($regions as $k=>$region){
-            $regions[$k]['subs'] = DB::table('subregions')->where('region_id',$region->id)->get();
+            $regions->{$k}->subs = DB::table('subregions')->where('region_id',$region->id)->get();
         }
         return response()->json([
             'status' => true,
