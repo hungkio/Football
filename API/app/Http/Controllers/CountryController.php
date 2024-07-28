@@ -10,7 +10,8 @@ class CountryController extends Controller
 {
     public function index(Request $request){
         try {
-            $countries = Country::select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')->when($request->keyword, function($query) use ($request){
+            $countries = Country::select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
+            ->when($request->keyword, function($query) use ($request){
                 $query->where('name', 'like', $request->keyword . '%')
                       ->orWhere('code', 'like', $request->keyword . '%');
             })

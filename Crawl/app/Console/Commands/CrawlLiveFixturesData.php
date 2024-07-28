@@ -50,6 +50,7 @@ class CrawlLiveFixturesData extends Command
                         'score'      => json_encode($item['score']),
                         'created_at' => now(),
                         'updated_at' => now(),
+                        'slug'  => 'fixture-' . createSlug($item['fixture']['id']),
                     ]
                 );
                 $page = 1;
@@ -75,6 +76,7 @@ class CrawlLiveFixturesData extends Command
                                         'weight'         => $playerItem['player']['weight'],
                                         'injured'        => $playerItem['player']['injured'],
                                         'photo'          => $playerItem['player']['photo'],
+                                        'slug'           => createSlug($playerItem['player']['name']),
                                     ]
                                 );
                                 foreach ($playerItem['statistics'] as $statistic) {

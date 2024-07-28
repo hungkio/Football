@@ -56,6 +56,7 @@ class CrawlApiData extends Command
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
+                        'slug'  => 'fixture-' . createSlug($item['fixture']['id']),
                     ]
                 );
             }

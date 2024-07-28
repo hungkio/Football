@@ -45,7 +45,8 @@ class CrawlLeaguesData extends Command
                         'type'         => $item['league']['type'],
                         'logo'         => $item['league']['logo'],
                         'country_code' => $item['country']['code'],
-                    ]
+                        'slug'  => createSlug($item['league']['name']),
+                        ]
                 );
                 Country::updateOrInsert(
                     [
@@ -56,6 +57,7 @@ class CrawlLeaguesData extends Command
                         'name'         => $item['country']['name'],
                         'code'         => $item['country']['code'],
                         'flag'         => $item['country']['flag'],
+                        'slug'  => createSlug($item['country']['code']),
                     ]
                 );
             }

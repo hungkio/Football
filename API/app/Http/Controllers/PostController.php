@@ -31,7 +31,7 @@ class PostController extends Controller
         try {
             $postIds = [];
             $taxonables = Taxonable::where('taxonable_type', Taxonable::BE_POST_MODEL)
-                            ->where('taxon_id', $request->category_id)
+                            ->where('taxon_slug', $request->category_slug)
                             ->get();
             foreach ($taxonables as $taxonable) {
                 $postIds[] = $taxonable->taxonable_id;
