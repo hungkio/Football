@@ -61,7 +61,7 @@ const navLink = [
   },
   {
     label: 'ĐTQG',
-    url: '/'
+    url: '/national-teams'
   },
   {
     label: 'CLB',

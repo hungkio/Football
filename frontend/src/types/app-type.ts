@@ -121,6 +121,41 @@ export interface IPost {
   tags: string[]
 }
 
+export interface ICountry {
+  id: number
+  api_id: number | null
+  name: string
+  code: string
+  flag: string
+  from_team: number
+  created_at: string | null
+  updated_at: string
+  name_vi: string | null
+  slug: string | null
+  meta_title: string | null
+  meta_description: string | null
+  meta_keywords: string | null
+  meta_title_vi: string | null
+  meta_description_vi: string | null
+  meta_keywords_vi: string | null
+  region: string
+  region_id: string
+  subregion: string
+  subregion_id: string
+  rank: string
+  previous_rank: string
+  points: string
+  previous_points: string
+  region_vi: string
+  subregion_vi: string
+}
+
+export interface ICountryRegion {
+  name: string
+  name_vi: string
+  items: ICountry[]
+}
+
 export interface PaginationResponse<T extends object> {
   data: T
   current_page: number

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import api from '@/api/api_instance'
-import { ILeagueMatches, IMenu, PaginationResponse } from '@/types/app-type'
+import { ICountry, ICountryRegion, ILeagueMatches, IMenu, IPost, PaginationResponse } from '@/types/app-type'
 
 export const getMenus = (): Promise<IMenu[]> => {
   return api.get('/get-menus/')
@@ -18,7 +18,7 @@ export const getLiveFixtures = (): Promise<PaginationResponse<ILeagueMatches>> =
   return api.get('/live-fixtures/')
 }
 
-export const getPostsOnPage = (pageId: number, date?: string, perPage?: number): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getPostsOnPage = (pageId: number, date?: string, perPage?: number): Promise<PaginationResponse<IPost[]>> => {
   return api.get('/posts/', {
     params: {
       page_id: pageId,
@@ -28,7 +28,7 @@ export const getPostsOnPage = (pageId: number, date?: string, perPage?: number):
   })
 }
 
-export const getPostsByCategory = (categoryId: number, date?: string, perPage?: number): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getPostsByCategory = (categoryId: number, date?: string, perPage?: number): Promise<PaginationResponse<IPost[]>> => {
   return api.get('/api/getPostsByCategory', {
     params: {
       category_id: categoryId,
@@ -38,7 +38,7 @@ export const getPostsByCategory = (categoryId: number, date?: string, perPage?: 
   })
 }
 
-export const getPostById = (postId: number): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getPostById = (postId: number): Promise<PaginationResponse<IPost>> => {
   return api.get('/getPostById/', {
     params: {
       post_id: postId
@@ -46,7 +46,7 @@ export const getPostById = (postId: number): Promise<PaginationResponse<ILeagueM
   })
 }
 
-export const getPostsByTag = (tag: string, date?: string): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getPostsByTag = (tag: string, date?: string): Promise<PaginationResponse<IPost[]>> => {
   return api.get('/getPostsByTag', {
     params: {
       tag,
@@ -67,13 +67,17 @@ export const getCategories = (): Promise<PaginationResponse<ILeagueMatches>> => 
   return api.get('/categories/')
 }
 
-export const getCountries = (keyword?: string, perPage?: number): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getCountries = (keyword?: string, perPage?: number): Promise<PaginationResponse<ICountry[]>> => {
   return api.get('/countries/', {
     params: {
       keyword,
       per_page: perPage
     }
   })
+}
+
+export const getNationalGroupByRegion = (): Promise<ICountryRegion[]> => {
+  return api.get('/nationalGroupByRegion')
 }
 
 export const getTeams = (keyword?: string, perPage?: number, national?: number): Promise<PaginationResponse<ILeagueMatches>> => {
