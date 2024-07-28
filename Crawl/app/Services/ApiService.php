@@ -271,7 +271,7 @@ class ApiService
 
         return null;
     }
-    public function crawlFifaRank($league, $season)
+    public function crawlFifaRank()
     {
         $client = new Client();
 
