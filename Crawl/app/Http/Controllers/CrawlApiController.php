@@ -324,4 +324,22 @@ class CrawlApiController extends Controller
             return 'Failed to fetch data from API. ' . $th;
         }
     }
+    public function crawlFifarank(){
+        try {
+            $data = $this->apiService->crawlFifaRank();
+            if ($data) {
+                foreach ($data['ranking'] as $item) {
+                    Country::where('name',$item['name'])->update(
+                        [
+                            'rank'         => $item['rank'],
+                            'points'         => $item['points']
+                        ]
+                    );
+                }
+            }
+            return $this->info('Data crawled and stored successfully.');
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
+    }
 }

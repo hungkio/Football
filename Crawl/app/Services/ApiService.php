@@ -271,4 +271,22 @@ class ApiService
 
         return null;
     }
+    public function crawlFifaRank($league, $season)
+    {
+        $client = new Client();
+
+        $response = $client->request('GET', 'https://world-football-ranking.p.rapidapi.com/current-ranking.php', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'world-football-ranking.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
 }
