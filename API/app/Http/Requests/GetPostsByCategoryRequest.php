@@ -25,7 +25,7 @@ class GetPostsByCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_slug' => 'integer|required',
+            'category_slug' => 'string|required',
             'date' => 'date_format:Y-m-d|nullable'
         ];
     }
