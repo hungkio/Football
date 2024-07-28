@@ -20,7 +20,7 @@ class UpdateCountriesSeeder extends Seeder
             $region_id = $item['region_id'];
             $subregion = $item['subregion'];
             $subregion_id = $item['subregion_id'];
-            Country::where('code',$code)->update(['region'=>$region, 'region_id'=>$region_id, 'subregion'=>$subregion, 'subregion_id'=>$subregion_id]);
+            Country::where('code', $code)->update(['region'=>$region, 'region_id'=>$region_id, 'subregion'=>$subregion, 'subregion_id'=>$subregion_id]);
         }
     }
 }
