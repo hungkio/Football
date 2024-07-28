@@ -43,4 +43,17 @@ class Fixture extends Model implements HasMedia
             ->addMediaCollection('fixture')
             ->singleFile();
     }
+
+    public function selectText(): string
+    {
+        $prettyName = '';
+        if ($this->ancestors->isNotEmpty()) {
+            foreach ($this->ancestors as $ancestor) {
+                $prettyName .= $ancestor->name.' -> ';
+            }
+        }
+        $prettyName .= $this->name;
+
+        return $prettyName;
+    }
 }

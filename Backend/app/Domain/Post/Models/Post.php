@@ -59,4 +59,17 @@ class Post extends Model implements HasMedia
     {
         return $this->belongsTo(Admin::class, 'user_id', 'id');
     }
+
+    public function selectText(): string
+    {
+        $prettyName = '';
+        if ($this->ancestors->isNotEmpty()) {
+            foreach ($this->ancestors as $ancestor) {
+                $prettyName .= $ancestor->name.' -> ';
+            }
+        }
+        $prettyName .= $this->name;
+
+        return $prettyName;
+    }
 }
