@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::table('countries', function (Blueprint $table) {
             $table->string('rank')->nullable();
+            $table->string('previous_rank')->nullable();
             $table->string('points')->nullable();
+            $table->string('previous_points')->nullable();
         });
     }
 
@@ -26,6 +28,8 @@ return new class extends Migration
             //
             $table->dropColumn('rank');
             $table->dropColumn('points');
+            $table->dropColumn('points');
+            $table->dropColumn('previous_points');
         });
     }
 };

@@ -41,7 +41,9 @@ class CrawlFiFaRankData extends Command
                     Country::where('name', $item['name'])->update(
                         [
                             'rank'         => $item['rank'],
-                            'points'         => $item['points']
+                            'points'         => $item['points'],
+                            'previous_rank'         => $item['previous_rank'],
+                            'previous_points'         => $item['previous_points']
                         ]
                     );
                 }
