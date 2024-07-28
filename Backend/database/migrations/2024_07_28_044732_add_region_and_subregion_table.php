@@ -28,4 +28,4 @@ return new class extends Migration
         Schema::dropIfExists('regions');
         Schema::dropIfExists('subregions');
     }
-}
+};
