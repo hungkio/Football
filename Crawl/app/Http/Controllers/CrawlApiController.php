@@ -319,7 +319,7 @@ class CrawlApiController extends Controller
                     }
                 }
             }
-            return $this->info('Data crawled and stored successfully.');
+            return 'Data crawled and stored successfully.';
         } catch (\Throwable $th) {
             return 'Failed to fetch data from API. ' . $th;
         }
@@ -339,7 +339,7 @@ class CrawlApiController extends Controller
                     );
                 }
             }
-            return $this->info('Data crawled and stored successfully.');
+            return 'Data crawled and stored successfully.';
         } catch (\Throwable $th) {
             return 'Failed to fetch data from API. ' . $th;
         }
