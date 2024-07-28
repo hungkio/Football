@@ -77,6 +77,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div id="en" class="tab-pane fade in active show">
+                                        <x-textarea-field name="content" :label="__('Nội dung')" :value="isset($team) ? $team->content : ''" :placeholder="__('Nội dung')" > </x-textarea-field>
                                         <x-text-field name="meta_title" :label="__('Tiêu đề')" type="text" :value="isset($team) ? $team->meta_title : ''" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
 
                                         <x-text-field name="meta_description" :label="__('Mô tả')" type="text" :value="isset($team) ? $team->meta_description : ''" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
@@ -84,6 +85,7 @@
                                         <x-text-field name="meta_keywords" :label="__('Từ khóa')" type="text" :value="isset($team) ? $team->meta_keywords : ''" :placeholder="__('Từ khóa nên nhập 12 ký tự trong 1 từ khóa, cách nhau bằng dấu \',\'')" > </x-text-field>
                                     </div>
                                     <div id="vi" class="tab-pane">
+                                        <x-textarea-field name="content_vi" :label="__('Nội dung')" :value="isset($team) ? $team->content_vi : ''" :placeholder="__('Nội dung')" > </x-textarea-field>
                                         <x-text-field name="meta_title_vi" :label="__('Tiêu đề')" type="text" :value="isset($team) ? $team->meta_title : ''" :placeholder="__('Tiêu đề nên nhập từ 10 đến 70 ký tự trở lên')" > </x-text-field>
 
                                         <x-text-field name="meta_description_vi" :label="__('Mô tả')" type="text" :value="isset($team) ? $team->meta_description : ''" :placeholder="__('Mô tả nên nhập từ 160 đến 255 ký tự trở lên')" > </x-text-field>
