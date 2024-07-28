@@ -40,6 +40,7 @@ Route::get('getPostsByTag', [PostController::class, 'getPostsByTag']);
 Route::get('comments', [CommentController::class, 'getCommentsFromPost']);
 Route::get('categories', [CategoryController::class, 'getPostCategories']);
 Route::get('countries', [CountryController::class, 'index']);
+Route::get('nationalTeam', [CountryController::class, 'nationalTeam']);
 Route::get('teams', [TeamController::class, 'index']);
 Route::get('players', [PlayerController::class, 'index']);
 Route::get('player/{player}', [PlayerController::class, 'details']);
