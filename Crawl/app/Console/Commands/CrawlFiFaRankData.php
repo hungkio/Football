@@ -38,7 +38,7 @@ class CrawlFiFaRankData extends Command
             $data = $this->apiService->crawlFifaRank();
             if ($data) {
                 foreach ($data['ranking'] as $item) {
-                    Country::where('name', $item['name'])->update(
+                    Country::where('name', 'like', substr($item['name'], 0, 5))->update(
                         [
                             'rank'         => $item['rank'],
                             'points'         => $item['points'],
