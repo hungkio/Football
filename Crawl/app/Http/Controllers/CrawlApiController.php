@@ -329,7 +329,7 @@ class CrawlApiController extends Controller
             $data = $this->apiService->crawlFifaRank();
             if ($data) {
                 foreach ($data['ranking'] as $item) {
-                    Country::where('name', 'like', substr($item['name'], 0, 5))->update(
+                    Country::where('name', 'like', str_replace(' ','-',substr($item['name'], 0, 4)).'%')->update(
                         [
                             'rank'         => $item['rank'],
                             'points'         => $item['points'],
