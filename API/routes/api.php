@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CoachController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\GetCrawledDataController;
+use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TeamController;
@@ -45,4 +48,8 @@ Route::get('regions', [CountryController::class, 'listRegions']);
 Route::get('teams', [TeamController::class, 'index']);
 Route::get('players', [PlayerController::class, 'index']);
 Route::get('player/{player}', [PlayerController::class, 'details']);
+Route::get('coaches', [CoachController::class, 'index']);
+Route::get('coach/{coach}', [CoachController::class, 'details']);
+Route::get('leagues', [LeagueController::class, 'index']);
+Route::get('page/{slug}', [PageController::class, 'getPage']);
 Route::get('menu/{position}', [PlayerController::class, 'details']);
