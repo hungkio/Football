@@ -59,8 +59,8 @@ class MenuDataTable extends BaseDatable
     protected function getTableButton(): array
     {
         return [
-            Button::make('create')->addClass('btn btn-success')->text('<i class="fal fa-plus-circle mr-2"></i>'.__('Tạo mới'))
-            ->action("$('#createMenu').modal('show')"),
+//            Button::make('create')->addClass('btn btn-success')->text('<i class="fal fa-plus-circle mr-2"></i>'.__('Tạo mới'))
+//            ->action("$('#createMenu').modal('show')"),
             Button::make('selected')->addClass('btn btn-warning')
                 ->text('<i class="fal fa-tasks mr-2"></i>'.__('Cập nhật trạng thái'))
                 ->action("
