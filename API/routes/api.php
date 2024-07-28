@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CoachController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\GetCrawledDataController;
@@ -45,3 +46,5 @@ Route::get('regions', [CountryController::class, 'listRegions']);
 Route::get('teams', [TeamController::class, 'index']);
 Route::get('players', [PlayerController::class, 'index']);
 Route::get('player/{player}', [PlayerController::class, 'details']);
+Route::get('coaches', [CoachController::class, 'index']);
+Route::get('coach/{coach}', [CoachController::class, 'details']);
