@@ -46,6 +46,7 @@ class CrawlCountriesData extends Command
                         'name'         => $item['name'],
                         'code'         => $item['code'],
                         'flag'         => $item['flag'],
+                        'slug'         => createSlug($item['name']),
                     ]
                 );
                 $venueData = $this->apiService->crawlVenues($item['name']);
@@ -61,6 +62,7 @@ class CrawlCountriesData extends Command
                             'capacity' => $venueItem['capacity'],
                             'surface' => $venueItem['surface'],
                             'image' => $venueItem['image'],
+                            'slug'  => createSlug($venueItem['name']),
                         ]
                     );
                 }
