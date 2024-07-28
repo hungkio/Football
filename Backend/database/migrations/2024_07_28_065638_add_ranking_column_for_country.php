@@ -27,7 +27,7 @@ return new class extends Migration
         Schema::table('countries', function (Blueprint $table) {
             //
             $table->dropColumn('rank');
-            $table->dropColumn('points');
+            $table->dropColumn('previous_rank');
             $table->dropColumn('points');
             $table->dropColumn('previous_points');
         });
