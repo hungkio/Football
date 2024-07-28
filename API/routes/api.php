@@ -45,3 +45,4 @@ Route::get('regions', [CountryController::class, 'listRegions']);
 Route::get('teams', [TeamController::class, 'index']);
 Route::get('players', [PlayerController::class, 'index']);
 Route::get('player/{player}', [PlayerController::class, 'details']);
+Route::get('menu/{position}', [PlayerController::class, 'details']);
