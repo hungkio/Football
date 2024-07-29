@@ -92,27 +92,27 @@ class MenuController
         $type = $request->type;
         if ($type) {
             if ($type == MenuItem::TYPE_PAGE) {
-                $data = Page::select('id', 'title')->paginate();
+                $data = Page::select('id', 'title')->get();
             }
             if ($type == MenuItem::TYPE_CATEGORY) {
-                $data = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->paginate();
+                $data = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
                 foreach ($data as &$taxon) {
                     $taxon->name = $taxon->selectText();
                 }
             }
             if ($type == MenuItem::TYPE_LEAGUE) {
-                $data = League::select('id', 'name')->paginate();
+                $data = League::select('id', 'name')->get();
             }
             if ($type == MenuItem::TYPE_COUNTY) {
-                $data = Country::select('id', 'name')->paginate();
+                $data = Country::select('id', 'name')->get();
             }
             if ($type == MenuItem::TYPE_POST) {
-                $data = Post::select('id', 'title')->paginate();
+                $data = Post::select('id', 'title')->get();
             }
         }
         return response()->json([
             'status' => true,
-            'data' => @$data->getCollection()
+            'data' => @$data
         ]);
     }
 
@@ -123,27 +123,22 @@ class MenuController
             $menuItem = MenuItem::findOrFail($menuItemId);
             $type = $menuItem->type;
             if ($type == MenuItem::TYPE_PAGE) {
-                $data = Page::select('id', 'title')->paginate();
-                $data = $data->getCollection();
+                $data = Page::select('id', 'title')->get();
             }
             if ($type == MenuItem::TYPE_CATEGORY) {
-                $data = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->paginate();
+                $data = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
                 foreach ($data as &$taxon) {
                     $taxon->name = $taxon->selectText();
                 }
-                $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_LEAGUE) {
-                $data = League::select('id', 'name')->paginate();
-                $data = $data->getCollection();
+                $data = League::select('id', 'name')->get();
             }
             if ($type == MenuItem::TYPE_COUNTY) {
-                $data = Country::select('id', 'name')->paginate();
-                $data = $data->getCollection();
+                $data = Country::select('id', 'name')->get();
             }
             if ($type == MenuItem::TYPE_POST) {
-                $data = Post::select('id', 'title')->paginate();
-                $data = $data->getCollection();
+                $data = Post::select('id', 'title')->get();
             }
             if ($type == MenuItem::TYPE_LINK) {
                 $data = '<input type="text" name="item_content" value="' . $menuItem->item_content . '" id="item_content" placeholder="Nội dung" class="form-control ">';
@@ -245,8 +240,8 @@ class MenuController
     public function searchData(Request $request)
     {
         if ($request->menu_type == MenuItem::TYPE_PAGE) {
-            $data = Page::where('title', 'LIKE', $request->query('q').'%')->paginate();
-            $data->getCollection()->transform(function ($personal) {
+            $data = Page::where('title', 'LIKE', $request->query('q').'%')->get();
+            $data->transform(function ($personal) {
                 $result = [
                     'id' => @$personal->id,
                 ];
@@ -255,8 +250,8 @@ class MenuController
             });
         }
         if ($request->menu_type == MenuItem::TYPE_CATEGORY) {
-            $data = Taxon::where('name', 'LIKE', $request->query('q').'%')->paginate();
-            $data->getCollection()->transform(function ($personal) {
+            $data = Taxon::where('name', 'LIKE', $request->query('q').'%')->get();
+            $data->transform(function ($personal) {
                 $result = [
                     'id' => @$personal->id,
                 ];
@@ -265,8 +260,8 @@ class MenuController
             });
         }
         if ($request->menu_type == MenuItem::TYPE_POST) {
-            $data = Post::where('title', 'LIKE', $request->query('q').'%')->paginate();
-            $data->getCollection()->transform(function ($personal) {
+            $data = Post::where('title', 'LIKE', $request->query('q').'%')->get();
+            $data->transform(function ($personal) {
                 $result = [
                     'id' => @$personal->id,
                 ];
@@ -276,8 +271,8 @@ class MenuController
         }
 
         if ($request->menu_type == MenuItem::TYPE_LEAGUE) {
-            $data = League::where('name', 'LIKE', $request->query('q').'%')->paginate();
-            $data->getCollection()->transform(function ($personal) {
+            $data = League::where('name', 'LIKE', $request->query('q').'%')->get();
+            $data->transform(function ($personal) {
                 $result = [
                     'id' => @$personal->id,
                 ];
@@ -287,8 +282,8 @@ class MenuController
         }
 
         if ($request->menu_type == MenuItem::TYPE_COUNTY) {
-            $data = Country::where('name', 'LIKE', $request->query('q').'%')->paginate();
-            $data->getCollection()->transform(function ($personal) {
+            $data = Country::where('name', 'LIKE', $request->query('q').'%')->get();
+            $data->transform(function ($personal) {
                 $result = [
                     'id' => @$personal->id,
                 ];
