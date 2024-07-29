@@ -36,7 +36,7 @@
                                                 <x-text-field name="description_vi" :placeholder="__('Mô tả')" :label="__('Mô tả')" :value="$post->description_vi" required>
                                                     {!! $post->description_vi ?? null !!}
                                                 </x-text-field>
-                                                <x-textarea-field name="body_vi" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body_vi" class="wysiwyg" required></x-textarea-field>
+                                                <x-textarea-field name="body_vi" :placeholder="__('Nội dung')" :label="__('Nội dung')" :value="$post->body_vi" class="noidung" required></x-textarea-field>
                                                 <h5>{{ __('SEO') }}</h5>
                                                 <hr>
                                                 <div class="collapse show" id="seo">
