@@ -64,11 +64,9 @@
         var editor_config = {
             path_absolute : "/",
             selector: "textarea.noidung",
-            plugins: [
-                "image preview lists code link link fullscreen preview"
-            ],
+            plugins: ["autolink autosave code fullscreen image link lists preview table wordcount"],
             menubar: false,
-            toolbar: "styleselect | bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | outdent indent | link quicktable code image media fullscreen preview",
+            toolbar: "styleselect bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | outdent indent | link unlink table code image fullscreen preview wordcount",
             relative_urls: false,
             file_browser_callback : function(field_name, url, type, win) {
                 var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
