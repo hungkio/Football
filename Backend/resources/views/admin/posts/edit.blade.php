@@ -39,7 +39,8 @@
     <script>
         $('.form-check-input-styled').uniform();
     </script>
-    <script src="{{ asset('backend/js/editor-admin.js') }}"></script>
+    {{--<script src="{{ asset('backend/js/editor-admin.js') }}"></script>--}}
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js" integrity="sha512-9WciDs0XP20sojTJ9E7mChDXy6pcO0qHpwbEJID1YVavz2H6QBz5eLoDD8lseZOb2yGT8xDNIV7HIe1ZbuiDWg==" crossorigin="anonymous"></script>
     <script>
         $('.select2').select2({
