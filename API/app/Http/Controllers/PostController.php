@@ -8,6 +8,7 @@ use App\Http\Requests\GetPostsByCategoryRequest;
 use App\Http\Requests\GetPostsByTagRequest;
 use App\Http\Requests\GetPostsOnpageRequest;
 use App\Models\Post;
+use App\Models\Taxon;
 use App\Models\Taxonable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,8 +31,9 @@ class PostController extends Controller
     public function getPostsByCategory(GetPostsByCategoryRequest $request){
         try {
             $postIds = [];
+            $taxons = Taxon::select('id')->where('slug', $request->category_slug)->get()->toArray();
             $taxonables = Taxonable::where('taxonable_type', Taxonable::BE_POST_MODEL)
-                            ->where('taxon_id', $request->category_id)
+                            ->whereIn('taxon_id', $taxons)
                             ->get();
             foreach ($taxonables as $taxonable) {
                 $postIds[] = $taxonable->taxonable_id;

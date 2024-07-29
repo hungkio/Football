@@ -10,17 +10,15 @@ class CountryController extends Controller
 {
     public function index(Request $request){
         try {
-            $countries = Country::select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')->when($request->keyword, function($query) use ($request){
+            $countries = Country::select('countries.*', 'regions.name_vi as region_vi', 'subregions.name_vi as subregion_vi')
+            ->when($request->keyword, function($query) use ($request){
                 $query->where('name', 'like', $request->keyword . '%')
                       ->orWhere('code', 'like', $request->keyword . '%');
             })
             ->join('regions', 'countries.region_id', '=', 'regions.id')
             ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
             ->paginate($request->per_page);
-            return response()->json([
-                'status' => true,
-                'data' => $countries
-            ]);
+            return response()->json($countries);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json([
@@ -104,9 +102,6 @@ class CountryController extends Controller
             $data[$k]['item'] = $region;
             $data[$k]['subs'] = DB::table('subregions')->where('region_id',$region->id)->get();
         }
-        return response()->json([
-            'status' => true,
-            'data' => $data
-        ]);
+        return response()->json($data);
     }
 }
