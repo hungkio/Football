@@ -27,6 +27,7 @@
         "spatie/once": "^3.1",
         "spatie/schema-org": "^3.23",
         "staudenmeir/laravel-adjacency-list": "^1.20",
+        "unisharp/laravel-filemanager": "^2.9",
         "yajra/laravel-datatables-buttons": "^10.0",
         "yajra/laravel-datatables-html": "^10.12",
         "yajra/laravel-datatables-oracle": "^10.0"

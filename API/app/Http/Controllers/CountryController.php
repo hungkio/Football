@@ -18,10 +18,7 @@ class CountryController extends Controller
             ->join('regions', 'countries.region_id', '=', 'regions.id')
             ->join('subregions', 'countries.subregion_id', '=', 'subregions.id')
             ->paginate($request->per_page);
-            return response()->json([
-                'status' => true,
-                'data' => $countries
-            ]);
+            return response()->json($countries);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json([
@@ -105,9 +102,6 @@ class CountryController extends Controller
             $data[$k]['item'] = $region;
             $data[$k]['subs'] = DB::table('subregions')->where('region_id',$region->id)->get();
         }
-        return response()->json([
-            'status' => true,
-            'data' => $data
-        ]);
+        return response()->json($data);
     }
 }
