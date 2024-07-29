@@ -94,11 +94,11 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'disk'                     => '../public',
+    'disk'                     => 'public',
 
     'rename_file'              => false,
 
-    'rename_duplicates'        => false,
+    'rename_duplicates'        => true,
 
     'alphanumeric_filename'    => false,
 
