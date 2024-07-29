@@ -61,6 +61,7 @@
 @stack('js')
 <script>
     if($('.noidung').lenght>0){
+        console.log('check');
         tinymce.init({
     selector: "textarea.noidung",
     plugins: [
