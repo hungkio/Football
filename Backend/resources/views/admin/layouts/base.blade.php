@@ -73,7 +73,7 @@
                 let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
 
                 let type = 'image' === meta.filetype ? 'Images' : 'Files',
-                    url  = '/laravel-filemanager?editor=tinymce5&type=' + type;
+                    url  = '/laravel-filemanager?editor=tinymce&type=' + type;
 
                 tinymce.activeEditor.windowManager.open({
                     url : url,
