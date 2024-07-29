@@ -60,7 +60,7 @@
 <script src="{{ asset('/backend/js/bootstrap-tagsinput.js') }}"></script>
 @stack('js')
 <script>
-    if($('.noidung').lenght>0){
+    if($('.noidung').length>0){
         console.log('check');
         tinymce.init({
     selector: "textarea.noidung",
