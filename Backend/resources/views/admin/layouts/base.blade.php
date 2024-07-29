@@ -60,11 +60,12 @@
 <script src="{{ asset('/backend/js/bootstrap-tagsinput.js') }}"></script>
 @stack('js')
 <script>
-    if($('.noidung').lenght>0){
+    if($('.noidung').length>0){
+        console.log('check');
         tinymce.init({
     selector: "textarea.noidung",
     plugins: [
-        "image imagetool",
+        "image",
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image",
     file_picker_callback: function (callback, value, meta) {
