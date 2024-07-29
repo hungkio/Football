@@ -78,7 +78,7 @@
                 let type = 'image' === meta.filetype ? 'Images' : 'Files',
                     url  = '/laravel-filemanager?editor=tinymce5&type=' + type;
 
-                tinymce.activeEditor.windowManager.openUrl({
+                tinymce.activeEditor.windowManager.open({
                     url : url,
                     title : 'Filemanager',
                     width : x * 0.8,
