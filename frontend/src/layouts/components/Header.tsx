@@ -29,7 +29,7 @@ const navLink = [
   },
   {
     label: 'Lịch thi đấu',
-    url: '/'
+    url: '/fixtures'
   },
   {
     label: 'Kèo bóng đá',
@@ -53,7 +53,7 @@ const navLink = [
   },
   {
     label: 'BXH FIFA',
-    url: '/'
+    url: '/fifa-rankings'
   },
   {
     label: 'Top ghi bàn',
@@ -61,7 +61,7 @@ const navLink = [
   },
   {
     label: 'ĐTQG',
-    url: '/'
+    url: '/national-teams'
   },
   {
     label: 'CLB',
