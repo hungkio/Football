@@ -67,9 +67,6 @@
             plugins: [
                 "image",
             ],
-            Flmngr: {
-                apiKey: "FLMNFLMN",
-            },
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image",
             file_picker_callback: function (callback, value, meta) {
                 let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
