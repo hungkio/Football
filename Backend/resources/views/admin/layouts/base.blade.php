@@ -65,7 +65,7 @@
         tinymce.init({
     selector: "textarea.noidung",
     plugins: [
-        "image imagetool",
+        "image",
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image",
     file_picker_callback: function (callback, value, meta) {
