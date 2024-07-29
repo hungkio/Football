@@ -68,7 +68,7 @@
                 "image preview lists code link link fullscreen preview"
             ],
             menubar: false,
-            toolbar: "styleselect | bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | outdent indent | link table code image media fullscreen preview",
+            toolbar: "styleselect | bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | outdent indent | link quicktable code image media fullscreen preview",
             relative_urls: false,
             file_browser_callback : function(field_name, url, type, win) {
                 var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
