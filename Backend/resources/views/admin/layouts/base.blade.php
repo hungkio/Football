@@ -65,12 +65,9 @@
             path_absolute : "/",
             selector: "textarea.noidung",
             plugins: [
-                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen",
-                "insertdatetime media nonbreaking save table contextmenu directionality",
-                "emoticons template paste textcolor colorpicker textpattern"
+                "image"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+            toolbar: "styleselect | bold italic underline | bullet numbered | alignleft aligncenter alignright alignjustify | outdent indent | link table code image media fullscreen preview",
             relative_urls: false,
             file_browser_callback : function(field_name, url, type, win) {
                 var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
