@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\CommentController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,3 +54,7 @@ Route::get('coaches', [CoachController::class, 'index']);
 Route::get('coach/{coach}', [CoachController::class, 'details']);
 Route::get('leagues', [LeagueController::class, 'index']);
 Route::get('page/{slug}', [PageController::class, 'getPage']);
+Route::get('menu/{position}', [PlayerController::class, 'details']);
+Route::post('register', [AuthController::class, 'register']);
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify'); 
+Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');

@@ -22,13 +22,25 @@ class MenuSeeder extends Seeder
                 'status' => Menu::STATUS_SHOW
             ],
             1 => [
-                'name' => 'Chân trang 1',
+                'name' => 'Header',
                 'status' => Menu::STATUS_SHOW
             ],
             2 => [
-                'name' => 'Chân trang 2',
+                'name' => 'Menu Vi',
                 'status' => Menu::STATUS_SHOW
-            ]
+            ],
+            3 => [
+                'name' => 'Menu En',
+                'status' => Menu::STATUS_SHOW
+            ],
+            4 => [
+                'name' => 'Menu Hot Vi',
+                'status' => Menu::STATUS_SHOW
+            ],
+            5 => [
+                'name' => 'Menu Hot En',
+                'status' => Menu::STATUS_SHOW
+            ],
         ];
         $posts = Post::select('id', 'title')->get();
         $pages = Page::select('id', 'title')->get();
