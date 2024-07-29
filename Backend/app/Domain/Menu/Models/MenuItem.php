@@ -29,7 +29,7 @@ class MenuItem extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'menu_items';
-    protected $fillable = ['menu_id', 'type', 'status', 'item_id', 'name', 'parent_id', 'item_content', 'order_column'];
+    protected $fillable = ['menu_id', 'type', 'status', 'item_id', 'name', 'parent_id', 'item_content', 'order_column', 'internal_url', 'external_url'];
 
     const TYPE_CATEGORY = 1;
     const TYPE_PAGE = 2;

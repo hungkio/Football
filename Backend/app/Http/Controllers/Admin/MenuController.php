@@ -11,6 +11,7 @@ use App\Domain\Post\Models\Post;
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Http\Requests\Admin\CreateMenuRequest;
 use App\Http\Requests\Admin\MenuBulkDeleteRequest;
+use App\Http\Requests\Admin\UpdateMenuRequest;
 use App\Models\Country;
 use App\Models\League;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -66,7 +67,7 @@ class MenuController
         return back();
     }
 
-    public function update(CreateMenuRequest $request, Menu $menu)
+    public function update(UpdateMenuRequest $request, Menu $menu)
     {
         DB::transaction(function () use ($request, $menu) {
             try{

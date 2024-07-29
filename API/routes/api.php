@@ -52,3 +52,4 @@ Route::get('coaches', [CoachController::class, 'index']);
 Route::get('coach/{coach}', [CoachController::class, 'details']);
 Route::get('leagues', [LeagueController::class, 'index']);
 Route::get('page/{slug}', [PageController::class, 'getPage']);
+Route::get('menu/{position}', [PlayerController::class, 'details']);
