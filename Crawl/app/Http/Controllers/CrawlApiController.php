@@ -152,6 +152,7 @@ class CrawlApiController extends Controller
                             'logo'      => $item['team']['logo'],
                             'league_id' => $league,
                             'season'    => $season,
+                            'slug'      => createSlug($item['team']['name'])
                         ]
                     );
                 }

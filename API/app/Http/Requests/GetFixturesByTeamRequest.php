@@ -22,7 +22,7 @@ class GetFixturesByTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_id' => 'integer|required',
+            'team_slug' => 'string|required',
             'type' => 'boolean|required' //get in coming or results
         ];
     }
