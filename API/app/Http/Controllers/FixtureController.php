@@ -13,17 +13,22 @@ class FixtureController extends Controller
 {
     public function index(GetFixturesByTeamRequest $request){
         $team = Team::where('slug', $request->team_slug)->first();
+    
         $fixtures = Fixture::where(function($query) use ($team){
             $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
-                ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+                  ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
         })
-            ->when($request->type, function($query) use ($request){
-                $query->where('date' ,'>=', Carbon::now());
-            })
-            ->when(!$request->type, function($query) use ($request){
-                $query->where('date', '<=', Carbon::now());
-            })
-            ->paginate($request->per_page);
+        // if type = 1 then get schedule
+        ->when($request->type == 1, function($query) use ($request){
+            $query->whereDate('date', '>=', Carbon::today());
+        })
+        // if type = 0 then get results
+        ->when($request->type == 0, function($query){
+            $query->whereDate('date', '<=', Carbon::today())
+                  ->limit(10);
+        })
+        ->paginate($request->per_page);
+    
         return response()->json([
             'status' => true,
             'data' => $fixtures,
