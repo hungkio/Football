@@ -13,10 +13,15 @@ class FixtureController extends Controller
 {
     public function index(GetFixturesByTeamRequest $request){
         $team = Team::where('slug', $request->team_slug)->first();
-    
+        if(!$team){
+            $country = DB::table('countries')->where('slug',$request->team_slug)->select('name')->first();
+            $team = Team::where('country', $country->name)->where('national',1)->first();
+        }
         $fixtures = Fixture::where(function($query) use ($team){
-            $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
-                  ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+            if($team->api_id){
+                $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
+                ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+            }
         })
         // if type = 1 then get schedule
         ->when($request->type == 1, function($query) use ($request){
@@ -28,7 +33,7 @@ class FixtureController extends Controller
                   ->limit(10);
         })
         ->paginate($request->per_page);
-    
+
         return response()->json([
             'status' => true,
             'data' => $fixtures,
