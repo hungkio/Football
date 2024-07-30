@@ -12,8 +12,10 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\VerificationController;
+use App\Models\Standing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,3 +62,4 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify'); 
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
+Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');

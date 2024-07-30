@@ -46,7 +46,9 @@ class crawlStandingsData extends Command
                             [
                                 'league_id' => $league->api_id,
                                 'season'    => $thisSeason,
-                                'team_id'   => $item['team']['id']
+                                'team_id'   => $item['team']['id'],
+                                'group'       => $item['group'],
+                                'form'        => $item['form'],
                             ],
                             [
                                 'league_id'   => $league->api_id,
@@ -59,9 +61,9 @@ class crawlStandingsData extends Command
                                 'form'        => $item['form'],
                                 'status'      => $item['status'],
                                 'description' => $item['description'],
-                                'all'         => json_encode($item['all']),
-                                'home'        => json_encode($item['home']),
-                                'away'        => json_encode($item['away']),
+                                'all'         => $item['all'],
+                                'home'        => $item['home'],
+                                'away'        => $item['away'],
                             ]
                         );
                     }
