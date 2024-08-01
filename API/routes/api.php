@@ -63,3 +63,4 @@ Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify']
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');
+Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
