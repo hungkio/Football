@@ -19,23 +19,19 @@ class GetCrawledDataController extends Controller
             $leagueName = $fixture->league['name'];
             $arr[$leagueName][] = $fixture->toArray();
         }
+        // dd($arr);
         $collection = collect($arr);
-
-        $perPage = $request->per_page ?? 15;
-
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-
-        $offset = ($currentPage * $perPage) - $perPage;
-
-        $itemsForCurrentPage = $collection->slice($offset, $perPage)->values();
-
-        $paginator = new LengthAwarePaginator(
-            $itemsForCurrentPage,
+        $page = request()->get('page', 1); // Lấy trang hiện tại từ request, mặc định là 1
+        $perPage = $request->per_page; // Số lượng items trên mỗi trang
+        $paginatedMatches = new LengthAwarePaginator(
+            $collection->forPage($page, $perPage),
             $collection->count(),
             $perPage,
-            $currentPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
         );
-        return response()->json($paginator);
+        
+        return response()->json($paginatedMatches);
     }
 
     public function getLiveFixtures(Request $request){
