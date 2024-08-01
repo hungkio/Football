@@ -25,7 +25,8 @@ class GetStandingByLeagueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'league_slug' => 'string|required'
+            'league_slug' => 'string|required',
+            'season' => 'integer|required'
         ];
     }
 
