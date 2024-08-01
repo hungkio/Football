@@ -121,9 +121,10 @@ class MenuController
         $menuItemId = $request->menu_item_id;
         if ($menuItemId) {
             $menuItem = MenuItem::findOrFail($menuItemId);
+            $item_id = $menuItem->item_id;
             $type = $menuItem->type;
             if ($type == MenuItem::TYPE_PAGE) {
-                $data = Page::select('id', 'title')->paginate();
+                $data = Page::select('id', 'title')->where('id', $item_id)->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_CATEGORY) {
@@ -134,15 +135,15 @@ class MenuController
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_LEAGUE) {
-                $data = League::select('id', 'name')->paginate();
+                $data = League::select('id', 'name')->where('id', $item_id)->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_COUNTY) {
-                $data = Country::select('id', 'name')->paginate();
+                $data = Country::select('id', 'name')->where('id', $item_id)->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_POST) {
-                $data = Post::select('id', 'title')->paginate();
+                $data = Post::select('id', 'title')->where('id', $item_id)->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_LINK) {

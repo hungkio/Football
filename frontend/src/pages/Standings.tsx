@@ -9,7 +9,9 @@ const Standings = () => {
         <title>Kết Quả Bóng Đá Tự Động</title>
       </Helmet>
       <div>
-        <h2 className="py-2.5 pl-1 border-l-[5px] border-secondary text-sm font-bold text-primary my-2.5">BXH NGOẠI HẠNG ANH MÙA GIẢI 2024-2025</h2>
+        <div className="py-2.5 pl-1 my-2.5 bg-[#f9f9f9] border border-[#eee]">
+          <h1 className="text-sm font-bold text-red">BXH NGOẠI HẠNG ANH MÙA GIẢI 2024-2025</h1>
+        </div>
         <table className="w-full text-center">
           <thead>
             <tr className="bg-[#edf2f7] text-xs [&>th]:p-2">
