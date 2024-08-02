@@ -14,6 +14,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TopScoreController;
 use App\Http\Controllers\VerificationController;
 use App\Models\Standing;
 use Illuminate\Http\Request;
@@ -64,3 +65,4 @@ Route::post('email/resend', [VerificationController::class, 'resend'])->name('ve
 Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');
 Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
+Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetFixturesByCountryRequest;
 use App\Http\Requests\GetFixturesByTeamRequest;
 use App\Models\Country;
 use App\Models\Fixture;
@@ -42,12 +43,19 @@ class FixtureController extends Controller
         ]);
     }
 
-    public function getFixturesByCountry(Request $request){
+    public function getFixturesByCountry(GetFixturesByCountryRequest $request){
         $country = Country::where('slug', $request->country_slug)->first();
         $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])->get();
-        $countryTeam = Team::where('country', $country->name)->where('national', 1)->first();
+        $latestFixture = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])->first();
+        $startDate = null;
+        if ($latestFixture) {
+            $startDate = Carbon::parse($latestFixture->date)->subDays(30);
+        }
         $countryTeamFixtures = Fixture::whereRaw("JSON_EXTRACT(teams, '$.home.name') = ?", [$country->name])
                                     ->orWhereRaw("JSON_EXTRACT(teams, '$.away.name') = ?", [$country->name])
+                                    ->when(isset($startDate), function($query) use ($startDate, $latestFixture){
+                                        $query->whereBetween('date', [$startDate, $latestFixture->date]);
+                                    })
                                     ->get();
         $arr = [];
         $arr[$country->name][] = $countryTeamFixtures->toArray();
