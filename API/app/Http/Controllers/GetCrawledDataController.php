@@ -22,7 +22,7 @@ class GetCrawledDataController extends Controller
         // dd($arr);
         $collection = collect($arr);
         $page = request()->get('page', 1); // Lấy trang hiện tại từ request, mặc định là 1
-        $perPage = $request->per_page; // Số lượng items trên mỗi trang
+        $perPage = $request->per_page ?? 15; // Số lượng items trên mỗi trang
         $paginatedMatches = new LengthAwarePaginator(
             $collection->forPage($page, $perPage),
             $collection->count(),

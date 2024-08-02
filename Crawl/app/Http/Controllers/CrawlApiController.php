@@ -186,6 +186,7 @@ class CrawlApiController extends Controller
                         'name'         => $item['country']['name'],
                         'code'         => $item['country']['code'],
                         'flag'         => $item['country']['flag'],
+                        'slug'         => $item['country']['name'],
                     ]
                 );
             }
@@ -208,6 +209,7 @@ class CrawlApiController extends Controller
                         'name'         => $item['name'],
                         'code'         => $item['code'],
                         'flag'         => $item['flag'],
+                        'slug'         => $item['name'],
                     ]
                 );
             }
@@ -230,6 +232,7 @@ class CrawlApiController extends Controller
                         'name'         => $item['name'],
                         'code'         => $item['code'],
                         'flag'         => $item['flag'],
+                        'slug'         => $item['name'],
                         'from_team'    => 1
                     ]
                 );

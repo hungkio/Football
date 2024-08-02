@@ -46,7 +46,7 @@ class CrawlTeamsCountriesData extends Command
                         'code'         => $item['code'],
                         'flag'         => $item['flag'],
                         'from_team'    => 1,
-                        'slug'  => createSlug($item['name']),
+                        'slug'         => createSlug($item['name']),
                     ]
                 );
             }
