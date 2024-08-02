@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CrawlFixturesRequest;
 use App\Http\Requests\CrawlTeamsRequest;
 use App\Models\Country;
 use App\Models\Fixture;
@@ -24,22 +25,34 @@ class CrawlApiController extends Controller
         $this->apiService = $apiService;
     }
 
-    public function crawlFixtures()
+    public function crawlFixtures(CrawlFixturesRequest $request)
     {
-        $today = date('Y-m-d');
-        $data = $this->apiService->crawlFixtures($today);
+        $league = $request->league;
+        $season = $request->season;
+        $data = $this->apiService->crawlFixturesByLeague($league, $season);
         if ($data) {
             foreach ($data['response'] as $item) {
+                // dd($item['fixture']);
+                
                 Fixture::updateOrInsert(
-                    ['fixture' => json_encode($item['fixture'])],
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'fixture' => json_encode($item['fixture']),
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
                         'league'     => json_encode($item['league']),
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'slug'       => createSlug($item['teams']['home']['name']). 
+                                        '-vs-' . createSlug($item['teams']['away']['name']) . 
+                                        '-' .
+                                        Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
                 );
             }
