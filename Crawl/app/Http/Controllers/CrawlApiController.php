@@ -15,7 +15,6 @@ use App\Models\Team;
 use App\Services\ApiService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 class CrawlApiController extends Controller
 {
@@ -45,7 +44,10 @@ class CrawlApiController extends Controller
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'slug'  => 'fixture-' . createSlug($item['fixture']['id']),
+                        'slug'       => createSlug($item['teams']['home']['name']).
+                                        '-vs-' . createSlug($item['teams']['away']['name']) .
+                                        '-' .
+                                        Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
                 );
             }
@@ -64,7 +66,7 @@ class CrawlApiController extends Controller
         if ($data) {
             foreach ($data['response'] as $item) {
                 // dd($item['fixture']);
-                
+
                 Fixture::updateOrInsert(
                     ['api_id' => $item['fixture']['id']],
                     [
@@ -80,8 +82,8 @@ class CrawlApiController extends Controller
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'slug'       => createSlug($item['teams']['home']['name']). 
-                                        '-vs-' . createSlug($item['teams']['away']['name']) . 
+                        'slug'       => createSlug($item['teams']['home']['name']).
+                                        '-vs-' . createSlug($item['teams']['away']['name']) .
                                         '-' .
                                         Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
