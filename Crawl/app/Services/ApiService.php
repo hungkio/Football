@@ -36,7 +36,6 @@ class ApiService
 
         return null;
     }
-
     public function crawlFixtures($date)
     {
         $response = $this->client->request('GET', 'fixtures', [
