@@ -23,7 +23,7 @@ class GetFixturesByTeamRequest extends FormRequest
     {
         return [
             'team_slug' => 'string|required',
-            'type' => 'boolean|required' //get in coming or results
+            'type' => 'boolean|nullable' //get in coming or results
         ];
     }
 }
