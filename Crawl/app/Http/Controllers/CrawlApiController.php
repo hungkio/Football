@@ -14,6 +14,7 @@ use App\Models\Team;
 use App\Services\ApiService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 class CrawlApiController extends Controller
 {
@@ -29,15 +30,21 @@ class CrawlApiController extends Controller
         if ($data) {
             foreach ($data['response'] as $item) {
                 Fixture::updateOrInsert(
-                    ['fixture' => json_encode($item['fixture'])],
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'fixture' => json_encode($item['fixture']),
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
                         'league'     => json_encode($item['league']),
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'slug'  => 'fixture-' . createSlug($item['fixture']['id']),
                     ]
                 );
             }
