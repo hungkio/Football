@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetFixturesByTeamRequest;
+use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class FixtureController extends Controller
@@ -38,5 +40,28 @@ class FixtureController extends Controller
             'status' => true,
             'data' => $fixtures,
         ]);
+    }
+
+    public function getFixturesByCountry(Request $request){
+        $country = Country::where('slug', $request->country_slug)->first();
+        $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])->get();
+        $arr = [];
+        foreach ($fixtures as $fixture) {
+            $leagueName = $fixture->league['name'];
+            $arr[$leagueName][] = $fixture->toArray();
+        }
+        // dd($arr);
+        $collection = collect($arr);
+        $page = request()->get('page', 1); // Lấy trang hiện tại từ request, mặc định là 1
+        $perPage = $request->per_page ?? 15; // Số lượng items trên mỗi trang
+        $paginatedMatches = new LengthAwarePaginator(
+            $collection->forPage($page, $perPage),
+            $collection->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+        
+        return response()->json($paginatedMatches);
     }
 }
