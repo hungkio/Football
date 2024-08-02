@@ -23,6 +23,30 @@ class CrawlApiController extends Controller
     {
         $this->apiService = $apiService;
     }
+    public function crawlFixturesbyteam()
+    {
+        $data = $this->apiService->crawlFixturesexample();
+        if ($data) {
+            foreach ($data['response'] as $item) {
+                Fixture::updateOrInsert(
+                    ['fixture' => json_encode($item['fixture'])],
+                    [
+                        'fixture' => json_encode($item['fixture']),
+                        'league'     => json_encode($item['league']),
+                        'teams'      => json_encode($item['teams']),
+                        'goals'      => json_encode($item['goals']),
+                        'score'      => json_encode($item['score']),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+            }
+
+            return 'Data crawled and stored successfully.';
+        } else {
+            return 'Failed to fetch data from API.';
+        }
+    }
 
     public function crawlFixtures()
     {

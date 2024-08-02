@@ -15,6 +15,27 @@ class ApiService
         ]);
     }
 
+    public function crawlFixturesexample()
+    {
+        $response = $this->client->request('GET', 'fixtures', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ],
+            'query' => [
+                'league' => 4,
+                'season' => 2024,
+                'team' => 2
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
     public function crawlFixtures($date)
     {
         $response = $this->client->request('GET', 'fixtures', [
