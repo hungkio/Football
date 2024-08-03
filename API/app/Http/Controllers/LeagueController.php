@@ -13,7 +13,11 @@ class LeagueController extends Controller
             $leagues = League::when($request->country_slug, function($query) use ($request){
                 $country = Country::where('slug', $request->country_slug)->first();
                 $query->where('country_code', $country->code);
-            })->paginate($request->per_page);
+            })
+            ->when($request->country_standing_page, function($query) use ($request){
+                $query->where('shown_on_country_standing', true);
+            })
+            ->paginate($request->per_page);
             return response()->json([
                 'status' => true,
                 'data' => $leagues
