@@ -35,9 +35,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:crawl-coachs-data')->daily();
 
         // leagues
-        $schedule->call(function () use ($crawlApiController) {
-            $crawlApiController->crawlLeagues();
-        })->daily();
+        $schedule->command('app:crawl-leagues-data')->daily();
 
         $schedule->call(function () {
             $leagues = League::all();
