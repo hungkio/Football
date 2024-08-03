@@ -58,6 +58,7 @@ class FixtureController extends Controller
         ->when($startDate, function($query) use ($startDate, $endDate){
             $query->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()]);
         })
+        ->limit(100)
         ->get();
         $countryTeamFixtures = Fixture::whereRaw("JSON_EXTRACT(teams, '$.home.name') = ?", [$country->name])
                                     ->orWhereRaw("JSON_EXTRACT(teams, '$.away.name') = ?", [$country->name])
