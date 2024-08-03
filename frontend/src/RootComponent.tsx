@@ -4,14 +4,14 @@ import HomePage from './pages/HomePage'
 import LiveScore from './pages/LiveScore'
 import NotFoundPage from './pages/NotFoundPage'
 import { ROUTES } from './resources/routes-constants'
-import NationalOrTournament from './pages/NationalOrTournament/NationalOrTournament'
-import Result from './pages/NationalOrTournament/components/Result'
-import Identify from './pages/NationalOrTournament/components/Identify'
-import Forecast from './pages/NationalOrTournament/components/Forecast'
-import TournamentStandings from './pages/NationalOrTournament/components/Standings'
-import TopScores from './pages/NationalOrTournament/components/TopScorers'
-import Fixtures from './pages/NationalOrTournament/components/Fixtures'
-import TournamentLiveScore from './pages/NationalOrTournament/components/LiveScore'
+import NationalOrTournament from './pages/Tournament/Tournament'
+import Result from './pages/Tournament/components/Result'
+import Identify from './pages/Tournament/components/Identify'
+import Forecast from './pages/Tournament/components/Forecast'
+import TournamentStandings from './pages/Tournament/components/Standings'
+import TopScores from './pages/Tournament/components/TopScorers'
+import Fixtures from './pages/Tournament/components/Fixtures'
+import TournamentLiveScore from './pages/Tournament/components/LiveScore'
 import Analysis from './pages/Analysis'
 import BettingOdds from './pages/BettingOdds'
 import News from './pages/News'
@@ -35,7 +35,7 @@ const RootComponent: React.FC = () => {
         <Route path={ROUTES.NATIONAL_TEAMS} element={<NationalList />} />
         <Route path={ROUTES.FIXTURES} element={<HomePage />} />
         <Route path={ROUTES.NEWS} element={<News />} />
-        <Route path={ROUTES.NATIONAL_OR_TOURNAMENT} element={<NationalOrTournament />}>
+        <Route path={ROUTES.NATIONAL_TOURNAMENT} element={<NationalOrTournament />}>
           <Route path={ROUTES.TOURNAMENT_RESULTS} element={<Result />}></Route>
           <Route path={ROUTES.TOURNAMENT_STANDINGS} element={<TournamentStandings />}></Route>
           <Route path={ROUTES.TOURNAMENT_TOP_SCORES} element={<TopScores />}></Route>

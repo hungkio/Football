@@ -11,31 +11,17 @@ interface TournamentProps {
 
 const Tournament: FC<TournamentProps> = ({ name, matches }) => {
   return (
-    <div>
+    <div className="mt-4">
       <div className="pl-2.5 py-1.5 border-l-4 border-secondary bg-[#edf2f7] flex items-center justify-between">
         <div>
           <Link className="text-primary hover:text-red text-xs font-bold" to="/">
-            {matches[0].league.country}
-          </Link>
-          <Link className="text-primary hover:text-red text-xs font-bold" to="/">
-            {' ⟩ '} {name}
-          </Link>
-        </div>
-        <div className="ml-auto">
-          <Link className="text-primary hover:text-red text-xs font-bold mr-2.5" to="/">
-            Lịch
-          </Link>
-          <Link className="text-primary hover:text-red text-xs font-bold mr-2.5" to="/">
-            Kết quả
-          </Link>
-          <Link className="text-primary hover:text-red text-xs font-bold mr-2.5" to="/">
-            BXH
+            {name}
           </Link>
         </div>
         <div className="clear-both"></div>
       </div>
-      {matches.map((item) => {
-        return <Match key={item.id} match={item} />
+      {matches.map((item, index) => {
+        return <Match key={index} match={item} />
       })}
     </div>
   )

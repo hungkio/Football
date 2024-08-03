@@ -15,7 +15,7 @@ const NationalList = () => {
     dispatch(loadingAction.show())
     try {
       const result = await getNationalGroupByRegion()
-      setRegionList(result)
+      setRegionList(result.data)
     } catch (error) {
       console.log(error)
     } finally {
@@ -44,8 +44,8 @@ const NationalList = () => {
                 <ul className="columns-3">
                   {region.items.map((national, index) => {
                     return (
-                      <li className="text-xs text-primary cursor-pointer" key={index}>
-                        <Link className="flex gap-1 px-2.5" to={ROUTES.NATIONAL_OR_TOURNAMENT.replace(':id', String(national.slug + '-football'))}>
+                      <li className="text-xs text-primary" key={index}>
+                        <Link className="inline-flex gap-1 px-2.5" to={ROUTES.NATIONAL.replace(':id', String(national.slug))}>
                           <img loading="lazy" className="w-4" src={national.flag} alt={national.name} />
                           {national.name_vi ?? national.name}
                         </Link>

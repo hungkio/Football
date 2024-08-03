@@ -13,7 +13,7 @@ const FIFAStandings = () => {
   const fetchData = async () => {
     dispatch(loadingAction.show())
     try {
-      const result = await getCountries('', 300)
+      const result = await getCountries({ perPage: 300 })
       const sortedCountries = result.data.filter((country) => country.rank).sort((a, b) => Number(a.rank) - Number(b.rank))
       setCountries(sortedCountries)
     } catch (error) {

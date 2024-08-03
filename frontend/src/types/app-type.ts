@@ -7,8 +7,13 @@ export interface IMenu {
   internal_url: string
 }
 
+export interface IPeriod {
+  first: number
+  second: number | null
+}
+
 export interface IVenue {
-  id: number
+  id: number | null
   city: string
   name: string
 }
@@ -16,33 +21,31 @@ export interface IVenue {
 export interface IStatus {
   long: string
   short: string
-  elapsed: number | null
-}
-
-export interface IPeriods {
-  first: number | null
-  second: number | null
-}
-
-export interface IFixture {
-  id: number
-  date: string
-  venue: IVenue
-  status: IStatus
-  periods: IPeriods
-  referee: string | null
-  timezone: string
-  timestamp: number | null
+  elapsed: number
 }
 
 export interface ILeague {
   id: number
-  flag: string
-  logo: string
+  api_id: number
   name: string
-  round: string
-  season: number
-  country: string
+  type: 'League' | 'Cup'
+  logo: string
+  country_code: string
+  created_at: string | null
+  updated_at: string | null
+  slug: string | null
+  meta_title: string | null
+  meta_description: string | null
+  meta_keywords: string | null
+  meta_title_vi: string | null
+  meta_description_vi: string | null
+  meta_keywords_vi: string | null
+  vi_name: string | null
+  content: string | null
+  content_vi: string | null
+  bot_body: string | null
+  bot_body_vi: string | null
+  shown_on_country_standing: number
 }
 
 export interface ITeam {
@@ -52,14 +55,9 @@ export interface ITeam {
   winner: boolean | null
 }
 
-export interface ITeams {
-  away: ITeam
-  home: ITeam
-}
-
 export interface IGoals {
-  away: number | null
-  home: number | null
+  away: number
+  home: number
 }
 
 export interface IScore {
@@ -72,8 +70,8 @@ export interface IScore {
     home: number | null
   }
   halftime: {
-    away: number | null
-    home: number | null
+    away: number
+    home: number
   }
   extratime: {
     away: number | null
@@ -83,17 +81,47 @@ export interface IScore {
 
 export interface IMatch {
   id: number
-  fixture: IFixture
-  league: ILeague
-  teams: ITeams
+  api_id: number
+  referee: string | null
+  timezone: string
+  date: string
+  timestamp: number
+  periods: IPeriod
+  venue: IVenue
+  status: IStatus
+  league: {
+    id: number
+    flag: string | null
+    logo: string
+    name: string
+    round: string
+    season: number
+    country: string
+  }
+  teams: {
+    away: ITeam
+    home: ITeam
+  }
   goals: IGoals
   score: IScore
-  created_at: string
-  updated_at: string
+  created_at: string | null
+  updated_at: string | null
+  slug: string
+  meta_title: string | null
+  meta_description: string | null
+  meta_keywords: string | null
+  meta_title_vi: string | null
+  meta_description_vi: string | null
+  meta_keywords_vi: string | null
+  content: string | null
+  vi_content: string | null
+  related_posts: string | null
+  bot_body: string | null
+  bot_body_vi: string | null
 }
 
 export interface ILeagueMatches {
-  [leagueName: string]: IMatch[]
+  [country: string]: IMatch[]
 }
 
 export interface IPost {
@@ -154,6 +182,11 @@ export interface ICountryRegion {
   name: string
   name_vi: string
   items: ICountry[]
+}
+
+export interface PaginateParams {
+  page?: number
+  per_page?: number
 }
 
 export interface PaginationResponse<T extends object> {
