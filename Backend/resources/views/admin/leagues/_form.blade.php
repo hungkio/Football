@@ -70,6 +70,15 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="shown_on_country_standing" class="col-lg-2 col-form-label text-right"> {{ __("Đang hiển thị trên BXH QG") }} :</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control" name="shown_on_country_standing">
+                                            <option value="0">Không hiển thị trên BXH QG</option>
+                                            <option value="1">Đang hiển thị trên BXH QG</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 {{-- <x-text-field name="country_code" :placeholder="__('Mã quốc gia')" :label="__('Mã quốc gia')" :value="isset($league) ? $league->country_code : ''" required> </x-text-field> --}}
                                 <h5>{{ __('SEO') }}</h5>
                                 <ul class="nav nav-tabs">
