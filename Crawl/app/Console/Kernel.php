@@ -77,10 +77,10 @@ class Kernel extends ConsoleKernel
                 }
             }
 
-            // live fixtures
-            $crawlApiController->crawlLiveFixtures();
         })->everyTwoMinutes();
 
+        // live fixtures
+        $schedule->command('cmd app:crawl-live-fixtures-data')->everyMinute();
         // standing
         $schedule->call(function () use ($crawlApiController) {
             $crawlApiController->crawlFifarank();
