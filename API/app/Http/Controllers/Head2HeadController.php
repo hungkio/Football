@@ -17,6 +17,8 @@ class Head2HeadController extends Controller
             'h2h' => $request->h2h,
         ]);
         list($teamId1, $teamId2) = explode('-', $request->h2h);
+        $teamId1 = (int) $teamId1; 
+        $teamId2 = (int) $teamId2; 
         $fixtures = Fixture::where(function($query) use ($teamId1, $teamId2){
             $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$teamId1])
             ->WhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$teamId2]);
