@@ -14,10 +14,7 @@ class CommentController extends Controller
             foreach ($comments as $comment) {
                 $comment->replies = Comment::where('post_id', $request->post_id)->where('parent_id', $comment->id)->get();
             }
-            return response()->json([
-                'status' => true,
-                'data' => $comments
-            ]);
+            return response()->json($comments);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

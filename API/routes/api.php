@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FixtureController;
 use App\Http\Controllers\GetCrawledDataController;
+use App\Http\Controllers\Head2HeadController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageController;
@@ -66,3 +67,4 @@ Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getF
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');
 Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
 Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);
+Route::get('headToHead', [Head2HeadController::class, 'index']);

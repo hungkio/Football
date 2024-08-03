@@ -181,114 +181,114 @@ class CrawlApiController extends Controller
     //     }
     // }
 
-    public function crawlTeams(CrawlTeamsRequest $request){
-        try {
-            $league = $request->league;
-            $season = $request->season;
-            $data = $this->apiService->crawlTeams($league, $season);
-            if ($data) {
-                foreach ($data['response'] as $item) {
-                    Team::updateOrInsert(
-                        ['api_id' => $item['team']['id']],
-                        [
-                            'api_id'    => $item['team']['id'],
-                            'name'      => $item['team']['name'],
-                            'code'      => $item['team']['code'],
-                            'country'   => $item['team']['country'],
-                            'national'  => $item['team']['national'],
-                            'logo'      => $item['team']['logo'],
-                            'league_id' => $league,
-                            'season'    => $season,
-                            'slug'      => createSlug($item['team']['name'])
-                        ]
-                    );
-                }
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    // public function crawlTeams(CrawlTeamsRequest $request){
+    //     try {
+    //         $league = $request->league;
+    //         $season = $request->season;
+    //         $data = $this->apiService->crawlTeams($league, $season);
+    //         if ($data) {
+    //             foreach ($data['response'] as $item) {
+    //                 Team::updateOrInsert(
+    //                     ['api_id' => $item['team']['id']],
+    //                     [
+    //                         'api_id'    => $item['team']['id'],
+    //                         'name'      => $item['team']['name'],
+    //                         'code'      => $item['team']['code'],
+    //                         'country'   => $item['team']['country'],
+    //                         'national'  => $item['team']['national'],
+    //                         'logo'      => $item['team']['logo'],
+    //                         'league_id' => $league,
+    //                         'season'    => $season,
+    //                         'slug'      => createSlug($item['team']['name'])
+    //                     ]
+    //                 );
+    //             }
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
 
-    public function crawlLeagues(){
-        try {
-            $data = $this->apiService->crawlLeagues();
-            foreach ($data['response'] as $item) {
-                League::updateOrInsert(
-                    ['api_id' => $item['league']['id']],
-                    [
-                        'api_id'       => $item['league']['id'],
-                        'name'         => $item['league']['name'],
-                        'type'         => $item['league']['type'],
-                        'logo'         => $item['league']['logo'],
-                        'country_code' => $item['country']['code'],
-                    ]
-                );
-                Country::updateOrInsert(
-                    [
-                        'code' => $item['country']['code'],
-                        'name' => $item['country']['name'],
-                    ],
-                    [
-                        'name'         => $item['country']['name'],
-                        'code'         => $item['country']['code'],
-                        'flag'         => $item['country']['flag'],
-                        'slug'         => $item['country']['name'],
-                    ]
-                );
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    // public function crawlLeagues(){
+    //     try {
+    //         $data = $this->apiService->crawlLeagues();
+    //         foreach ($data['response'] as $item) {
+    //             League::updateOrInsert(
+    //                 ['api_id' => $item['league']['id']],
+    //                 [
+    //                     'api_id'       => $item['league']['id'],
+    //                     'name'         => $item['league']['name'],
+    //                     'type'         => $item['league']['type'],
+    //                     'logo'         => $item['league']['logo'],
+    //                     'country_code' => $item['country']['code'],
+    //                 ]
+    //             );
+    //             Country::updateOrInsert(
+    //                 [
+    //                     'code' => $item['country']['code'],
+    //                     'name' => $item['country']['name'],
+    //                 ],
+    //                 [
+    //                     'name'         => $item['country']['name'],
+    //                     'code'         => $item['country']['code'],
+    //                     'flag'         => $item['country']['flag'],
+    //                     'slug'         => $item['country']['name'],
+    //                 ]
+    //             );
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
 
-    public function crawlCountries(){
-        try {
-            $data = $this->apiService->crawlCountries();
-            foreach ($data['response'] as $item) {
-                Country::updateOrInsert(
-                    [
-                        'name' => $item['name'],
-                        'code' => $item['code'],
-                    ],
-                    [
-                        'name'         => $item['name'],
-                        'code'         => $item['code'],
-                        'flag'         => $item['flag'],
-                        'slug'         => $item['name'],
-                    ]
-                );
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    // public function crawlCountries(){
+    //     try {
+    //         $data = $this->apiService->crawlCountries();
+    //         foreach ($data['response'] as $item) {
+    //             Country::updateOrInsert(
+    //                 [
+    //                     'name' => $item['name'],
+    //                     'code' => $item['code'],
+    //                 ],
+    //                 [
+    //                     'name'         => $item['name'],
+    //                     'code'         => $item['code'],
+    //                     'flag'         => $item['flag'],
+    //                     'slug'         => $item['name'],
+    //                 ]
+    //             );
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
 
-    public function crawlTeamsCountries(){
-        try {
-            $data = $this->apiService->crawlTeamsCountries();
-            foreach ($data['response'] as $item) {
-                Country::updateOrInsert(
-                    [
-                        'code' => $item['code'],
-                        'name' => $item['name']
-                    ],
-                    [
-                        'name'         => $item['name'],
-                        'code'         => $item['code'],
-                        'flag'         => $item['flag'],
-                        'slug'         => $item['name'],
-                        'from_team'    => 1
-                    ]
-                );
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    // public function crawlTeamsCountries(){
+    //     try {
+    //         $data = $this->apiService->crawlTeamsCountries();
+    //         foreach ($data['response'] as $item) {
+    //             Country::updateOrInsert(
+    //                 [
+    //                     'code' => $item['code'],
+    //                     'name' => $item['name']
+    //                 ],
+    //                 [
+    //                     'name'         => $item['name'],
+    //                     'code'         => $item['code'],
+    //                     'flag'         => $item['flag'],
+    //                     'slug'         => $item['name'],
+    //                     'from_team'    => 1
+    //                 ]
+    //             );
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
 
     public function crawlPlayersByLeague(Request $request){
         try {
