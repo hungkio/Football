@@ -45,20 +45,25 @@ class FixtureController extends Controller
 
     public function getFixturesByCountry(GetFixturesByCountryRequest $request){
         $country = Country::where('slug', $request->country_slug)->first();
-        $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])->get();
-        $latestFixture = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])->first();
+
+        $latestFixture = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])->orderBy('date', 'desc')->first();
+
         $startDate = null;
         if ($latestFixture) {
             $startDate = Carbon::parse($latestFixture->date)->subDays(30);
+            $endDate = $startDate->copy()->addDays(30);
         }
+        // dd([$startDate->toDateString(), $endDate->toDateString()]);
+        $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.country') = ?", [$country->name])
+        ->when($startDate, function($query) use ($startDate, $endDate){
+            $query->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()]);
+        })
+        ->get();
         $countryTeamFixtures = Fixture::whereRaw("JSON_EXTRACT(teams, '$.home.name') = ?", [$country->name])
                                     ->orWhereRaw("JSON_EXTRACT(teams, '$.away.name') = ?", [$country->name])
-                                    ->when(isset($startDate), function($query) use ($startDate, $latestFixture){
-                                        $query->whereBetween('date', [$startDate, $latestFixture->date]);
-                                    })
                                     ->get();
         $arr = [];
-        $arr[$country->name][] = $countryTeamFixtures->toArray();
+        $arr[$country->name] = $countryTeamFixtures;
         foreach ($fixtures as $fixture) {
             $leagueName = $fixture->league['name'];
             $arr[$leagueName][] = $fixture->toArray();
