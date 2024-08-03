@@ -65,7 +65,9 @@
                                         <select class="form-control" name="country_code">
                                             <option>{{ __('Chọn mã quốc gia') }}</option>
                                             @foreach ($country_codes as $country_code)
-                                                <option value="{{$country_code}}">{{$country_code}}</option>
+                                                <option value="{{$country_code}}"
+                                                @if(in_array($country_code, $country_codes)) selected @endif
+                                                >{{$country_code}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -74,8 +76,12 @@
                                     <label for="shown_on_country_standing" class="col-lg-2 col-form-label text-right"> {{ __("Đang hiển thị trên BXH QG") }} :</label>
                                     <div class="col-lg-9">
                                         <select class="form-control" name="shown_on_country_standing">
-                                            <option value="0">Không hiển thị trên BXH QG</option>
-                                            <option value="1">Đang hiển thị trên BXH QG</option>
+                                            <option value="0" @if (!$league->shown_on_country_standing)
+                                                selected
+                                            @endif>Không hiển thị trên BXH QG</option>
+                                            <option value="1"@if ($league->shown_on_country_standing)
+                                                selected
+                                            @endif>Đang hiển thị trên BXH QG</option>
                                         </select>
                                     </div>
                                 </div>
