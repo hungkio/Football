@@ -15,5 +15,8 @@ class LiveFixture extends Model
         'teams' => 'array',
         'goals' => 'array',
         'score' => 'array',
+        'periods' => 'array',
+        'venue' => 'array',
+        'status' => 'array',
     ];
 }
