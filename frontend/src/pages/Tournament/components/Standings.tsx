@@ -53,6 +53,10 @@ const Standings = () => {
       <div className="py-2.5 pl-1 my-2.5 bg-[#f9f9f9] border border-[#eee]">
         <h1 className="text-sm font-bold text-red">BXH NGOẠI HẠNG ANH MÙA GIẢI 2024-2025</h1>
       </div>
+      <div className="bg-[#edf2f7] text-left text-xs [&>th]:p-2 flex justify-between px-2 py-2.5">
+        <span>Giải đấu</span>
+        <span>Cập nhật</span>
+      </div>
       {leagues && (
         <InfiniteScroll
           style={{
@@ -69,18 +73,16 @@ const Standings = () => {
         >
           {leagues.map((item, index) => {
             return (
-              <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
-                <td>
-                  <Link
-                    className="text-primary hover:text-red font-bold flex items-center gap-4"
-                    to={ROUTES.TOURNAMENT_STANDINGS.replace(':id', item.slug ?? '')}
-                  >
-                    <img className="max-w-5" src={item.logo} alt={item.name} />
-                    BXH {item.name}
-                  </Link>
-                </td>
-                <td>{item.updated_at}</td>
-              </tr>
+              <div key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] px-2 py-2.5 flex justify-between">
+                <Link
+                  className="text-primary hover:text-red font-bold flex items-center gap-4"
+                  to={ROUTES.TOURNAMENT_TOP_SCORES.replace(':id', item.slug ?? '')}
+                >
+                  <img className="max-w-5" src={item.logo} alt={item.name} />
+                  Vua phá lưới {item.name}
+                </Link>
+                <div>{new Date(item.updated_at).toLocaleDateString()}</div>
+              </div>
             )
           })}
         </InfiniteScroll>

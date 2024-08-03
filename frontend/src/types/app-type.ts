@@ -32,7 +32,7 @@ export interface ILeague {
   logo: string
   country_code: string
   created_at: string | null
-  updated_at: string | null
+  updated_at: string
   slug: string | null
   meta_title: string | null
   meta_description: string | null

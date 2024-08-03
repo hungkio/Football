@@ -49,46 +49,41 @@ const TopScores = () => {
       <div className="py-2.5 pl-1 my-2.5 bg-[#f9f9f9] border border-[#eee]">
         <h1 className="text-sm font-bold text-red">TOP GHI BÀN BÓNG ĐÁ ANH MỚI NHẤT</h1>
       </div>
-      <table className="w-full">
-        <thead>
-          <tr className="bg-[#edf2f7] text-left text-xs [&>th]:p-2">
-            <th>Giải đấu</th>
-            <th>Cập nhật</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leagues && (
-            <InfiniteScroll
-              style={{
-                height: 'unset',
-                overflow: 'unset'
-              }}
-              hasMore={isLoadMore}
-              loader={<p>Loading...</p>}
-              next={() => {
-                setPage((prev) => prev + 1)
-                fetchLeagues(page + 1)
-              }}
-              dataLength={leagues.length}
-            >
-              {leagues.map((item, index) => {
-                return (
-                  <div key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] px-2 py-2.5">
-                    <Link
-                      className="text-primary hover:text-red font-bold flex items-center gap-4"
-                      to={ROUTES.TOURNAMENT_TOP_SCORES.replace(':id', item.slug ?? '')}
-                    >
-                      <img className="max-w-5" src={item.logo} alt={item.name} />
-                      Vua phá lưới {item.name}
-                    </Link>
-                    <div>{item.updated_at}</div>
-                  </div>
-                )
-              })}
-            </InfiniteScroll>
-          )}
-        </tbody>
-      </table>
+
+      <div className="bg-[#edf2f7] text-left text-xs [&>th]:p-2 flex justify-between px-2 py-2.5">
+        <span>Giải đấu</span>
+        <span>Cập nhật</span>
+      </div>
+      {leagues && (
+        <InfiniteScroll
+          style={{
+            height: 'unset',
+            overflow: 'unset'
+          }}
+          hasMore={isLoadMore}
+          loader={<p>Loading...</p>}
+          next={() => {
+            setPage((prev) => prev + 1)
+            fetchLeagues(page + 1)
+          }}
+          dataLength={leagues.length}
+        >
+          {leagues.map((item, index) => {
+            return (
+              <div key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] px-2 py-2.5 flex justify-between">
+                <Link
+                  className="text-primary hover:text-red font-bold flex items-center gap-4"
+                  to={ROUTES.TOURNAMENT_TOP_SCORES.replace(':id', item.slug ?? '')}
+                >
+                  <img className="max-w-5" src={item.logo} alt={item.name} />
+                  Vua phá lưới {item.name}
+                </Link>
+                <div>{new Date(item.updated_at).toLocaleDateString()}</div>
+              </div>
+            )
+          })}
+        </InfiniteScroll>
+      )}
     </div>
   )
 }
