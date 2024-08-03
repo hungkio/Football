@@ -25,10 +25,7 @@ class CoachController extends Controller
     public function details($coach){
         try {
             $coach = Coach::find($coach);
-            return response()->json([
-                'status' => true,
-                'data' => $coach,
-            ]);
+            return response()->json($coach);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

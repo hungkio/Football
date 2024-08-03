@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Country;
 use App\Models\League;
 use App\Services\ApiService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CrawlLeaguesData extends Command
@@ -46,6 +47,8 @@ class CrawlLeaguesData extends Command
                         'logo'         => $item['league']['logo'],
                         'country_code' => $item['country']['code'],
                         'slug'  => createSlug($item['league']['name']),
+                        'created_at'   => Carbon::now(),
+                        'updated_at'   => Carbon::now(),
                         ]
                 );
                 Country::updateOrInsert(

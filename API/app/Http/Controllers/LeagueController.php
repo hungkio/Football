@@ -18,10 +18,7 @@ class LeagueController extends Controller
                 $query->where('shown_on_country_standing', true);
             })
             ->paginate($request->per_page);
-            return response()->json([
-                'status' => true,
-                'data' => $leagues
-            ]);
+            return response()->json($leagues);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
