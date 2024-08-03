@@ -62,9 +62,9 @@ class crawlStandingsData extends Command
                                     'form'        => $item['form'],
                                     'status'      => $item['status'],
                                     'description' => $item['description'],
-                                    'all'         => $item['all'],
-                                    'home'        => $item['home'],
-                                    'away'        => $item['away'],
+                                    'all'         => json_encode($item['all']),
+                                    'home'        => json_encode($item['home']),
+                                    'away'        => json_encode($item['away']),
                                 ]
                             );
                         }
