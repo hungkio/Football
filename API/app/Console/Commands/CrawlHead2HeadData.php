@@ -21,7 +21,7 @@ class CrawlHead2HeadData extends Command
      *
      * @var string
      */
-    protected $signature = 'app:crawl-head2-head-data';
+    protected $signature = 'app:crawl-head2-head-data {h2h}';
 
     /**
      * The console command description.
@@ -35,9 +35,10 @@ class CrawlHead2HeadData extends Command
      */
     public function handle()
     {
-        $data = $this->apiService->crawlLiveFixtures();
+        $h2h = $this->argument('h2h');
+        $data = $this->apiService->crawlHead2Head($h2h);
         if ($data) {
-            foreach ($$data['response'] as $item) {
+            foreach ($data['response'] as $item) {
                 Fixture::updateOrInsert(
                     ['api_id' => $item['fixture']['id']],
                     [
