@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetFixturesByCountryRequest;
+use App\Http\Requests\GetFixturesByLeagueRequest;
 use App\Http\Requests\GetFixturesByTeamRequest;
 use App\Models\Country;
 use App\Models\Fixture;
+use App\Models\League;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,5 +85,23 @@ class FixtureController extends Controller
         );
         
         return response()->json($paginatedMatches);
+    }
+
+    public function getFixturesByLeague(GetFixturesByLeagueRequest $request){
+        try {
+            $league = League::where('slug', $request->league_slug)->first();
+            $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.id') = ?", [$league->api_id])
+            ->when($request->round, function($query) use ($request){
+                $query->whereRaw("TRIM(BOTH ' ' FROM SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(league, '$.round')), '-', -1)) = ?", [$request->round]);
+            })
+            ->paginate($request->per_page);
+            return response()->json($fixtures);
+
+        } catch (\Throwable $th) {
+            return response([
+                'status' => false,
+                'message' => $th,
+            ]);
+        }
     }
 }
