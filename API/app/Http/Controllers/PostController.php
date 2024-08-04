@@ -25,6 +25,10 @@ class PostController extends Controller
         ->orderBy('created_at','desc')
         ->paginate($request->per_page);
 
+        foreach ($posts as $post) {
+            $author = Admin::find($post->user_id);
+            $post->author = $author->first_name . ' ' . $author->last_name;
+        }
         return response()->json($posts);
     }
 
