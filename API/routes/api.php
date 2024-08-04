@@ -59,6 +59,7 @@ Route::get('player/{player}', [PlayerController::class, 'details']);
 Route::get('coaches', [CoachController::class, 'index']);
 Route::get('coach/{coach}', [CoachController::class, 'details']);
 Route::get('leagues', [LeagueController::class, 'index']);
+Route::get('popularLeagues', [LeagueController::class, 'popularLeagues']);
 Route::get('page/{slug}', [PageController::class, 'getPage']);
 Route::get('menu/{position}', [PlayerController::class, 'details']);
 Route::post('register', [AuthController::class, 'register']);
