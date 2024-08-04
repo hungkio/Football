@@ -49,6 +49,10 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
 use App\Http\Controllers\Admin\PlayerController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\ToolRedirecterController;
+use App\Http\Controllers\Admin\ToolAutoLinkController;
+use App\Http\Controllers\Admin\ToolMetaSeoLinkController;
+use App\Http\Controllers\Admin\ToolTextSeoFooterController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -219,6 +223,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Api
             Route::get('/api/countries', [CountryController::class, 'index'])->name('api.countries');
 
+
             Route::delete('/api/country/{id}', [CountryController::class, 'delete'])->name('api.countries.destroy');
             Route::get('/api/country/{country}', [CountryController::class, 'edit'])->name('api.countries.edit');
             Route::put('/api/country/{country}', [CountryController::class, 'update'])->name('api.countries.update');
@@ -257,5 +262,29 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/api/coach/{coach}', [CoachController::class, 'edit'])->name('api.coach.edit');
             Route::put('/api/coach/{coach}', [CoachController::class, 'update'])->name('api.coach.update');
             Route::delete('/api/coach/{id}', [CoachController::class, 'delete'])->name('api.coach.destroy');
+
+            // tool redirecter
+            Route::get('/api/tool-redirecter', [ToolRedirecterController::class, 'index']);
+            Route::post('/api/tool-redirecter', [ToolRedirecterController::class, 'store']);
+            Route::put('/api/tool-redirecter/{id}', [ToolRedirecterController::class, 'update']);
+            Route::delete('/api/tool-redirecter/{id}', [ToolRedirecterController::class, 'delete']);
+
+            // tool autoLink
+            Route::get('/api/tool-auto-link', [ToolAutoLinkController::class, 'index']);
+            Route::post('/api/tool-auto-link', [ToolAutoLinkController::class, 'store']);
+            Route::put('/api/tool-auto-link/{id}', [ToolAutoLinkController::class, 'update']);
+            Route::delete('/api/tool-auto-link/{id}', [ToolAutoLinkController::class, 'delete']);
+            
+            // tool autoLink seo
+            Route::get('/api/tool-meta-seo-link', [ToolMetaSeoLinkController::class, 'index']);
+            Route::post('/api/tool-meta-seo-link', [ToolMetaSeoLinkController::class, 'store']);
+            Route::put('/api/tool-meta-seo-link/{id}', [ToolMetaSeoLinkController::class, 'update']);
+            Route::delete('/api/tool-meta-seo-link/{id}', [ToolMetaSeoLinkController::class, 'delete']);
+
+            // tool autoLink seo
+            Route::get('/api/tool-text-seo-footer', [ToolTextSeoFooterController::class, 'index']);
+            Route::post('/api/tool-text-seo-footer', [ToolTextSeoFooterController::class, 'store']);
+            Route::put('/api/tool-text-seo-footer/{id}', [ToolTextSeoFooterController::class, 'update']);
+            Route::delete('/api/tool-text-seo-footer/{id}', [ToolTextSeoFooterController::class, 'delete']);
         });
 });
