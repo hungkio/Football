@@ -5,6 +5,7 @@ import {
   ICountryRegion,
   ILeague,
   ILeagueMatches,
+  IMatch,
   IMenu,
   IPost,
   IPostList,
@@ -23,12 +24,7 @@ export const getFixtures = (params: { date: string; perPage?: number; page?: num
   })
 }
 
-export const getFixturesByTeam = (params: {
-  teamSlug: string
-  type?: number
-  perPage?: number
-  page?: number
-}): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getFixturesByTeam = (params: { teamSlug: string; type?: number; perPage?: number; page?: number }): Promise<PaginationResponse<IMatch[]>> => {
   return api.get('/getFixturesByTeam', {
     params: {
       ...params,
