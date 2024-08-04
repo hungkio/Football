@@ -37,9 +37,10 @@ class CrawlAllFixture extends Command
         foreach ($leagues as $league) {
             foreach ($seasons as $season) {
                 // fixtures
-                $crawlApiController->crawlFixtures($league->api_id, $season->year);
+                if ($league->api_id && $season->year) {
+                    $crawlApiController->crawlFixtures($league->api_id, $season->year);
+                }
             }
         }
-        //
     }
 }
