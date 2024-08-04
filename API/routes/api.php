@@ -17,7 +17,6 @@ use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TopScoreController;
 use App\Http\Controllers\VerificationController;
-use App\Models\Standing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,3 +70,4 @@ Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCoun
 Route::get('getFixturesByLeague', [FixtureController::class, 'getFixturesByLeague']);
 Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);
 Route::get('headToHead', [Head2HeadController::class, 'index']);
+Route::get('getTeamsByPopularLeagues', [TeamController::class, 'getTeamsByPopularLeagues']);

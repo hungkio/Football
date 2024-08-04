@@ -17,6 +17,11 @@ class LeagueController extends Controller
             ->when($request->country_standing_page, function($query) use ($request){
                 $query->where('shown_on_country_standing', true);
             })
+            ->when($request->exclude_popular, function($query){
+                $popularLeagues = League::where('popular', League::POPULAR)->pluck('id')->toArray();
+                $query->whereNotIn('id', $popularLeagues);
+            })
+            ->orderBy('updated_at', 'desc')
             ->paginate($request->per_page);
             return response()->json($leagues);
         } catch (\Throwable $th) {
