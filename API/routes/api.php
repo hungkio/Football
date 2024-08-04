@@ -43,7 +43,7 @@ Route::get('live-fixtures', [GetCrawledDataController::class, 'getLiveFixtures']
 //client api
 Route::get('get-menus', [MenuController::class, 'getAll']);
 Route::get('posts', [PostController::class, 'getPostsOnPage']);
-Route::get('allPosts', [PostController::class, 'getPostsOnPage']);
+Route::get('allPosts', [PostController::class, 'getPosts']);
 Route::get('getPostsByCategory', [PostController::class, 'getPostsByCategory']);
 Route::get('getPostById', [PostController::class, 'getPostById']);
 Route::get('getPostBySlug', [PostController::class, 'getPostBySlug']);
