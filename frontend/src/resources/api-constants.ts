@@ -1,6 +1,17 @@
 import axios from 'axios'
 import api from '@/api/api_instance'
-import { ICountry, ICountryRegion, ILeague, ILeagueMatches, IMenu, IPost, PaginateParams, PaginationResponse } from '@/types/app-type'
+import {
+  ICountry,
+  ICountryRegion,
+  ILeague,
+  ILeagueMatches,
+  IMenu,
+  IPost,
+  IPostList,
+  ITeamStanding,
+  ITopScorePlayerResponse,
+  PaginationResponse
+} from '@/types/app-type'
 
 export const getMenus = (): Promise<IMenu[]> => {
   return api.get('/get-menus/')
@@ -12,7 +23,12 @@ export const getFixtures = (params: { date: string; perPage?: number; page?: num
   })
 }
 
-export const getFixturesByTeam = (params: { teamSlug: string; perPage?: number; page?: number }): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getFixturesByTeam = (params: {
+  teamSlug: string
+  type?: number
+  perPage?: number
+  page?: number
+}): Promise<PaginationResponse<ILeagueMatches>> => {
   return api.get('/getFixturesByTeam', {
     params: {
       ...params,
@@ -36,7 +52,17 @@ export const getLiveFixtures = (): Promise<PaginationResponse<ILeagueMatches>> =
   return api.get('/live-fixtures/')
 }
 
-export const getPostsOnPage = (params: { pageId: number; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPost[]>> => {
+export const getAllPosts = (params?: { pageId?: number; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPostList[]>> => {
+  return api.get('/allPosts/', {
+    params: {
+      page_id: params?.pageId,
+      date: params?.date,
+      per_page: params?.perPage
+    }
+  })
+}
+
+export const getPostsOnPage = (params: { pageId: number; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPostList[]>> => {
   return api.get('/posts/', {
     params: {
       page_id: params.pageId,
@@ -46,7 +72,12 @@ export const getPostsOnPage = (params: { pageId: number; date?: string; perPage?
   })
 }
 
-export const getPostsByCategory = (params: { categoryId: number; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPost[]>> => {
+export const getPostsByCategory = (params: {
+  categoryId: number
+  date?: string
+  perPage?: number
+  page?: number
+}): Promise<PaginationResponse<IPostList[]>> => {
   return api.get('/api/getPostsByCategory', {
     params: {
       ...params,
@@ -64,7 +95,7 @@ export const getPostById = (params: { postId: number }): Promise<IPost> => {
   })
 }
 
-export const getPostsByTag = (params: { tag: string; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPost[]>> => {
+export const getPostsByTag = (params: { tag: string; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPostList[]>> => {
   return api.get('/getPostsByTag', {
     params: {
       ...params,
@@ -111,9 +142,26 @@ export const getLeagues = (params: {
   })
 }
 
-export const getStandingByLeague = (params: { league_slug: string; season: number }): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getStandingByLeague = (params: {
+  league_slug: string
+  season: number
+  perPage?: number
+  page?: number
+}): Promise<PaginationResponse<ITeamStanding[]>> => {
   return api.get('/standingByLeague', {
-    params
+    params: {
+      ...params,
+      per_page: params.perPage
+    }
+  })
+}
+
+export const getTopScoresByLeague = (params: { league_slug: string; season: number; perPage?: number; page?: number }): Promise<ITopScorePlayerResponse> => {
+  return api.get('/getTopScoresByLeague', {
+    params: {
+      ...params,
+      per_page: params.perPage
+    }
   })
 }
 

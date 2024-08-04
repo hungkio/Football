@@ -26,7 +26,6 @@ const Predictions: React.FC = () => {
       const formattedDate = getPrevDateWithYear(day)
       const result = await getFixtures({ date: formattedDate })
       setLeagues(result.data)
-      // setLeagues([...leagues, ...result.data ])
     } catch (error) {
       console.log(error)
     } finally {

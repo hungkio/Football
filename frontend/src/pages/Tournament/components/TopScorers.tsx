@@ -1,8 +1,8 @@
-import { getLeagues, getStandingByLeague } from '@/resources/api-constants'
+import { getLeagues, getStandingByLeague, getTopScoresByLeague } from '@/resources/api-constants'
 import { ROUTES } from '@/resources/routes-constants'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
-import { ILeague } from '@/types/app-type'
+import { ILeague, ITopScorePlayer } from '@/types/app-type'
 import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Link, useParams } from 'react-router-dom'
@@ -11,10 +11,24 @@ const TopScores = () => {
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const [isLoadMore, setIsLoadMore] = useState(true)
-  // Page type 1 is National page, 0 is Club page
   const [page, setPage] = useState(1)
+  // Page type 1 is National page, 0 is Club page
   const [pageType, setPageType] = useState(1)
   const [leagues, setLeagues] = useState<ILeague[] | null>(null)
+  const [players, setPlayers] = useState<ITopScorePlayer[] | null>(null)
+
+  const fetchTopScores = async (year?: number) => {
+    try {
+      if (!id) {
+        return
+      }
+      const currentYear = new Date().getFullYear()
+      const result = await getTopScoresByLeague({ league_slug: id, season: year ?? currentYear })
+      setPlayers(result.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const fetchLeagues = async (page: number) => {
     try {
       if (!id) {
@@ -36,13 +50,15 @@ const TopScores = () => {
       dispatch(loadingAction.hide())
     }
   }
+  console.log(players)
   useEffect(() => {
     dispatch(loadingAction.show())
     if (!id?.includes('-football')) {
       setPageType(0)
     }
+    fetchTopScores()
     fetchLeagues(page)
-  }, [])
+  }, [id])
 
   return (
     <div>
@@ -50,11 +66,34 @@ const TopScores = () => {
         <h1 className="text-sm font-bold text-red">TOP GHI BÀN BÓNG ĐÁ ANH MỚI NHẤT</h1>
       </div>
 
-      <div className="bg-[#edf2f7] text-left text-xs [&>th]:p-2 flex justify-between px-2 py-2.5">
-        <span>Giải đấu</span>
-        <span>Cập nhật</span>
-      </div>
-      {leagues && (
+      {pageType === 0 && players && (
+        <table className="w-full text-center">
+          <thead>
+            <tr className="bg-[#edf2f7] text-xs [&>th]:p-2">
+              <th>XH</th>
+              <th className="text-left">Đội bóng</th>
+              <th>Bàn thắng</th>
+              <th>Penalty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {players.map((item, index) => {
+              return (
+                <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
+                  <td>{index + 1}</td>
+                  <td className="text-left">
+                    <p>{item.player_name}</p>
+                    <p>{item.team}</p>
+                  </td>
+                  <td>{item.goals}</td>
+                  <td>{item.penalty}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      )}
+      {pageType === 1 && leagues && (
         <InfiniteScroll
           style={{
             height: 'unset',
@@ -68,6 +107,10 @@ const TopScores = () => {
           }}
           dataLength={leagues.length}
         >
+          <div className="bg-[#edf2f7] text-left text-xs [&>th]:p-2 flex justify-between px-2 py-2.5">
+            <span>Giải đấu</span>
+            <span>Cập nhật</span>
+          </div>
           {leagues.map((item, index) => {
             return (
               <div key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] px-2 py-2.5 flex justify-between">

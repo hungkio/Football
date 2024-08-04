@@ -124,6 +124,58 @@ export interface ILeagueMatches {
   [country: string]: IMatch[]
 }
 
+export interface IGoalsStandings {
+  for: number
+  against: number
+}
+
+export interface IMatchStats {
+  win: number
+  draw: number
+  lose: number
+  goals: IGoalsStandings
+  played: number
+}
+
+export interface ITeamStanding {
+  id: number
+  league_id: number
+  season: number
+  team_id: number
+  team_name: string
+  rank: number
+  points: number
+  goalsDiff: number
+  group: string
+  form: string | null
+  status: string
+  description: string | null
+  all: IMatchStats
+  home: IMatchStats
+  away: IMatchStats
+  created_at: string
+  updated_at: string
+  five_recent_matches: string[]
+}
+
+export interface ITopScorePlayerResponse {
+  data: ITopScorePlayer[]
+}
+
+export interface ITopScorePlayer {
+  id: number
+  player_id: number
+  league_id: number
+  season: number
+  created_at: string
+  updated_at: string
+  goals: number
+  penalty: number
+  team_id: number
+  player_name: string
+  team: string
+}
+
 export interface IPost {
   id: number
   user_id: number
@@ -149,6 +201,32 @@ export interface IPost {
   tags: string[]
 }
 
+export interface IPostList {
+  id: number
+  user_id: number
+  title: string
+  description: string
+  status: string
+  slug: string
+  body: string
+  view: number
+  meta_title: string | null
+  meta_description: string | null
+  meta_keywords: string | null
+  created_at: string
+  updated_at: string
+  related_posts: string[] | null
+  title_vi: string | null
+  description_vi: string | null
+  body_vi: string | null
+  meta_title_vi: string | null
+  meta_description_vi: string | null
+  meta_keywords_vi: string | null
+  on_pages: string[] | null
+  tags: string[]
+  bot_body: string | null
+  bot_body_vi: string | null
+}
 export interface ICountry {
   id: number
   api_id: number | null
