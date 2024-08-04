@@ -71,7 +71,6 @@ class Kernel extends ConsoleKernel
                         'league' => $league->api_id,
                         'season' => $season->year,
                     ]);
-
                 }
             }
 
