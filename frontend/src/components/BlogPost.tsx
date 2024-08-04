@@ -15,7 +15,7 @@ const BlogPost: FC<BlogPostProps> = ({ post }) => {
           {post.title}
         </Link>
         <p className="text-xs mb-2.5">
-          Minh Long - {new Date(post.created_at).toLocaleDateString()} {new Date(post.created_at).toLocaleTimeString()}
+          {post.author} - {new Date(post.created_at).toLocaleDateString()} {new Date(post.created_at).toLocaleTimeString()}
         </p>
         <p className="text-xs">{post.description}</p>
       </div>

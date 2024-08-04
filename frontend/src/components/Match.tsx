@@ -39,13 +39,15 @@ const Match: FC<MatchProps> = ({ match }) => {
           <img className="w-5" src={match.teams.home.logo} alt="" />
           <span>{match.teams.home.name}</span>
         </div>
-        <div className="w-[65px]">
-          <Link className="text-primary hover:text-red text-xs font-bold" to={'/'}>
-            <span>{match.score.halftime.away}</span>
-            <span>-</span>
-            <span>{match.score.halftime.home}</span>
-          </Link>
-        </div>
+        {match.score.halftime.away && (
+          <div className="w-[65px]">
+            <span className="text-primary hover:text-red text-xs font-bold">
+              <span>{match.score.halftime.away}</span>
+              <span>-</span>
+              <span>{match.score.halftime.home}</span>
+            </span>
+          </div>
+        )}
         <div className="px-2">
           <Screen />
         </div>

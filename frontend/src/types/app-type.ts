@@ -204,6 +204,7 @@ export interface IPost {
 export interface IPostList {
   id: number
   user_id: number
+  author: string
   title: string
   description: string
   status: string
