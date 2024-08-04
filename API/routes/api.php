@@ -43,6 +43,7 @@ Route::get('live-fixtures', [GetCrawledDataController::class, 'getLiveFixtures']
 //client api
 Route::get('get-menus', [MenuController::class, 'getAll']);
 Route::get('posts', [PostController::class, 'getPostsOnPage']);
+Route::get('allPosts', [PostController::class, 'getPostsOnPage']);
 Route::get('getPostsByCategory', [PostController::class, 'getPostsByCategory']);
 Route::get('getPostById', [PostController::class, 'getPostById']);
 Route::get('getPostBySlug', [PostController::class, 'getPostBySlug']);
@@ -61,7 +62,7 @@ Route::get('leagues', [LeagueController::class, 'index']);
 Route::get('page/{slug}', [PageController::class, 'getPage']);
 Route::get('menu/{position}', [PlayerController::class, 'details']);
 Route::post('register', [AuthController::class, 'register']);
-Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify'); 
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');

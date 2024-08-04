@@ -7,6 +7,7 @@ use App\Http\Requests\GetPostBySlugRequest;
 use App\Http\Requests\GetPostsByCategoryRequest;
 use App\Http\Requests\GetPostsByTagRequest;
 use App\Http\Requests\GetPostsOnpageRequest;
+use App\Http\Requests\GetPostsRequest;
 use App\Models\Post;
 use App\Models\Taxon;
 use App\Models\Taxonable;
@@ -18,6 +19,18 @@ class PostController extends Controller
     public function getPostsOnPage(GetPostsOnpageRequest $request){
         $posts = Post::whereJsonContains('on_pages', $request->page_slug)
         ->when($request->date, function($query) use ($request){
+            $query->whereDate('created_at', $request->date);
+        })
+        ->paginate($request->per_page);
+
+        return response()->json([
+            'status' => true,
+            'data' => $posts
+        ]);
+    }
+
+    public function getPosts(GetPostsRequest $request){
+        $posts = Post::when($request->date, function($query) use ($request){
             $query->whereDate('created_at', $request->date);
         })
         ->paginate($request->per_page);
