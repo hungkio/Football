@@ -74,13 +74,13 @@ class CrawlLiveFixturesData extends Command
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'slug'       => createSlug($item['teams']['home']['name']). 
-                                        '-vs-' . createSlug($item['teams']['away']['name']) . 
+                        'slug'       => createSlug($item['teams']['home']['name']).
+                                        '-vs-' . createSlug($item['teams']['away']['name']) .
                                         '-' .
                                         Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
                 );
-                $page = 1;
+                /*$page = 1;
                 $totalPages = 1;
                 while ($page <= $totalPages) {
                     foreach ($item['teams'] as $teamItem) {
@@ -138,7 +138,7 @@ class CrawlLiveFixturesData extends Command
                         $totalPages = $playerData['paging']['total'];
                         $page++;
                     }
-                }
+                }*/
             }
 
             $this->info('Data crawled and stored successfully.');
