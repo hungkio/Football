@@ -1,10 +1,44 @@
 import BlogPost from '@/components/BlogPost'
 import Default from '@/layouts/Default'
-import React from 'react'
+import { getAllPosts } from '@/resources/api-constants'
+import { useAppDispatch } from '@/store/reducers/store'
+import { loadingAction } from '@/store/slice/loading.slice'
+import { IPostList } from '@/types/app-type'
+import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { Link } from 'react-router-dom'
 
 const News = () => {
+  const [posts, setPosts] = useState<IPostList[] | null>(null)
+  const [isLoadMore, setIsLoadMore] = useState(true)
+  const [page, setPage] = useState(1)
+  const dispatch = useAppDispatch()
+  const fetchData = async (page: number) => {
+    try {
+      const result = await getAllPosts({ page })
+
+      if (result.data.length < 15) {
+        setIsLoadMore(false)
+      }
+      if (posts) {
+        setPosts([...posts, ...result.data])
+      } else {
+        setPosts(result.data)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      dispatch(loadingAction.hide())
+    }
+  }
+  useEffect(() => {
+    dispatch(loadingAction.show())
+    fetchData(page)
+  }, [])
+
+  console.log(posts)
+
   return (
     <Default>
       <Helmet>
@@ -29,18 +63,29 @@ const News = () => {
       </div>
       <h1 className="text-primary font-bold mx-2.5 my-5">Tin tức bóng đá hôm nay, tin bóng đá Việt Nam và Thế giới</h1>
 
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
-      <BlogPost />
+      {posts && (
+        <InfiniteScroll
+          style={{
+            height: 'unset',
+            overflow: 'unset'
+          }}
+          hasMore={isLoadMore}
+          loader={<p>Loading...</p>}
+          next={() => {
+            setPage((prev) => prev + 1)
+            fetchData(page + 1)
+          }}
+          dataLength={posts.length}
+        >
+          {posts.map((item, index) => {
+            return (
+              <div key={index}>
+                <BlogPost post={item} />
+              </div>
+            )
+          })}
+        </InfiniteScroll>
+      )}
     </Default>
   )
 }

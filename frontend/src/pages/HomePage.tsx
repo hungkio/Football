@@ -8,24 +8,34 @@ import { ILeagueMatches, PaginationResponse } from '@/types/app-type'
 import { getPrevDate, getPrevDateWithYear } from '@/utility/date'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
+import { usePrevious } from '@/hooks/usePrevious'
 
 const HomePage: React.FC = () => {
+  const [isLoadMore, setIsLoadMore] = useState(true)
   const [page, setPage] = useState(1)
-  const [hasMore, setHasMore] = useState(true)
   const [leagues, setLeagues] = useState<ILeagueMatches | null>(null)
   const numbers = Array.from({ length: 9 }, (_, i) => i)
   const [day, setDay] = useState(0)
   const dispatch = useAppDispatch()
+  const prevDay = usePrevious(day)
   useEffect(() => {
-    fetchFixtures()
+    fetchData(1)
   }, [day])
-  const fetchFixtures = async () => {
+  const fetchData = async (page: number) => {
     dispatch(loadingAction.show())
     try {
       const formattedDate = getPrevDateWithYear(day)
-      const result = await getFixtures(formattedDate)
-      setLeagues(result.data)
-      // setLeagues([...leagues, ...result.data ])
+
+      const result = await getFixtures({ date: formattedDate, page: prevDay !== day ? 1 : page })
+      if (Object.entries(result.data).length < 15) {
+        setIsLoadMore(false)
+      }
+      if (prevDay !== day) {
+        setPage(1)
+        setLeagues(result.data)
+      } else {
+        setLeagues({ ...result.data })
+      }
     } catch (error) {
       console.log(error)
     } finally {
@@ -54,10 +64,25 @@ const HomePage: React.FC = () => {
         )
       })}
 
-      {leagues &&
-        Object.entries(leagues).map((item) => {
-          return <Tournament key={item[0]} name={item[0]} matches={item[1]} />
-        })}
+      {leagues && (
+        <InfiniteScroll
+          style={{
+            height: 'unset',
+            overflow: 'unset'
+          }}
+          hasMore={isLoadMore}
+          loader={<p>Loading...</p>}
+          next={() => {
+            setPage((prev) => prev + 1)
+            fetchData(page + 1)
+          }}
+          dataLength={Object.entries(leagues).length}
+        >
+          {Object.entries(leagues).map((item, index) => {
+            return <Tournament key={index} name={item[0]} matches={item[1]} />
+          })}
+        </InfiniteScroll>
+      )}
     </Default>
   )
 }

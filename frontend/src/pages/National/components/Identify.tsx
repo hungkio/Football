@@ -16,10 +16,10 @@ const Identify = () => {
           số bàn thắng, đội vô địch và tỷ số hiệp 1-cả trận.
         </p>
       </div>
+      {/* <BlogPost />
       <BlogPost />
       <BlogPost />
-      <BlogPost />
-      <BlogPost />
+      <BlogPost /> */}
     </div>
   )
 }
