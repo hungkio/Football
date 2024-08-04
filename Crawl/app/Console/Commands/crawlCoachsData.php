@@ -56,7 +56,8 @@ class crawlCoachsData extends Command
                             'weight' => $item['weight'],
                             'photo' => $item['photo'],
                             'team_id' => $item['team']['id'],
-                            'career' => json_encode($item['career'])
+                            'career' => json_encode($item['career']),
+                            'slug'  => createSlug($item['name']),
                         ]
                     );
                 }

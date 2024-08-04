@@ -38,7 +38,10 @@ class crawlSeasonsData extends Command
             foreach ($data['response'] as $item) {
                 Season::updateOrInsert(
                     ['year' => $item],
-                    ['year' => $item]
+                    [
+                        'year' => $item,
+                        'slug' => $item
+                    ]
                 );
             }
             return $this->info('Data crawled and stored successfully.');

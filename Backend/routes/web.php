@@ -32,3 +32,6 @@ Route::get('/bai-viet', [PostController::class, 'index'])->name('post.index');
 Route::get('/bai-viet/{post:slug?}', [PostController::class, 'show'])->name('post.show');
 
 Route::get('/trang/{page:slug?}', [PageController::class, 'show'])->name('page.show');
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

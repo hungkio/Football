@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CrawlFixturesRequest;
 use App\Http\Requests\CrawlTeamsRequest;
 use App\Models\Country;
 use App\Models\Fixture;
@@ -23,23 +24,30 @@ class CrawlApiController extends Controller
     {
         $this->apiService = $apiService;
     }
-
-    public function crawlFixtures()
+    public function crawlFixturesbyteam()
     {
-        $today = date('Y-m-d');
-        $data = $this->apiService->crawlFixtures($today);
+        $data = $this->apiService->crawlFixturesexample();
         if ($data) {
             foreach ($data['response'] as $item) {
                 Fixture::updateOrInsert(
-                    ['fixture' => json_encode($item['fixture'])],
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'fixture' => json_encode($item['fixture']),
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
                         'league'     => json_encode($item['league']),
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'slug'       => createSlug($item['teams']['home']['name']).
+                                        '-vs-' . createSlug($item['teams']['away']['name']) .
+                                        '-' .
+                                        Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
                 );
             }
@@ -50,80 +58,32 @@ class CrawlApiController extends Controller
         }
     }
 
-    public function crawlLiveFixtures()
+    public function crawlFixtures($league, $season)
     {
-        LiveFixtures::truncate();
-        $data = $this->apiService->crawlLiveFixtures();
+        $data = $this->apiService->crawlFixturesByLeague($league, $season);
         if ($data) {
             foreach ($data['response'] as $item) {
-                LiveFixtures::updateOrInsert(
-                    ['fixture' => json_encode($item['fixture'])],
+                Fixture::updateOrInsert(
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'fixture'    => json_encode($item['fixture']),
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
                         'league'     => json_encode($item['league']),
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'slug'       => createSlug($item['teams']['home']['name']).
+                                        '-vs-' . createSlug($item['teams']['away']['name']) .
+                                        '-' .
+                                        Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
                 );
-                $page = 1;
-                $totalPages = 1;
-                while ($page <= $totalPages) {
-                    foreach ($item['teams'] as $teamItem) {
-                        $playerData = $this->apiService->crawlPlayersByTeam($teamItem['id'], $item['league']['season'], $page);
-                        if ($playerData) {
-                            foreach ($playerData['response'] as $playerItem){
-                                Player::updateOrCreate(
-                                    ['api_id' => $playerItem['player']['id']],
-                                    [
-                                        'api_id'         => $playerItem['player']['id'],
-                                        'name'           => $playerItem['player']['name'],
-                                        'first_name'     => $playerItem['player']['firstname'],
-                                        'last_name'      => $playerItem['player']['lastname'],
-                                        'age'            => $playerItem['player']['age'],
-                                        'date_of_birth'  => $playerItem['player']['birth']['date'],
-                                        'place_of_birth' => $playerItem['player']['birth']['place'],
-                                        'country'        => $playerItem['player']['birth']['country'],
-                                        'nationality'    => $playerItem['player']['nationality'],
-                                        'height'         => $playerItem['player']['height'],
-                                        'weight'         => $playerItem['player']['weight'],
-                                        'injured'        => $playerItem['player']['injured'],
-                                        'photo'          => $playerItem['player']['photo'],
-                                    ]
-                                );
-                                foreach ($playerItem['statistics'] as $statistic) {
-                                    PlayerStatistic::updateOrCreate(
-                                        [
-                                            'player_id'   => $playerItem['player']['id'],
-                                            'team_id'     => $statistic['team']['id'],
-                                            'league_id'   => $statistic['league']['id'],
-                                        ],
-                                        [
-                                            'player_id'   => $playerItem['player']['id'],
-                                            'team_id'     => $statistic['team']['id'],
-                                            'league_id'   => $statistic['league']['id'],
-                                            'games'       => $statistic['games'],
-                                            'substitutes' => $statistic['substitutes'],
-                                            'shots'       => $statistic['shots'],
-                                            'goals'       => $statistic['goals'],
-                                            'passes'      => $statistic['passes'],
-                                            'tackles'     => $statistic['tackles'],
-                                            'duels'       => $statistic['duels'],
-                                            'dribbles'    => $statistic['dribbles'],
-                                            'fouls'       => $statistic['fouls'],
-                                            'cards'       => $statistic['cards'],
-                                            'penalty'     => $statistic['penalty'],
-                                        ]
-                                    );
-                                }
-                            }
-                        }
-                        $totalPages = $playerData['paging']['total'];
-                        $page++;
-                    }
-                }
             }
 
             return 'Data crawled and stored successfully.';
@@ -132,101 +92,199 @@ class CrawlApiController extends Controller
         }
     }
 
-    public function crawlTeams(CrawlTeamsRequest $request){
-        try {
-            $league = $request->league;
-            $season = $request->season;
-            $data = $this->apiService->crawlTeams($league, $season);
-            if ($data) {
-                foreach ($data['response'] as $item) {
-                    Team::updateOrInsert(
-                        ['api_id' => $item['team']['id']],
-                        [
-                            'api_id'    => $item['team']['id'],
-                            'name'      => $item['team']['name'],
-                            'code'      => $item['team']['code'],
-                            'country'   => $item['team']['country'],
-                            'national'  => $item['team']['national'],
-                            'logo'      => $item['team']['logo'],
-                            'league_id' => $league,
-                            'season'    => $season,
-                        ]
-                    );
-                }
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    //only used for testing
+    // public function crawlLiveFixtures()
+    // {
+    //     LiveFixtures::truncate();
+    //     $data = $this->apiService->crawlLiveFixtures();
+    //     if ($data) {
+    //         foreach ($data['response'] as $item) {
+    //             LiveFixtures::updateOrInsert(
+    //                 ['fixture' => json_encode($item['fixture'])],
+    //                 [
+    //                     'fixture'    => json_encode($item['fixture']),
+    //                     'league'     => json_encode($item['league']),
+    //                     'teams'      => json_encode($item['teams']),
+    //                     'goals'      => json_encode($item['goals']),
+    //                     'score'      => json_encode($item['score']),
+    //                     'created_at' => now(),
+    //                     'updated_at' => now(),
+    //                 ]
+    //             );
+    //             $page = 1;
+    //             $totalPages = 1;
+    //             while ($page <= $totalPages) {
+    //                 foreach ($item['teams'] as $teamItem) {
+    //                     $playerData = $this->apiService->crawlPlayersByTeam($teamItem['id'], $item['league']['season'], $page);
+    //                     if ($playerData) {
+    //                         foreach ($playerData['response'] as $playerItem){
+    //                             Player::updateOrCreate(
+    //                                 ['api_id' => $playerItem['player']['id']],
+    //                                 [
+    //                                     'api_id'         => $playerItem['player']['id'],
+    //                                     'name'           => $playerItem['player']['name'],
+    //                                     'first_name'     => $playerItem['player']['firstname'],
+    //                                     'last_name'      => $playerItem['player']['lastname'],
+    //                                     'age'            => $playerItem['player']['age'],
+    //                                     'date_of_birth'  => $playerItem['player']['birth']['date'],
+    //                                     'place_of_birth' => $playerItem['player']['birth']['place'],
+    //                                     'country'        => $playerItem['player']['birth']['country'],
+    //                                     'nationality'    => $playerItem['player']['nationality'],
+    //                                     'height'         => $playerItem['player']['height'],
+    //                                     'weight'         => $playerItem['player']['weight'],
+    //                                     'injured'        => $playerItem['player']['injured'],
+    //                                     'photo'          => $playerItem['player']['photo'],
+    //                                 ]
+    //                             );
+    //                             foreach ($playerItem['statistics'] as $statistic) {
+    //                                 PlayerStatistic::updateOrCreate(
+    //                                     [
+    //                                         'player_id'   => $playerItem['player']['id'],
+    //                                         'team_id'     => $statistic['team']['id'],
+    //                                         'league_id'   => $statistic['league']['id'],
+    //                                         'season'      => $statistic['league']['season'],
+    //                                     ],
+    //                                     [
+    //                                         'player_id'   => $playerItem['player']['id'],
+    //                                         'team_id'     => $statistic['team']['id'],
+    //                                         'league_id'   => $statistic['league']['id'],
+    //                                         'season'      => $statistic['league']['season'],
+    //                                         'games'       => $statistic['games'],
+    //                                         'substitutes' => $statistic['substitutes'],
+    //                                         'shots'       => $statistic['shots'],
+    //                                         'goals'       => $statistic['goals'],
+    //                                         'passes'      => $statistic['passes'],
+    //                                         'tackles'     => $statistic['tackles'],
+    //                                         'duels'       => $statistic['duels'],
+    //                                         'dribbles'    => $statistic['dribbles'],
+    //                                         'fouls'       => $statistic['fouls'],
+    //                                         'cards'       => $statistic['cards'],
+    //                                         'penalty'     => $statistic['penalty'],
+    //                                     ]
+    //                                 );
+    //                             }
+    //                         }
+    //                     }
+    //                     $totalPages = $playerData['paging']['total'];
+    //                     $page++;
+    //                 }
+    //             }
+    //         }
 
-    public function crawlLeagues(){
-        try {
-            $data = $this->apiService->crawlLeagues();
-            foreach ($data['response'] as $item) {
-                League::updateOrInsert(
-                    ['api_id' => $item['league']['id']],
-                    [
-                        'api_id'       => $item['league']['id'],
-                        'name'         => $item['league']['name'],
-                        'type'         => $item['league']['type'],
-                        'logo'         => $item['league']['logo'],
-                        'country_code' => $item['country']['code'],
-                    ]
-                );
-                Country::updateOrInsert(
-                    ['code' => $item['country']['code']],
-                    [
-                        'name'         => $item['country']['name'],
-                        'code'         => $item['country']['code'],
-                        'flag'         => $item['country']['flag'],
-                    ]
-                );
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    //         return 'Data crawled and stored successfully.';
+    //     } else {
+    //         return 'Failed to fetch data from API.';
+    //     }
+    // }
 
-    public function crawlCountries(){
-        try {
-            $data = $this->apiService->crawlCountries();
-            foreach ($data['response'] as $item) {
-                Country::updateOrInsert(
-                    ['code' => $item['code']],
-                    [
-                        'name'         => $item['name'],
-                        'code'         => $item['code'],
-                        'flag'         => $item['flag'],
-                    ]
-                );
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    // public function crawlTeams(CrawlTeamsRequest $request){
+    //     try {
+    //         $league = $request->league;
+    //         $season = $request->season;
+    //         $data = $this->apiService->crawlTeams($league, $season);
+    //         if ($data) {
+    //             foreach ($data['response'] as $item) {
+    //                 Team::updateOrInsert(
+    //                     ['api_id' => $item['team']['id']],
+    //                     [
+    //                         'api_id'    => $item['team']['id'],
+    //                         'name'      => $item['team']['name'],
+    //                         'code'      => $item['team']['code'],
+    //                         'country'   => $item['team']['country'],
+    //                         'national'  => $item['team']['national'],
+    //                         'logo'      => $item['team']['logo'],
+    //                         'league_id' => $league,
+    //                         'season'    => $season,
+    //                         'slug'      => createSlug($item['team']['name'])
+    //                     ]
+    //                 );
+    //             }
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
 
-    public function crawlTeamsCountries(){
-        try {
-            $data = $this->apiService->crawlTeamsCountries();
-            foreach ($data['response'] as $item) {
-                Country::updateOrInsert(
-                    ['code' => $item['code']],
-                    [
-                        'name'         => $item['name'],
-                        'code'         => $item['code'],
-                        'flag'         => $item['flag'],
-                        'from_team'    => 1
-                    ]
-                );
-            }
-            return 'Data crawled and stored successfully.';
-        } catch (\Throwable $th) {
-            return 'Failed to fetch data from API. ' . $th;
-        }
-    }
+    // public function crawlLeagues(){
+    //     try {
+    //         $data = $this->apiService->crawlLeagues();
+    //         foreach ($data['response'] as $item) {
+    //             League::updateOrInsert(
+    //                 ['api_id' => $item['league']['id']],
+    //                 [
+    //                     'api_id'       => $item['league']['id'],
+    //                     'name'         => $item['league']['name'],
+    //                     'type'         => $item['league']['type'],
+    //                     'logo'         => $item['league']['logo'],
+    //                     'country_code' => $item['country']['code'],
+    //                 ]
+    //             );
+    //             Country::updateOrInsert(
+    //                 [
+    //                     'code' => $item['country']['code'],
+    //                     'name' => $item['country']['name'],
+    //                 ],
+    //                 [
+    //                     'name'         => $item['country']['name'],
+    //                     'code'         => $item['country']['code'],
+    //                     'flag'         => $item['country']['flag'],
+    //                     'slug'         => $item['country']['name'],
+    //                 ]
+    //             );
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
+
+    // public function crawlCountries(){
+    //     try {
+    //         $data = $this->apiService->crawlCountries();
+    //         foreach ($data['response'] as $item) {
+    //             Country::updateOrInsert(
+    //                 [
+    //                     'name' => $item['name'],
+    //                     'code' => $item['code'],
+    //                 ],
+    //                 [
+    //                     'name'         => $item['name'],
+    //                     'code'         => $item['code'],
+    //                     'flag'         => $item['flag'],
+    //                     'slug'         => $item['name'],
+    //                 ]
+    //             );
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
+
+    // public function crawlTeamsCountries(){
+    //     try {
+    //         $data = $this->apiService->crawlTeamsCountries();
+    //         foreach ($data['response'] as $item) {
+    //             Country::updateOrInsert(
+    //                 [
+    //                     'code' => $item['code'],
+    //                     'name' => $item['name']
+    //                 ],
+    //                 [
+    //                     'name'         => $item['name'],
+    //                     'code'         => $item['code'],
+    //                     'flag'         => $item['flag'],
+    //                     'slug'         => $item['name'],
+    //                     'from_team'    => 1
+    //                 ]
+    //             );
+    //         }
+    //         return 'Data crawled and stored successfully.';
+    //     } catch (\Throwable $th) {
+    //         return 'Failed to fetch data from API. ' . $th;
+    //     }
+    // }
 
     public function crawlPlayersByLeague(Request $request){
         try {
@@ -259,14 +317,16 @@ class CrawlApiController extends Controller
                         foreach ($item['statistics'] as $statistic) {
                             PlayerStatistic::updateOrCreate(
                                 [
-                                    'player_id'      => $item['player']['id'],
+                                    'player_id'   => $item['player']['id'],
                                     'team_id'     => $statistic['team']['id'],
                                     'league_id'   => $statistic['league']['id'],
+                                    'season'      => $statistic['league']['season'],
                                 ],
                                 [
                                     'player_id'      => $item['player']['id'],
                                     'team_id'     => $statistic['team']['id'],
                                     'league_id'   => $statistic['league']['id'],
+                                    'season'      => $statistic['league']['season'],
                                     'games'       => $statistic['games'],
                                     'substitutes' => $statistic['substitutes'],
                                     'shots'       => $statistic['shots'],
@@ -306,7 +366,40 @@ class CrawlApiController extends Controller
                     }
                 }
             }
-            return $this->info('Data crawled and stored successfully.');
+            return 'Data crawled and stored successfully.';
+        } catch (\Throwable $th) {
+            return 'Failed to fetch data from API. ' . $th;
+        }
+    }
+    public function crawlFifarank(){
+        try {
+            $data = $this->apiService->crawlFifaRank();
+            if ($data) {
+                foreach ($data['ranking'] as $item) {
+                    $count = Country::where('name', 'like', str_replace(' ', '-', substr($item['name'], 0, 5)).'%')->get()->count();
+                    if($count==1){
+                        Country::where('name', 'like', str_replace(' ', '-', substr($item['name'], 0, 5)).'%')->update(
+                            [
+                                'rank'         => $item['rank'],
+                                'points'         => $item['points'],
+                                'previous_rank'         => $item['previous_rank'],
+                                'previous_points'         => $item['previous_points']
+                            ]
+                        );
+                    }else{
+                        $update = Country::where('name', '=', str_replace(' ','-',$item['name']))->update(
+                            [
+                                'rank'         => $item['rank'],
+                                'points'         => $item['points'],
+                                'previous_rank'         => $item['previous_rank'],
+                                'previous_points'         => $item['previous_points']
+                            ]
+                        );
+                    }
+
+                }
+            }
+            return 'Data crawled and stored successfully.';
         } catch (\Throwable $th) {
             return 'Failed to fetch data from API. ' . $th;
         }

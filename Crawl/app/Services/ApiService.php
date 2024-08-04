@@ -15,6 +15,49 @@ class ApiService
         ]);
     }
 
+    public function crawlFixturesexample()
+    {
+        $response = $this->client->request('GET', 'fixtures', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ],
+            'query' => [
+                'league' => 4,
+                'season' => 2024,
+                'team' => 2
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
+
+    public function crawlFixturesByLeague($league, $season)
+    {
+        $response = $this->client->request('GET', 'fixtures', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ],
+            'query' => [
+                'league' => $league,
+                'season' => $season,
+                'timezone' => 'Asia/Ho_Chi_Minh'
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
     public function crawlFixtures($date)
     {
         $response = $this->client->request('GET', 'fixtures', [
@@ -262,6 +305,43 @@ class ApiService
             'query' => [
                 'league' => $league,
                 'season' => $season,
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
+    public function crawlFifaRank()
+    {
+        $client = new Client();
+
+        $response = $client->request('GET', 'https://world-football-ranking.p.rapidapi.com/current-ranking.php', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'world-football-ranking.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ]
+        ]);
+
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
+
+        return null;
+    }
+
+    public function crawlHead2Head($h2h){
+        $response = $this->client->request('GET', 'standings', [
+            'headers' => [
+                'X-RapidAPI-Key' => config('app.rapid_api_key'),
+                'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+                'Accept'        => 'application/json',
+            ],
+            'query' => [
+                'h2h' => $h2h,
             ]
         ]);
 

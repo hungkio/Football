@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    'rapid_api_key' => env('RAPID_API_KEY'),
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('crawlTeams', [CrawlApiController::class, 'crawlTeams']);
 Route::post('crawlPlayersByLeague', [CrawlApiController::class, 'crawlPlayersByLeague']);
 Route::get('crawlStandings', [CrawlApiController::class, 'crawlStandings']);
+Route::get('crawlFixtures', [CrawlApiController::class, 'crawlFixtures']);

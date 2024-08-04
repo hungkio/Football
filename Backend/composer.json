@@ -11,7 +11,9 @@
         "bensampo/laravel-enum": "^6.11",
         "cviebrock/eloquent-sluggable": "^10.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
+        "edsdk/flmngr-server-php": "^1.6",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image-laravel": "^1.3",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
@@ -27,6 +29,7 @@
         "spatie/once": "^3.1",
         "spatie/schema-org": "^3.23",
         "staudenmeir/laravel-adjacency-list": "^1.20",
+        "unisharp/laravel-filemanager": "^2.9",
         "yajra/laravel-datatables-buttons": "^10.0",
         "yajra/laravel-datatables-html": "^10.12",
         "yajra/laravel-datatables-oracle": "^10.0"

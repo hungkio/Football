@@ -38,11 +38,15 @@ class CrawlCountriesData extends Command
             $data = $this->apiService->crawlCountries();
             foreach ($data['response'] as $item) {
                 Country::updateOrInsert(
-                    ['code' => $item['code']],
+                    [
+                        'code' => $item['code'],
+                        'name' => $item['name']
+                    ],
                     [
                         'name'         => $item['name'],
                         'code'         => $item['code'],
                         'flag'         => $item['flag'],
+                        'slug'         => createSlug($item['name']),
                     ]
                 );
                 $venueData = $this->apiService->crawlVenues($item['name']);
@@ -58,6 +62,7 @@ class CrawlCountriesData extends Command
                             'capacity' => $venueItem['capacity'],
                             'surface' => $venueItem['surface'],
                             'image' => $venueItem['image'],
+                            'slug'  => createSlug($venueItem['name']),
                         ]
                     );
                 }

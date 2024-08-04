@@ -11,6 +11,9 @@ use App\Domain\Post\Models\Post;
 use App\Domain\Taxonomy\Models\Taxon;
 use App\Http\Requests\Admin\CreateMenuRequest;
 use App\Http\Requests\Admin\MenuBulkDeleteRequest;
+use App\Http\Requests\Admin\UpdateMenuRequest;
+use App\Models\Country;
+use App\Models\League;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,8 +34,9 @@ class MenuController
         $this->authorize('update', $menu);
         $internalLinks = InternalLink::all();
         $taxons = Taxon::whereTaxonomyId(setting('post_taxonomy', 1))->get();
+        $leagues = League::all();
 
-        return view('admin.menus.edit', compact('menu', 'taxons', 'internalLinks'));
+        return view('admin.menus.edit', compact('menu', 'taxons', 'internalLinks', 'leagues'));
     }
 
     public function store(CreateMenuRequest $request)
@@ -63,7 +67,7 @@ class MenuController
         return back();
     }
 
-    public function update(CreateMenuRequest $request, Menu $menu)
+    public function update(UpdateMenuRequest $request, Menu $menu)
     {
         DB::transaction(function () use ($request, $menu) {
             try{
@@ -96,6 +100,12 @@ class MenuController
                     $taxon->name = $taxon->selectText();
                 }
             }
+            if ($type == MenuItem::TYPE_LEAGUE) {
+                $data = League::select('id', 'name')->paginate();
+            }
+            if ($type == MenuItem::TYPE_COUNTY) {
+                $data = Country::select('id', 'name')->paginate();
+            }
             if ($type == MenuItem::TYPE_POST) {
                 $data = Post::select('id', 'title')->paginate();
             }
@@ -111,9 +121,10 @@ class MenuController
         $menuItemId = $request->menu_item_id;
         if ($menuItemId) {
             $menuItem = MenuItem::findOrFail($menuItemId);
+            $item_id = $menuItem->item_id;
             $type = $menuItem->type;
             if ($type == MenuItem::TYPE_PAGE) {
-                $data = Page::select('id', 'title')->paginate();
+                $data = Page::select('id', 'title')->where('id', $item_id)->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_CATEGORY) {
@@ -123,8 +134,16 @@ class MenuController
                 }
                 $data = $data->getCollection();
             }
+            if ($type == MenuItem::TYPE_LEAGUE) {
+                $data = League::select('id', 'name')->where('id', $item_id)->paginate();
+                $data = $data->getCollection();
+            }
+            if ($type == MenuItem::TYPE_COUNTY) {
+                $data = Country::select('id', 'name')->where('id', $item_id)->paginate();
+                $data = $data->getCollection();
+            }
             if ($type == MenuItem::TYPE_POST) {
-                $data = Post::select('id', 'title')->paginate();
+                $data = Post::select('id', 'title')->where('id', $item_id)->paginate();
                 $data = $data->getCollection();
             }
             if ($type == MenuItem::TYPE_LINK) {
@@ -257,11 +276,48 @@ class MenuController
             });
         }
 
+        if ($request->menu_type == MenuItem::TYPE_LEAGUE) {
+            $data = League::where('name', 'LIKE', $request->query('q').'%')->paginate();
+            $data->getCollection()->transform(function ($personal) {
+                $result = [
+                    'id' => @$personal->id,
+                ];
+                $result['pretty_name'] = @$personal->name;
+                return $result;
+            });
+        }
+
+        if ($request->menu_type == MenuItem::TYPE_COUNTY) {
+            $data = Country::where('name', 'LIKE', $request->query('q').'%')->paginate();
+            $data->getCollection()->transform(function ($personal) {
+                $result = [
+                    'id' => @$personal->id,
+                ];
+                $result['pretty_name'] = @$personal->name;
+                return $result;
+            });
+        }
+
         return response()->json(@$data);
     }
 
     public function getAll(){
         $menus = Menu::all();
         return response($menus, 200);
+    }
+
+    public function sort(Request $request, MenuItem $menu) {
+        $newSiblings = MenuItem::whereParentId($request->input('parent_id'))->where('id', '<>', $menu->id)
+            ->ordered()
+            ->pluck('id')
+            ->toArray();
+
+        $menu->update(['parent_id' => $request->input('parent_id'), 'order_column' => $request->input('position')]);
+        array_splice($newSiblings, (int)$request->input('position'), 0, $menu->id);
+
+        MenuItem::setNewOrder($newSiblings);
+
+        return response()->json(['status' => true]);
+
     }
 }

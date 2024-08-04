@@ -10,6 +10,6 @@ class TopScore extends Model
     use HasFactory;
 
     protected $fillable = [
-        'player_id', 'league_id', 'season'
+        'player_id', 'league_id', 'season', 'goals', 'penalty', 'team_id'
     ];
 }

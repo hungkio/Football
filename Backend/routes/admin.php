@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Admin\CoachController;
 use App\Http\Controllers\Admin\AccountSettingController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AnalyticsController;
@@ -25,7 +26,9 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FixtureController;
 use App\Http\Controllers\Admin\InternalLinkController;
+use App\Http\Controllers\Admin\LeagueController;
 use App\Http\Controllers\Admin\MostVisitedPageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\RoleController;
@@ -44,6 +47,8 @@ use App\Http\Controllers\Admin\LogActivityController;
 use App\Http\Controllers\Admin\MailSettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
+use App\Http\Controllers\Admin\PlayerController;
+use App\Http\Controllers\Admin\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -196,6 +201,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
             Route::post('/menus/bulk-delete', [MenuController::class, 'bulkDelete'])->name('menus.bulk-delete');
             Route::get('/menus/search-data', [MenuController::class, 'searchData'])->name('menus.search-data');
+            Route::post('/menus/{menu}/sort', [MenuController::class, 'sort'])->name('menus.sort');
 
             Route::post('/menu-item', [MenuItemController::class, 'store'])->name('menu-item.store');
             Route::get('/menu-item/{menu_item}/edit', [MenuItemController::class, 'edit'])->name('menu-item.edit');
@@ -209,14 +215,47 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Comments
             Route::get('/comments', [CommentController::class, 'index'])->name('comments');
             Route::delete('/comments/delete/{id}', [CommentController::class, 'delete'])->name('comments.destroy');
-            Route::get('/comments/{id}', [CommentController::class, 'edit'])->name('comments.edit');
-            Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
 
             //Api
             Route::get('/api/countries', [CountryController::class, 'index'])->name('api.countries');
-            
+
             Route::delete('/api/country/{id}', [CountryController::class, 'delete'])->name('api.countries.destroy');
-            Route::get('/api/country/{id}', [CountryController::class, 'edit'])->name('api.countries.edit');
-            Route::post('/api/country', [CountryController::class, 'update'])->name('api.countries.update');
+            Route::get('/api/country/{country}', [CountryController::class, 'edit'])->name('api.countries.edit');
+            Route::put('/api/country/{country}', [CountryController::class, 'update'])->name('api.countries.update');
+
+            Route::get('/api/teams', [TeamController::class, 'index'])->name('api.teams');
+            Route::get('/api/teams/create', [TeamController::class, 'create'])->name('api.team.create');
+            Route::post('/api/teams/store', [TeamController::class, 'store'])->name('api.team.store');
+            Route::get('/api/team/{team}', [TeamController::class, 'edit'])->name('api.team.edit');
+            Route::put('/api/team/{team}', [TeamController::class, 'update'])->name('api.team.update');
+            Route::delete('/api/team/{id}', [TeamController::class, 'delete'])->name('api.team.destroy');
+
+            Route::get('/api/players', [PlayerController::class, 'index'])->name('api.players');
+            Route::post('/api/players/store', [PlayerController::class, 'store'])->name('api.player.store');
+            Route::get('/api/players/create', [PlayerController::class, 'create'])->name('api.player.create');
+            Route::get('/api/player/{player}', [PlayerController::class, 'edit'])->name('api.player.edit');
+            Route::put('/api/player/{player}', [PlayerController::class, 'update'])->name('api.player.update');
+            Route::delete('/api/player/{id}', [PlayerController::class, 'delete'])->name('api.player.destroy');
+
+            Route::get('/api/fixtures', [FixtureController::class, 'index'])->name('api.fixtures');
+            Route::post('/api/fixtures/store', [FixtureController::class, 'store'])->name('api.fixture.store');
+            Route::get('/api/fixtures/create', [FixtureController::class, 'create'])->name('api.fixture.create');
+            Route::get('/api/fixture/{fixture}', [FixtureController::class, 'edit'])->name('api.fixture.edit');
+            Route::put('/api/fixture/{fixture}', [FixtureController::class, 'update'])->name('api.fixture.update');
+            Route::delete('/api/fixture/{id}', [FixtureController::class, 'delete'])->name('api.fixture.destroy');
+
+            Route::get('/api/leagues', [LeagueController::class, 'index'])->name('api.leagues');
+            Route::post('/api/leagues/store', [LeagueController::class, 'store'])->name('api.league.store');
+            Route::get('/api/leagues/create', [LeagueController::class, 'create'])->name('api.league.create');
+            Route::get('/api/league/{league}', [LeagueController::class, 'edit'])->name('api.league.edit');
+            Route::put('/api/league/{league}', [LeagueController::class, 'update'])->name('api.league.update');
+            Route::delete('/api/league/{id}', [LeagueController::class, 'delete'])->name('api.league.destroy');
+
+            Route::get('/api/coaches', [CoachController::class, 'index'])->name('api.coaches');
+            Route::post('/api/coaches/store', [CoachController::class, 'store'])->name('api.coach.store');
+            Route::get('/api/coaches/create', [CoachController::class, 'create'])->name('api.coach.create');
+            Route::get('/api/coach/{coach}', [CoachController::class, 'edit'])->name('api.coach.edit');
+            Route::put('/api/coach/{coach}', [CoachController::class, 'update'])->name('api.coach.update');
+            Route::delete('/api/coach/{id}', [CoachController::class, 'delete'])->name('api.coach.destroy');
         });
 });

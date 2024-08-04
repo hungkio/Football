@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Fixture;
 use App\Models\LiveFixtures;
 use App\Models\Player;
 use App\Models\PlayerStatistic;
 use App\Services\ApiService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CrawlLiveFixturesData extends Command
@@ -41,15 +43,41 @@ class CrawlLiveFixturesData extends Command
         if ($data) {
             foreach ($data['response'] as $item) {
                 LiveFixtures::updateOrInsert(
-                    ['fixture' => json_encode($item['fixture'])],
+                    ['api_id' => $item['fixture']['id']],
                     [
-                        'fixture'    => json_encode($item['fixture']),
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
                         'league'     => json_encode($item['league']),
                         'teams'      => json_encode($item['teams']),
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                    ]
+                );
+                Fixture::updateOrInsert(
+                    ['api_id' => $item['fixture']['id']],
+                    [
+                        'api_id'     => $item['fixture']['id'],
+                        'referee'    => $item['fixture']['referee'],
+                        'timezone'   => $item['fixture']['timezone'],
+                        'date'       => Carbon::parse($item['fixture']['date']),
+                        'timestamp'  => $item['fixture']['timestamp'],
+                        'periods'    => json_encode($item['fixture']['periods']),
+                        'venue'      => json_encode($item['fixture']['venue']),
+                        'status'     => json_encode($item['fixture']['status']),
+                        'league'     => json_encode($item['league']),
+                        'teams'      => json_encode($item['teams']),
+                        'goals'      => json_encode($item['goals']),
+                        'score'      => json_encode($item['score']),
+                        'slug'       => createSlug($item['teams']['home']['name']). 
+                                        '-vs-' . createSlug($item['teams']['away']['name']) . 
+                                        '-' .
+                                        Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
                     ]
                 );
                 $page = 1;
@@ -75,6 +103,7 @@ class CrawlLiveFixturesData extends Command
                                         'weight'         => $playerItem['player']['weight'],
                                         'injured'        => $playerItem['player']['injured'],
                                         'photo'          => $playerItem['player']['photo'],
+                                        'slug'           => createSlug($playerItem['player']['name']),
                                     ]
                                 );
                                 foreach ($playerItem['statistics'] as $statistic) {

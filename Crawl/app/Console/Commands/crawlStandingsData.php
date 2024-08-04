@@ -41,29 +41,33 @@ class crawlStandingsData extends Command
             foreach ($leagues as $league) {
                 $data = $this->apiService->crawlStandings($league->api_id, $thisSeason);
                 if ($data['response']) {
-                    foreach ($data['response'][0]['league']['standings'][0] as $item) {
-                        Standing::updateOrCreate(
-                            [
-                                'league_id' => $league->api_id,
-                                'season'    => $thisSeason,
-                                'team_id'   => $item['team']['id']
-                            ],
-                            [
-                                'league_id'   => $league->api_id,
-                                'season'      => $thisSeason,
-                                'team_id'     => $item['team']['id'],
-                                'rank'        => $item['rank'],
-                                'points'      => $item['points'],
-                                'goalsDiff'   => $item['goalsDiff'],
-                                'group'       => $item['group'],
-                                'form'        => $item['form'],
-                                'status'      => $item['status'],
-                                'description' => $item['description'],
-                                'all'         => json_encode($item['all']),
-                                'home'        => json_encode($item['home']),
-                                'away'        => json_encode($item['away']),
-                            ]
-                        );
+                    foreach ($data['response'][0]['league']['standings'] as $items) {
+                        foreach ($items as $item) {
+                            Standing::updateOrCreate(
+                                [
+                                    'league_id' => $league->api_id,
+                                    'season'    => $thisSeason,
+                                    'team_id'   => $item['team']['id'],
+                                    'group'       => $item['group'],
+                                    'form'        => $item['form'],
+                                ],
+                                [
+                                    'league_id'   => $league->api_id,
+                                    'season'      => $thisSeason,
+                                    'team_id'     => $item['team']['id'],
+                                    'rank'        => $item['rank'],
+                                    'points'      => $item['points'],
+                                    'goalsDiff'   => $item['goalsDiff'],
+                                    'group'       => $item['group'],
+                                    'form'        => $item['form'],
+                                    'status'      => $item['status'],
+                                    'description' => $item['description'],
+                                    'all'         => $item['all'],
+                                    'home'        => $item['home'],
+                                    'away'        => $item['away'],
+                                ]
+                            );
+                        }
                     }
                 }
             }

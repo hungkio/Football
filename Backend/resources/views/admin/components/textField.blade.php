@@ -16,6 +16,8 @@
             class="form-control{{ $errors->has($name) ? ' border-danger' : null}}"
             placeholder="{{ $placeholder ?? '' }}"
             value="{{ old($name, $value ?? '') }}"
+            {{isset($readonly) && $readonly ? 'readonly' : null}}
+
         >
         @isset($icon)
             <div class="form-control-feedback">

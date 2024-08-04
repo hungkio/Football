@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PermissionSeeder::class);
         $this->call(TaxonomySeeder::class);
-        $this->call(PostSeeder::class);
-        $this->call(PageSeeder::class);
         $this->call(MenuSeeder::class);
     }
 }

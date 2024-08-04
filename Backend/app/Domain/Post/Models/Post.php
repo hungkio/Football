@@ -20,6 +20,8 @@ class Post extends Model implements HasMedia
 
     protected $casts = [
         'related_posts' => 'array',
+        'on_pages' => 'array',
+        'tags' => 'array'
     ];
 
     protected $guarded = [];
@@ -56,5 +58,18 @@ class Post extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(Admin::class, 'user_id', 'id');
+    }
+
+    public function selectText(): string
+    {
+        $prettyName = '';
+        if ($this->ancestors->isNotEmpty()) {
+            foreach ($this->ancestors as $ancestor) {
+                $prettyName .= $ancestor->name.' -> ';
+            }
+        }
+        $prettyName .= $this->name;
+
+        return $prettyName;
     }
 }

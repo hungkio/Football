@@ -173,6 +173,22 @@
                 }).appendTo('#create-menu');
                 $('#createMenu').modal('show')
             })
+            .on('move_node.jstree', function (e, data) {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: Admin.adminUrl('menus/' + data.node.id + '/sort'),
+                    data: {
+                        parent_id: data.node.parent,
+                        position: data.position
+                    },
+                    success: function (data) {
+                        showMessage('success', '{{ __('Bạn đã chuyển vị trí menu thành công !') }}');
+                    }
+                }).fail(function () {
+                    data.instance.refresh();
+                });
+            });
 
         $('.list_category').change(function () {
             var el = $(this)
@@ -224,7 +240,7 @@
             if (selector.length > 0) {
                 selector.select2({
                     dropdownParent: dropdownParent,
-                    placeholder: 'Chọn trang',
+                    placeholder: 'Chọn item',
                     width: '100%',
                     ajax: {
                         url: '{{ route('admin.menus.search-data') }}',
@@ -350,12 +366,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">{{ __('Nội dung') }}</label>
+                        <label class="control-label">{{ __('Item') }}</label>
                         <div class="list_item">
                             <select class="custom-select list_category form-control select-create-content" name="item_id">
-                                @if($taxons)
-                                    @foreach($taxons as $taxon)
-                                        <option value="{{ $taxon->id }}">{{ $taxon->selectText() }}</option>
+                                @if($leagues)
+                                    @foreach($leagues as $league)
+                                        <option value="{{ $league->id }}">{{ $league->name }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -402,7 +418,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">{{ __('Nội dung') }}</label>
+                        <label class="control-label">{{ __('Item') }}</label>
                         <div class="list_item">
                         </div>
                     </div>
@@ -444,7 +460,7 @@
                             </fieldset>
                             <fieldset>
                                 <legend class="font-weight-semibold text-uppercase font-size-sm">
-                                    {{ __('Cây thư mục') }}
+                                    {{ __('Cây menu') }}
                                 </legend>
 
                                 <div class="collapse show" id="tree">

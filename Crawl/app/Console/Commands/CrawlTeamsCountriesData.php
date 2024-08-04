@@ -37,12 +37,16 @@ class CrawlTeamsCountriesData extends Command
             $data = $this->apiService->crawlTeamsCountries();
             foreach ($data['response'] as $item) {
                 Country::updateOrInsert(
-                    ['code' => $item['code']],
+                    [
+                        'code' => $item['code'],
+                        'name' => $item['name'],
+                    ],
                     [
                         'name'         => $item['name'],
                         'code'         => $item['code'],
                         'flag'         => $item['flag'],
-                        'from_team'    => 1
+                        'from_team'    => 1,
+                        'slug'         => createSlug($item['name']),
                     ]
                 );
             }

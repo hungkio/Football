@@ -21,6 +21,7 @@ class CountryDataTable extends BaseDatable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
+            ->addColumn('flag', fn (Country $country) => view('admin.countries._tableFlag', compact('country')))
             ->addColumn('action', 'admin.countries._tableAction');
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
             // ->rawColumns(['action']);
@@ -38,6 +39,7 @@ class CountryDataTable extends BaseDatable
             Column::make('id')->title(__('STT'))->data('DT_RowIndex')->searchable(false),
             Column::make('name')->title(__('Tên')),
             Column::make('code')->title(__('Mã')),
+            Column::make('flag')->title(__('Quốc Kỳ')),
             Column::make('created_at')->title(__('Thời gian tạo'))->searchable(false),
             Column::computed('action')
                 ->title(__('Tác vụ'))

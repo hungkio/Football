@@ -124,18 +124,48 @@
                         </li>
                     @endif
                 @endcan
-                <li class="nav-item nav-item-submenu {{ request()->routeIs('admin.admins*') || request()->routeIs('admin.roles*') ? 'nav-item-expanded nav-item-open' : null }}">
-                    <a href="#" class="nav-link"><i class="fal fa-user"></i> <span>{{ __('Api') }}</span></a>
-                    <ul class="nav nav-group-sub" data-submenu-title="{{ __('Api') }}">
+                <li class="nav-item nav-item-submenu {{ request()->routeIs('admin.api*') ? 'nav-item-expanded nav-item-open' : null }}">
+                    <a href="#" class="nav-link"><i class="fal fa-edit"></i> <span>{{ __('Q.lý nội dung') }}</span></a>
+                    <ul class="nav nav-group-sub" data-submenu-title="{{ __('Q.lý nội dung') }}">
                         @can('admins.view')
                             <li class="nav-item">
                                 <a href="{{ route('admin.api.countries') }}"
-                                    class="nav-link @if(request()->routeIs('admin.api*'))active @endif">
+                                    class="nav-link @if(request()->routeIs('admin.api.countries'))active @endif">
                                     {{ __('Quốc gia') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.teams') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.teams'))active @endif">
+                                    {{ __('Đội tuyển') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.players') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.players'))active @endif">
+                                    {{ __('Cầu thủ') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.fixtures') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.fixtures'))active @endif">
+                                    {{ __('Các trận đấu') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.leagues') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.leagues'))active @endif">
+                                    {{ __('Các giải đấu') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.api.coaches') }}"
+                                    class="nav-link @if(request()->routeIs('admin.api.coaches'))active @endif">
+                                    {{ __('Huấn luyện viên') }}
+                                </a>
+                            </li>
                         @endcan
-                        
+
                     </ul>
                 </li>
                 @canany(['contacts.view', 'log-search.view', 'subscribe-email.view', 'mail-settings.view'])
@@ -243,7 +273,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.internal-links') }}"
-                               class="nav-link @if(request()->routeIs('admin.menus*'))active @endif">
+                               class="nav-link @if(request()->routeIs('admin.internal-links*'))active @endif">
                                 <span>
                             {{ __("Quản lý link nội tuyến") }}
                         </span>
