@@ -177,10 +177,8 @@ class CrawlApiController extends Controller
     //     }
     // }
 
-    public function crawlTeams(CrawlTeamsRequest $request){
+    public function crawlTeams($league, $season){
         try {
-            $league = $request->league;
-            $season = $request->season;
             $data = $this->apiService->crawlTeams($league, $season);
             if ($data) {
                 foreach ($data['response'] as $item) {
