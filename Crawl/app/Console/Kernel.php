@@ -58,7 +58,7 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         // top scores
-        $schedule->command('cmd app:crawl-top-scores-data')->daily();
+        $schedule->command('app:crawl-top-scores-data')->daily();
 
         // fixtures
         $schedule->call(function () use ($crawlApiController) {
@@ -78,7 +78,7 @@ class Kernel extends ConsoleKernel
         })->everyTwoMinutes();
 
         // live fixtures
-        $schedule->command('cmd app:crawl-live-fixtures-data')->everyMinute();
+        $schedule->command('app:crawl-live-fixtures-data')->everyMinute();
         // standing
         $schedule->call(function () use ($crawlApiController) {
             $crawlApiController->crawlFifarank();
