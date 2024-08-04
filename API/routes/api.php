@@ -67,5 +67,6 @@ Route::post('email/resend', [VerificationController::class, 'resend'])->name('ve
 Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');
 Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
+Route::get('getFixturesByLeague', [FixtureController::class, 'getFixturesByLeague']);
 Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);
 Route::get('headToHead', [Head2HeadController::class, 'index']);
