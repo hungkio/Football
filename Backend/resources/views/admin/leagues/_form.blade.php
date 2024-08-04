@@ -85,6 +85,19 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="popular" class="col-lg-2 col-form-label text-right"> {{ __("Được quan tâm") }} :</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control" name="popular">
+                                            <option value="0" @if (!$league->popular)
+                                                selected
+                                            @endif>Không</option>
+                                            <option value="1"@if ($league->popular)
+                                                selected
+                                            @endif>Có</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 {{-- <x-text-field name="country_code" :placeholder="__('Mã quốc gia')" :label="__('Mã quốc gia')" :value="isset($league) ? $league->country_code : ''" required> </x-text-field> --}}
                                 <h5>{{ __('SEO') }}</h5>
                                 <ul class="nav nav-tabs">
@@ -118,12 +131,12 @@
 
                     </x-card>
                     <div class="d-flex justify-content-center align-items-center action" id="action-form">
-                        <a href="{{ route('admin.api.countries') }}" class="btn btn-light">{{ __('Trở lại') }}</a>
+                        <a href="{{ route('admin.api.leagues') }}" class="btn btn-light">{{ __('Trở lại') }}</a>
                         <div class="btn-group ml-3">
                             <button class="btn btn-primary btn-block" data-loading>{{ __('Lưu') }}</button>
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="javascript:void(0)" class="dropdown-item submit-type" data-redirect="{{ route('admin.api.countries') }}">{{ __('Lưu và thoát') }}</a>
+                                <a href="javascript:void(0)" class="dropdown-item submit-type" data-redirect="{{ route('admin.api.leagues') }}">{{ __('Lưu và thoát') }}</a>
                                 <a href="javascript:void(0)" class="dropdown-item submit-type" data-redirect="{{ route('admin.banners.create') }}">{{ __('Lưu và tạo mới') }}</a>
                             </div>
                         </div>

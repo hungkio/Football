@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class League extends Model
 {
     use HasFactory;
+
+    const POPULAR = 1;
+    const NOTPOPULAR = 0;
 }

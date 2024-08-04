@@ -43,6 +43,7 @@ class LeagueDataTable extends BaseDatable
             Column::make('type')->title(__('Kiểu')),
             Column::make('country_code')->title(__('Mã quốc gia')),
             Column::make('shown_on_country_standing')->title(__('Đang hiển thị trên BXH QG')),
+            Column::make('popular')->title(__('Được quan tâm')),
             Column::make('logo')->title(__('Logo')),
             Column::computed('action')
                 ->title(__('Tác vụ'))

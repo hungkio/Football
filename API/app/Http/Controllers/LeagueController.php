@@ -26,4 +26,17 @@ class LeagueController extends Controller
             ]);
         }
     }
+
+    public function popularLeagues(){
+        try {
+            $leagues = League::where('popular', League::POPULAR)->get();
+            return response()->json($leagues);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'status' => false,
+                'message' => $th
+            ]);
+        }
+    }
 }
