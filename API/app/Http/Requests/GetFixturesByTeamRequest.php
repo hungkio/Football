@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
 class GetFixturesByTeamRequest extends FormRequest
 {
@@ -25,5 +28,13 @@ class GetFixturesByTeamRequest extends FormRequest
             'team_slug' => 'string|required',
             'type' => 'boolean|nullable' //get in coming or results
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'message' => $validator->errors()->first(),
+        ], 422));
     }
 }
