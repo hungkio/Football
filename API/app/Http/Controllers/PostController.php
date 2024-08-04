@@ -37,10 +37,7 @@ class PostController extends Controller
         ->orderBy('created_at','desc')
         ->paginate($request->per_page);
 
-        return response()->json([
-            'status' => true,
-            'data' => $posts
-        ]);
+        return response()->json($posts);
     }
 
     public function getPostsByCategory(GetPostsByCategoryRequest $request){
