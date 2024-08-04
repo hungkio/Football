@@ -8,6 +8,7 @@ use App\Http\Requests\GetPostsByCategoryRequest;
 use App\Http\Requests\GetPostsByTagRequest;
 use App\Http\Requests\GetPostsOnpageRequest;
 use App\Http\Requests\GetPostsRequest;
+use App\Models\Admin;
 use App\Models\Post;
 use App\Models\Taxon;
 use App\Models\Taxonable;
@@ -24,10 +25,7 @@ class PostController extends Controller
         ->orderBy('created_at','desc')
         ->paginate($request->per_page);
 
-        return response()->json([
-            'status' => true,
-            'data' => $posts
-        ]);
+        return response()->json($posts);
     }
 
     public function getPosts(GetPostsRequest $request){
@@ -36,7 +34,10 @@ class PostController extends Controller
         })
         ->orderBy('created_at','desc')
         ->paginate($request->per_page);
-
+        foreach ($posts as $post) {
+            $author = Admin::find($post->user_id);
+            $post->author = $author->first_name . ' ' . $author->last_name;
+        }
         return response()->json($posts);
     }
 
