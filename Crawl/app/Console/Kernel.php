@@ -60,21 +60,11 @@ class Kernel extends ConsoleKernel
         // top scores
         $schedule->command('app:crawl-top-scores-data')->daily();
 
-        // fixtures
-        $schedule->call(function () use ($crawlApiController) {
-            $leagues = League::all();
-            $seasons = Season::all();
-            foreach ($leagues as $league) {
-                foreach ($seasons as $season) {
-                    // fixtures
-                    $crawlApiController->crawlFixtures($league->api_id, $season->year);
-                }
-            }
-
-        })->daily();
-
         // live fixtures
         $schedule->command('app:crawl-live-fixtures-data')->everyMinute();
+
+        // fixtures
+        $schedule->command('app:crawl-fixtures-data')->everyTwoMinutes();
         // standing
         $schedule->call(function () use ($crawlApiController) {
             $crawlApiController->crawlFifarank();
