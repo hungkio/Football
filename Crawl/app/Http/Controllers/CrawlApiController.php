@@ -58,15 +58,11 @@ class CrawlApiController extends Controller
         }
     }
 
-    public function crawlFixtures(CrawlFixturesRequest $request)
+    public function crawlFixtures($league, $season)
     {
-        $league = $request->league;
-        $season = $request->season;
         $data = $this->apiService->crawlFixturesByLeague($league, $season);
         if ($data) {
             foreach ($data['response'] as $item) {
-                // dd($item['fixture']);
-
                 Fixture::updateOrInsert(
                     ['api_id' => $item['fixture']['id']],
                     [

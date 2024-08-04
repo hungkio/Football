@@ -67,14 +67,11 @@ class Kernel extends ConsoleKernel
             foreach ($leagues as $league) {
                 foreach ($seasons as $season) {
                     // fixtures
-                    Http::get(config('app.url') . '/api/crawlFixtures', [
-                        'league' => $league->api_id,
-                        'season' => $season->year,
-                    ]);
+                    $crawlApiController->crawlFixtures($league->api_id, $season->year);
                 }
             }
 
-        })->everyTwoMinutes();
+        })->daily();
 
         // live fixtures
         $schedule->command('app:crawl-live-fixtures-data')->everyMinute();
