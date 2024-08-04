@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetTeamsRequest;
+use App\Models\League;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -28,5 +29,15 @@ class TeamController extends Controller
                 'message' => $th
             ]);
         }
+    }
+
+    public function getTeamsByPopularLeagues(){
+        $popularLeagues = League::where('popular', League::POPULAR)->get();
+        $arr = [];
+        foreach ($popularLeagues as $league) {
+            $teams = Team::where('league_id', $league->id)->get();
+            $arr[$league->name][] = $teams;
+        }
+        return response()->json($arr);
     }
 }
