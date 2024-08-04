@@ -15,9 +15,6 @@ class StandingController extends Controller
         $standings = Standing::where('league_id', $league->api_id)
         ->where('season', $request->season)
         ->paginate($request->per_page);
-        return response()->json([
-            'status' => true,
-            'data' => $standings
-        ]);
+        return response()->json($standings);
     }
 }
