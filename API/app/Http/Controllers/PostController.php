@@ -21,6 +21,7 @@ class PostController extends Controller
         ->when($request->date, function($query) use ($request){
             $query->whereDate('created_at', $request->date);
         })
+        ->orderBy('created_at','desc')
         ->paginate($request->per_page);
 
         return response()->json([
@@ -33,6 +34,7 @@ class PostController extends Controller
         $posts = Post::when($request->date, function($query) use ($request){
             $query->whereDate('created_at', $request->date);
         })
+        ->orderBy('created_at','desc')
         ->paginate($request->per_page);
 
         return response()->json([
