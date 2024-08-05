@@ -18,26 +18,53 @@ export const getMenus = (): Promise<IMenu[]> => {
   return api.get('/get-menus/')
 }
 
+export const getPopularLeagues = (): Promise<ILeague[]> => {
+  return api.get('/popularLeagues')
+}
+
 export const getFixtures = (params: { date: string; perPage?: number; page?: number }): Promise<PaginationResponse<ILeagueMatches>> => {
   return api.get('/fixtures/', {
     params
   })
 }
 
-export const getFixturesByTeam = (params: { teamSlug: string; type?: number; perPage?: number; page?: number }): Promise<PaginationResponse<IMatch[]>> => {
+export const getFixturesByTeam = (params: { teamSlug: string; status?: number; perPage?: number; page?: number }): Promise<PaginationResponse<IMatch[]>> => {
   return api.get('/getFixturesByTeam', {
     params: {
-      ...params,
+      status: params.status,
+      page: params.page,
       team_slug: params.teamSlug,
       per_page: params.perPage
     }
   })
 }
 
-export const getFixturesByCountry = (params: { countrySlug: string; perPage?: number; page?: number }): Promise<PaginationResponse<ILeagueMatches>> => {
+export const getFixturesByLeague = (params: {
+  leagueSlug: string
+  status?: number
+  perPage?: number
+  page?: number
+}): Promise<PaginationResponse<IMatch[]>> => {
+  return api.get('/getFixturesByLeague', {
+    params: {
+      status: params.status,
+      page: params.page,
+      league_slug: params.leagueSlug,
+      per_page: params.perPage
+    }
+  })
+}
+
+export const getFixturesByCountry = (params: {
+  countrySlug: string
+  status?: number
+  perPage?: number
+  page?: number
+}): Promise<PaginationResponse<ILeagueMatches>> => {
   return api.get('/getFixturesByCountry', {
     params: {
-      ...params,
+      page: params.page,
+      status: params.status,
       country_slug: params.countrySlug,
       per_page: params.perPage
     }
@@ -63,7 +90,8 @@ export const getPostsOnPage = (params: { pageId: number; date?: string; perPage?
     params: {
       page_id: params.pageId,
       date: params.date,
-      per_page: params.perPage
+      per_page: params.perPage,
+      page: params.page
     }
   })
 }
@@ -76,9 +104,10 @@ export const getPostsByCategory = (params: {
 }): Promise<PaginationResponse<IPostList[]>> => {
   return api.get('/api/getPostsByCategory', {
     params: {
-      ...params,
+      date: params.date,
       category_id: params.categoryId,
-      per_page: params.perPage
+      per_page: params.perPage,
+      page: params.page
     }
   })
 }
@@ -94,8 +123,10 @@ export const getPostById = (params: { postId: number }): Promise<IPost> => {
 export const getPostsByTag = (params: { tag: string; date?: string; perPage?: number; page?: number }): Promise<PaginationResponse<IPostList[]>> => {
   return api.get('/getPostsByTag', {
     params: {
-      ...params,
-      per_page: params.perPage
+      tag: params.tag,
+      date: params.date,
+      per_page: params.perPage,
+      page: params.page
     }
   })
 }

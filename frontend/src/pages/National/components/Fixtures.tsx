@@ -23,7 +23,7 @@ const Fixtures: React.FC = () => {
         return
       }
 
-      const result = await getFixturesByTeam({ teamSlug: 'manchester-united', type: 1, page })
+      const result = await getFixturesByTeam({ teamSlug: 'manchester-united', status: 1, page })
       if (result.data.length < 15) {
         setIsLoadMore(false)
       }

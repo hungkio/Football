@@ -17,27 +17,27 @@ const navLink = [
   },
   {
     label: 'Trực tuyến',
-    url: '/livescore'
+    url: ROUTES.LIVE_ROUTE
   },
   {
     label: 'Nhận định',
-    url: '/analysis'
+    url: ROUTES.ANALYTICS
   },
   {
     label: 'Dự đoán',
-    url: '/predictions'
+    url: ROUTES.PREDICTIONS
   },
   {
     label: 'Lịch thi đấu',
-    url: '/fixtures'
+    url: ROUTES.FIXTURES
   },
   {
     label: 'Kèo bóng đá',
-    url: '/betting-odds'
+    url: ROUTES.BETTING_ODDS
   },
   {
     label: 'Tin tức',
-    url: '/news'
+    url: ROUTES.NEWS
   },
   {
     label: 'Lịch phát sóng',
@@ -49,19 +49,19 @@ const navLink = [
   },
   {
     label: 'BXH',
-    url: '/standings'
+    url: ROUTES.STANDINGS
   },
   {
     label: 'BXH FIFA',
-    url: '/fifa-rankings'
+    url: ROUTES.FIFA_STANDINGS
   },
   {
     label: 'Top ghi bàn',
-    url: '/'
+    url: ROUTES.TOP_SCORES
   },
   {
     label: 'ĐTQG',
-    url: '/national-teams'
+    url: ROUTES.NATIONAL_TEAMS
   },
   {
     label: 'CLB',

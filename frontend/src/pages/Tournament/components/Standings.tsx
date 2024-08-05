@@ -156,7 +156,7 @@ const Standings = () => {
                   to={ROUTES.TOURNAMENT_STANDINGS.replace(':id', item.slug ?? '')}
                 >
                   <img className="max-w-5" src={item.logo} alt={item.name} />
-                  Vua phá lưới {item.name}
+                  BXH {item.name}
                 </Link>
                 <div>{new Date(item.updated_at).toLocaleDateString()}</div>
               </div>
