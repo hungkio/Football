@@ -108,6 +108,19 @@ class FixtureController extends Controller
             ->when($request->round, function($query) use ($request){
                 $query->whereRaw("TRIM(BOTH ' ' FROM SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(league, '$.round')), '-', -1)) = ?", [$request->round]);
             })
+            ->when($request->status, function($query) use ($request){
+                switch ($request->status) {
+                    case Fixture::FINISHED: //2
+                        $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['FT']);
+                        break;
+                    case Fixture::NOT_STARTED: //1
+                        $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['NS']);
+                        break;
+                    case Fixture::LIVE: 
+                        $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.short'))) NOT IN (?, ?)", ['NS', 'FT']);
+                        break;
+                }
+            })
             ->paginate($request->per_page);
             
             return response()->json($fixtures);
