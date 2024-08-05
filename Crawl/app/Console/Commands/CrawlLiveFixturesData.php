@@ -38,7 +38,7 @@ class CrawlLiveFixturesData extends Command
      */
     public function handle()
     {
-        #LiveFixtures::truncate();
+        LiveFixtures::truncate();
         $data = $this->apiService->crawlLiveFixtures();
         if ($data) {
             foreach ($data['response'] as $item) {
