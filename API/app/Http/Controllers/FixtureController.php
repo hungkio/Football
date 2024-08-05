@@ -61,6 +61,19 @@ class FixtureController extends Controller
         ->when($startDate, function($query) use ($startDate, $endDate){
             $query->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()]);
         })
+        ->when($request->status, function($query) use ($request){
+            switch ($request->status) {
+                case Fixture::FINISHED: //2
+                    $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['FT']);
+                    break;
+                case Fixture::NOT_STARTED: //1
+                    $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['NS']);
+                    break;
+                case Fixture::LIVE: 
+                    $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.short'))) NOT IN (?, ?)", ['NS', 'FT']);
+                    break;
+            }
+        })
         ->limit(100)
         ->get();
         $countryTeamFixtures = Fixture::whereRaw("JSON_EXTRACT(teams, '$.home.name') = ?", [$country->name])

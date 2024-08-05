@@ -9,6 +9,9 @@ class Fixture extends Model
 {
     use HasFactory;
 
+    const NOT_STARTED = 1;
+    const FINISHED = 2;
+    const LIVE = 3;
     protected $fillable = ['fixture', 'league', 'teams', 'goals', 'score'];
     protected $casts = [
         'fixture' => 'array',
