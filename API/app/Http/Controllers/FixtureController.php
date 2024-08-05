@@ -90,15 +90,34 @@ class FixtureController extends Controller
     public function getFixturesByLeague(GetFixturesByLeagueRequest $request){
         try {
             $league = League::where('slug', $request->league_slug)->first();
+            
             $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.id') = ?", [$league->api_id])
             ->when($request->round, function($query) use ($request){
                 $query->whereRaw("TRIM(BOTH ' ' FROM SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(league, '$.round')), '-', -1)) = ?", [$request->round]);
             })
             ->paginate($request->per_page);
+            
             return response()->json($fixtures);
 
         } catch (\Throwable $th) {
             return response([
+                'status' => false,
+                'message' => $th,
+            ]);
+        }
+    }
+
+    public function getRounds(GetFixturesByLeagueRequest $request){
+        try {
+            $league = League::where('slug', $request->league_slug)->first();
+
+            $roundsCount = Fixture::whereRaw("JSON_EXTRACT(league, '$.id') = ?", [$league->api_id])
+            ->distinct()
+            ->count(DB::raw("TRIM(BOTH ' ' FROM SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(league, '$.round')), '-', -1))"));
+
+            return response()->json($roundsCount);
+        } catch (\Throwable $th) {
+            return response()->json([
                 'status' => false,
                 'message' => $th,
             ]);
