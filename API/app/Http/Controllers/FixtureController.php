@@ -76,9 +76,25 @@ class FixtureController extends Controller
         })
         ->limit(100)
         ->get();
-        $countryTeamFixtures = Fixture::whereRaw("JSON_EXTRACT(teams, '$.home.name') = ?", [$country->name])
-                                    ->orWhereRaw("JSON_EXTRACT(teams, '$.away.name') = ?", [$country->name])
-                                    ->get();
+
+        $countryTeamFixtures = Fixture::where(function ($query) use ($country){
+            $query->whereRaw("JSON_EXTRACT(teams, '$.home.name') = ?", [$country->name])
+                  ->orWhereRaw("JSON_EXTRACT(teams, '$.away.name') = ?", [$country->name]);
+        })
+        ->when($request->status, function($query) use ($request){
+            switch ($request->status) {
+                case Fixture::FINISHED: //2
+                    $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Match Finished']);
+                    break;
+                case Fixture::NOT_STARTED: //1
+                    $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Not Started']);
+                    break;
+                case Fixture::LIVE: 
+                    $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.long'))) NOT IN (?, ?)", ['Match Finished', 'Not Started']);
+                    break;
+            }
+        })
+        ->get();
         $arr = [];
         $arr[$country->name] = $countryTeamFixtures;
         foreach ($fixtures as $fixture) {
@@ -111,13 +127,13 @@ class FixtureController extends Controller
             ->when($request->status, function($query) use ($request){
                 switch ($request->status) {
                     case Fixture::FINISHED: //2
-                        $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['FT']);
+                        $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Match Finished']);
                         break;
                     case Fixture::NOT_STARTED: //1
-                        $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['NS']);
+                        $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Not Started']);
                         break;
                     case Fixture::LIVE: 
-                        $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.short'))) NOT IN (?, ?)", ['NS', 'FT']);
+                        $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.long'))) NOT IN (?, ?)", ['Match Finished', 'Not Started']);
                         break;
                 }
             })
