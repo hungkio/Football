@@ -17,7 +17,7 @@ const Result = () => {
     try {
       if (id) {
         const teamSlug = id.includes('-football') ? id.replace('-football', '') : id
-        const result = await getFixturesByCountry({ countrySlug: teamSlug, page })
+        const result = await getFixturesByCountry({ countrySlug: teamSlug, status: 2, page })
 
         if (Object.entries(result.data).length < 15) {
           setIsLoadMore(false)

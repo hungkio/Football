@@ -16,7 +16,7 @@ const Match: FC<MatchProps> = ({ match }) => {
           {(match.status.short === 'NS' || match.status.long === 'Match Finished') && (
             <span className="text-primary">{new Date(match.date).toLocaleString()}</span>
           )}
-          {match.status.elapsed && match.status.short !== 'FT' && (
+          {match.status.elapsed && match.status.long !== 'Match Finished' && (
             <span className="text-red">
               {match.status.elapsed}
               {'′'}
@@ -39,15 +39,15 @@ const Match: FC<MatchProps> = ({ match }) => {
           <img className="w-5" src={match.teams.home.logo} alt="" />
           <span>{match.teams.home.name}</span>
         </div>
-        {match.score.halftime.away && (
-          <div className="w-[65px]">
+        <div className="w-[65px]">
+          {match.score.halftime.away !== null && (
             <span className="text-primary hover:text-red text-xs font-bold">
               <span>{match.score.halftime.away}</span>
               <span>-</span>
               <span>{match.score.halftime.home}</span>
             </span>
-          </div>
-        )}
+          )}
+        </div>
         <div className="px-2">
           <Screen />
         </div>

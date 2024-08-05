@@ -45,7 +45,7 @@ const NationalList = () => {
                   {region.items.map((national, index) => {
                     return (
                       <li className="text-xs text-primary" key={index}>
-                        <Link className="inline-flex gap-1 px-2.5" to={ROUTES.NATIONAL.replace(':id', String(national.slug))}>
+                        <Link className="inline-flex gap-1 px-2.5" to={ROUTES.NATIONAL.replace(':id', String(national.slug) + '-football')}>
                           <img loading="lazy" className="w-4" src={national.flag} alt={national.name} />
                           {national.name_vi ?? national.name}
                         </Link>

@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import LiveScore from './pages/LiveScore'
 import NotFoundPage from './pages/NotFoundPage'
 import { ROUTES } from './resources/routes-constants'
-import NationalOrTournament from './pages/Tournament/Tournament'
+import NationalOrTournament from './pages/Tournament/NationalOrTournament'
 import Result from './pages/Tournament/components/Result'
 import Identify from './pages/Tournament/components/Identify'
 import Forecast from './pages/Tournament/components/Forecast'
@@ -19,6 +19,8 @@ import Predictions from './pages/Predictions'
 import Standings from './pages/Standings'
 import FIFAStandings from './pages/Rankings/FIFAStandings'
 import NationalList from './pages/NationalList'
+import TopScore from './pages/TopScore'
+import Tournament from './pages/Tournament/components/Tournament'
 
 const RootComponent: React.FC = () => {
   return (
@@ -27,6 +29,7 @@ const RootComponent: React.FC = () => {
         <Route path="*" element={<NotFoundPage />} />
         <Route path={ROUTES.HOMEPAGE_ROUTE} element={<HomePage />} />
         <Route path={ROUTES.LIVE_ROUTE} element={<LiveScore />} />
+        <Route path={ROUTES.TOP_SCORES} element={<TopScore />} />
         <Route path={ROUTES.ANALYTICS} element={<Analysis />} />
         <Route path={ROUTES.PREDICTIONS} element={<Predictions />} />
         <Route path={ROUTES.STANDINGS} element={<Standings />} />
@@ -41,6 +44,7 @@ const RootComponent: React.FC = () => {
           <Route path={ROUTES.TOURNAMENT_TOP_SCORES} element={<TopScores />}></Route>
           <Route path={ROUTES.TOURNAMENT_FIXTURES} element={<Fixtures />}></Route>
           <Route path={ROUTES.TOURNAMENT_LIVESCORES} element={<TournamentLiveScore />}></Route>
+          <Route path={ROUTES.TOURNAMENT_TOURNAMENTS} element={<Tournament />}></Route>
         </Route>
       </Routes>
     </Router>

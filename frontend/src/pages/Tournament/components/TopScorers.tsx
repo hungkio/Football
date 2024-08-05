@@ -65,8 +65,7 @@ const TopScores = () => {
       <div className="py-2.5 pl-1 my-2.5 bg-[#f9f9f9] border border-[#eee]">
         <h1 className="text-sm font-bold text-red">TOP GHI BÀN BÓNG ĐÁ ANH MỚI NHẤT</h1>
       </div>
-
-      {pageType === 0 && players && (
+      {pageType === 0 && (
         <table className="w-full text-center">
           <thead>
             <tr className="bg-[#edf2f7] text-xs [&>th]:p-2">
@@ -76,21 +75,23 @@ const TopScores = () => {
               <th>Penalty</th>
             </tr>
           </thead>
-          <tbody>
-            {players.map((item, index) => {
-              return (
-                <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
-                  <td>{index + 1}</td>
-                  <td className="text-left">
-                    <p>{item.player_name}</p>
-                    <p>{item.team}</p>
-                  </td>
-                  <td>{item.goals}</td>
-                  <td>{item.penalty}</td>
-                </tr>
-              )
-            })}
-          </tbody>
+          {players && players?.length > 0 && (
+            <tbody>
+              {players.map((item, index) => {
+                return (
+                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
+                    <td>{index + 1}</td>
+                    <td className="text-left">
+                      <p>{item.player_name}</p>
+                      <p>{item.team}</p>
+                    </td>
+                    <td>{item.goals}</td>
+                    <td>{item.penalty}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          )}
         </table>
       )}
       {pageType === 1 && leagues && (

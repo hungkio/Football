@@ -28,12 +28,12 @@ export interface ILeague {
   id: number
   api_id: number
   name: string
-  type: 'League' | 'Cup'
+  type: string
   logo: string
   country_code: string
-  created_at: string | null
+  created_at: string
   updated_at: string
-  slug: string | null
+  slug: string
   meta_title: string | null
   meta_description: string | null
   meta_keywords: string | null
