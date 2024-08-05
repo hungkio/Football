@@ -11,8 +11,8 @@ interface MatchProps {
 const Match: FC<MatchProps> = ({ match }) => {
   return (
     <>
-      <div className="flex items-center text-xs py-1.5 border-b border-[#eee] last-of-type:border-b-0">
-        <div className="w-[65px]">
+      <div className="flex items-center text-xs py-1.5 border-b border-[#eee] last-of-type:border-b-0 flex-wrap">
+        <div className="w-[60px]">
           {(match.status.short === 'NS' || match.status.long === 'Match Finished') && (
             <span className="text-primary">{new Date(match.date).toLocaleString()}</span>
           )}
@@ -28,7 +28,7 @@ const Match: FC<MatchProps> = ({ match }) => {
           <img className="w-5" src={match.teams.away.logo} alt="" />
           <span>{match.teams.away.name}</span>
         </div>
-        <div className="w-[65px] text-center">
+        <div className="w-[40px] text-center">
           <Link className="text-primary hover:text-red text-xs font-bold" to={'/'}>
             <span>{match.goals.away}</span>
             <span>-</span>
@@ -39,20 +39,30 @@ const Match: FC<MatchProps> = ({ match }) => {
           <img className="w-5" src={match.teams.home.logo} alt="" />
           <span>{match.teams.home.name}</span>
         </div>
-        {match.score.halftime.away && (
-          <div className="w-[65px]">
+        {match.score.halftime.away ? (
+          <div className="w-[25px]">
             <span className="text-primary hover:text-red text-xs font-bold">
               <span>{match.score.halftime.away}</span>
               <span>-</span>
               <span>{match.score.halftime.home}</span>
             </span>
           </div>
+        ): (
+            <div className="w-[25px]">
+            <span className="text-primary hover:text-red text-xs font-bold">
+              <span>0</span>
+              <span>-</span>
+              <span>0</span>
+            </span>
+            </div>
         )}
-        <div className="px-2">
-          <Screen />
-        </div>
-        <div>
-          <span> {match.league.round} </span>
+        <div className="flex">
+          <div className="px-2">
+            <Screen />
+          </div>
+          <div>
+            <span> {match.league.round} </span>
+          </div>
         </div>
       </div>
       {match.score.extratime.home !== null && (

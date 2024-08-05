@@ -37,15 +37,15 @@ const Default: FC<DefaultProps> = ({ children }) => {
           <img className="block" src={AdsLeftRight} alt="" />
         </div>
         <div className="container mx-auto pb-4">
-          <div className="w-[70%] float-left">{children}</div>
-          <div className="w-[30%] p-l-5 float-right">
+          <div className="w-[100%] md:w-[70%] mb-4 md:mb-0 md:float-left">{children}</div>
+          <div className="w-[100%] md:w-[30%] md:float-right">
             <Sidebar />
           </div>
           <div className="clear-both"></div>
         </div>
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2">
-          <img className="block" src={AdsHeader} alt="" />
-          <img className="block" src={AdsHeader} alt="" />
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full">
+          <img className="block mx-auto" src={AdsHeader} alt="" />
+          <img className="block mx-auto" src={AdsHeader} alt="" />
         </div>
       </div>
       <Footer />

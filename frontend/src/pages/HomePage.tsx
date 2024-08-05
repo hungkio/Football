@@ -47,22 +47,24 @@ const HomePage: React.FC = () => {
       <Helmet>
         <title>Kết Quả Bóng Đá Tự Động</title>
       </Helmet>
-      {numbers.map((number) => {
-        return (
-          <span key={number}>
+      <div className="flex items-center text-nowrap whitespace-nowrap overflow-x-auto pb-2.5">
+        {numbers.map((number) => {
+          return (
+            <span key={number}>
             {day === number ? (
-              <span className="px-3 py-1 bg-secondary rounded text-primary  hover:cursor-pointer text-xs mr-2">{getPrevDate(number)}</span>
+                <span className="px-3 py-1 bg-secondary rounded text-primary  hover:cursor-pointer text-xs mr-2">{getPrevDate(number)}</span>
             ) : (
-              <span
-                className="px-3 py-1 bg-[#dce0e4] rounded text-primary hover:text-primary hover:bg-secondary hover:cursor-pointer text-xs mr-2"
-                onClick={() => setDay(number)}
-              >
+                <span
+                    className="px-3 py-1 bg-[#dce0e4] rounded text-primary hover:text-primary hover:bg-secondary hover:cursor-pointer text-xs mr-2"
+                    onClick={() => setDay(number)}
+                >
                 {getPrevDate(number)}
               </span>
             )}
           </span>
-        )
-      })}
+          )
+        })}
+      </div>
 
       {leagues && (
         <InfiniteScroll
