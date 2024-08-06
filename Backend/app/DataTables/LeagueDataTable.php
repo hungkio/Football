@@ -42,7 +42,7 @@ class LeagueDataTable extends BaseDatable
     protected function getColumns(): array
     {
         return [
-            Column::checkbox(''),
+            //Column::checkbox(''),
             Column::make('id')->title(__('STT'))->data('DT_RowIndex')->searchable(false),
             Column::make('api_id')->title(__('Mã giải')),
             Column::make('name')->title(__('Tên')),

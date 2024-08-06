@@ -119,6 +119,6 @@ class LeagueController
             $league->save();
         }
         logActivity($league, 'update'); // log activity
-        return array('status'=>true,'message'=>__('Giải đấu ":model" đã được cập nhật thành công!', ['model' => $league->name]));
+        return array('status'=>true,'message'=>__('Đã cập nhật thông tin các giải đấu thành công!'));
     }
 }
