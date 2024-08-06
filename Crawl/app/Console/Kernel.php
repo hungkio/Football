@@ -67,9 +67,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:crawl-fixtures-data')->everyTwoMinutes();
         // standing
         $schedule->call(function () use ($crawlApiController) {
-            $crawlApiController->crawlFifarank();
             $crawlApiController->crawlStandings();
         })->hourly();
+        /*$schedule->call(function () use ($crawlApiController) {
+            $crawlApiController->crawlFifarank();
+        })->daily();*/
     }
 
     /**
