@@ -122,7 +122,7 @@ class LeagueController
                 $league->save();
             }
         }
-        flash()->success(__('Giải đấu ":model" đã được cập nhật thành công!', ['model' => $league->name]));
-        return intended($request, route('admin.api.leagues'));
+        logActivity($league, 'update'); // log activity
+        return array('status'=>true,'message'=>__('Giải đấu ":model" đã được cập nhật thành công!', ['model' => $league->name]));
     }
 }
