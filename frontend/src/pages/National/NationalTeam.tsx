@@ -1,45 +1,30 @@
-import Tabs from '@/components/Tabs'
 import Default from '@/layouts/Default'
 import React from 'react'
-import Result from './components/Result'
-import LiveScore from './components/LiveScore'
-import Identify from './components/Identify'
-import Forecast from './components/Forecast'
-import Bet from './components/BettingOdds'
-import BroadcastSchedule from './components/BroadcastSchedule'
-import Standings from './components/Standings'
-import TopScores from './components/TopScorers'
-import Tournament from './components/Tournament'
 import { NavLink, Outlet, useParams } from 'react-router-dom'
-import Schedule from './components/Fixtures'
 import { ROUTES } from '@/resources/routes-constants'
 
-const NationalOrTournament = () => {
+const NationalTeam = () => {
   const { id } = useParams()
   const tabs = [
     {
       label: 'Kết quả',
-      url: ROUTES.NATIONAL.replace(':id', String(id))
+      url: ROUTES.NATIONAL_TEAM.replace(':id', String(id))
     },
     {
       label: 'Trực tuyến',
-      url: ROUTES.NATIONAL_LIVESCORES.replace(':id', String(id))
+      url: ROUTES.NATIONAL_TEAM_LIVESCORES.replace(':id', String(id))
     },
     {
       label: 'Bảng xếp hạng',
-      url: ROUTES.NATIONAL_STANDINGS.replace(':id', String(id))
+      url: ROUTES.NATIONAL_TEAM_STANDINGS.replace(':id', String(id))
     },
     {
       label: 'Top ghi bàn',
-      url: ROUTES.NATIONAL_TOP_SCORES.replace(':id', String(id))
+      url: ROUTES.NATIONAL_TEAM_TOP_SCORES.replace(':id', String(id))
     },
     {
       label: 'Lịch thi đấu',
-      url: ROUTES.NATIONAL_FIXTURES.replace(':id', String(id))
-    },
-    {
-      label: 'Livescore',
-      url: ROUTES.NATIONAL_LIVESCORES.replace(':id', String(id))
+      url: ROUTES.NATIONAL_TEAM_FIXTURES.replace(':id', String(id))
     }
   ]
   return (
@@ -61,4 +46,4 @@ const NationalOrTournament = () => {
   )
 }
 
-export default NationalOrTournament
+export default NationalTeam
