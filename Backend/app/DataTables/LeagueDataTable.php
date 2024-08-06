@@ -27,7 +27,7 @@ class LeagueDataTable extends BaseDatable
             ->addColumn('shown_on_country_standing', fn (League $league) => view('admin.leagues._tableBXH', compact('league')))
             ->addColumn('popular', fn (League $league) => view('admin.leagues._tablePopular', compact('league')))
             ->addColumn('priority', fn (League $league) => view('admin.leagues._tablePriority', compact('league')))
-            ->addColumn('country_code', fn (League $league) => display_country_name($league->country_code))
+            //->addColumn('country_code', fn (League $league) => display_country_name($league->country_code))
             ->rawColumns(['shown_on_country_standing','popular','priority','action'])
             ;
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))

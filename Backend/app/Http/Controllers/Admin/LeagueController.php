@@ -108,19 +108,15 @@ class LeagueController
         }
         $shown_standing = $data['shown_standing'];
         foreach ($shown_standing as $key => $value){
-            if($value){
-                $league = League::find($key);
-                $league->shown_on_country_standing = $value;
-                $league->save();
-            }
+            $league = League::find($key);
+            $league->shown_on_country_standing = $value;
+            $league->save();
         }
         $popular = $data['popular'];
         foreach ($popular as $key => $value){
-            if($value){
-                $league = League::find($key);
-                $league->popular = $value;
-                $league->save();
-            }
+            $league = League::find($key);
+            $league->popular = $value;
+            $league->save();
         }
         logActivity($league, 'update'); // log activity
         return array('status'=>true,'message'=>__('Giải đấu ":model" đã được cập nhật thành công!', ['model' => $league->name]));
