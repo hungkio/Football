@@ -88,7 +88,7 @@ class LeagueDataTable extends BaseDatable
             Button::make('export')->addClass('btn btn-primary')->text('<i class="fal fa-download mr-2"></i>'.__('Xuất')),
             Button::make('print')->addClass('btn bg-primary')->text('<i class="fal fa-print mr-2"></i>'.__('In')),
             Button::make('reset')->addClass('btn bg-primary')->text('<i class="fal fa-undo mr-2"></i>'.__('Thiết lập lại')),
-            Button::make('save')->addClass('btn btn-primary')->text('<i class="fal fa-save mr-2"></i>'.__('Lưu')),
+            //Button::make('save')->addClass('btn btn-primary')->text('<i class="fal fa-save mr-2"></i>'.__('Lưu thiết lập')),
         ];
     }
 

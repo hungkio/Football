@@ -85,29 +85,13 @@
                                 <div class="form-group row">
                                     <label for="shown_on_country_standing" class="col-lg-2 col-form-label text-right"> {{ __("Hiển thị trên BXH QG") }} :</label>
                                     <div class="col-lg-9">
-                                        <input class="form-check-input" type="checkbox" value="1" @if ($league->shown_on_country_standing) checked @endif id="shown_on_country_standing" name="shown_on_country_standing">
-                                        <select class="form-control" name="shown_on_country_standing">
-                                            <option value="0" @if (!$league->shown_on_country_standing)
-                                                selected
-                                            @endif>Không hiển thị trên BXH QG</option>
-                                            <option value="1"@if ($league->shown_on_country_standing)
-                                                selected
-                                            @endif>Đang hiển thị trên BXH QG</option>
-                                        </select>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox" value="1" @if ($league->shown_on_country_standing) checked @endif id="shown_on_country_standing" name="shown_on_country_standing"></div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="popular" class="col-lg-2 col-form-label text-right"> {{ __("Được quan tâm") }} :</label>
                                     <div class="col-lg-9">
-                                        <input class="form-check-input" type="checkbox" value="1" @if ($league->popular) checked @endif id="popular" name="popular">
-                                        <select class="form-control" name="popular">
-                                            <option value="0" @if (!$league->popular)
-                                                selected
-                                            @endif>Không</option>
-                                            <option value="1"@if ($league->popular)
-                                                selected
-                                            @endif>Có</option>
-                                        </select>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox" value="1" @if ($league->popular) checked @endif id="popular" name="popular"></div>
                                     </div>
                                 </div>
                                 {{-- <x-text-field name="country_code" :placeholder="__('Mã quốc gia')" :label="__('Mã quốc gia')" :value="isset($league) ? $league->country_code : ''" required> </x-text-field> --}}

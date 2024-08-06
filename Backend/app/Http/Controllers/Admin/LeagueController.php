@@ -45,6 +45,8 @@ class LeagueController
     {
         $this->authorize('create', League::class);
         $data = $request->all();
+        $data['popular'] = isset($data['popular'])?1:0;
+        $data['shown_on_country_standing'] = isset($data['shown_on_country_standing'])?1:0;
         $league = League::create($data);
         if ($request->hasFile('logo')) {
             $league->addMedia($request->file('logo'))->toMediaCollection('league');
@@ -72,7 +74,10 @@ class LeagueController
     public function update(League $league, Request $request)
     {
         $this->authorize('update', $league);
-        $league->update($request->except('logo'));
+        $data = $request->except('logo');
+        $data['popular'] = isset($data['popular'])?1:0;
+        $data['shown_on_country_standing'] = isset($data['shown_on_country_standing'])?1:0;
+        $league->update($data);
         if ($request->hasFile('logo')) {
             $league->addMedia($request->file('logo'))->toMediaCollection('league');
         }
