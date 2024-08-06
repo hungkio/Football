@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ToolRedirecterStore;
 use Illuminate\Http\Request;
-use App\Models\ToolRedirecter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Validator;
+use App\DataTables\ToolRedirecterDataTable;
+use App\Domain\ToolRedirecter\Models\ToolRedirecter;
+use Illuminate\View\View;
 
 class ToolRedirecterController
 {
     //
     protected $toolRedirecter;
+    use AuthorizesRequests;
 
 
     public function __construct(ToolRedirecter $toolRedirecter)
@@ -24,16 +27,27 @@ class ToolRedirecterController
      * params page
      * params perpage 
      */
-    public function index(Request $request)
+    public function index(ToolRedirecterDataTable $dataTable)
     {
-        $page = $request->input('page', 1);
-        $perPage =  $request->input('perPage', 15);
+        $this->authorize('view', ToolRedirecter::class);
 
-        $query = $this->toolRedirecter->newQuery();
+        return $dataTable->render('admin.tools-redirecter.index');
+    }
 
-        // Fetch the paginated list of ToolRedirecters
-        $toolRedirecters = $query->paginate($perPage, ['*'], 'page', $page);
-        return response()->json($toolRedirecters);
+
+    public function create(): View
+    {
+
+        $this->authorize('create', ToolRedirecterDataTable::class);
+        return view('admin.tools-redirecter.create');
+    }
+
+
+    public function edit(ToolRedirecter $tool): View
+    {
+        $this->authorize('update', $tool);
+
+        return view('admin.tools-redirecter.edit', compact('tool'));
     }
 
     public function store(Request $request)
@@ -59,6 +73,8 @@ class ToolRedirecterController
                 'end_at' =>  $request->end_at ?? null,
             ];
             $this->toolRedirecter->create($dataToolRedirecter);
+            return intended($request, route('admin.api.tools-redirecter'));
+
             return response()->json(['message' => "success", "status" => 200]);
             // Validate the incoming request data
         } catch (\Throwable $th) {
@@ -92,6 +108,8 @@ class ToolRedirecterController
             ];
 
             $this->toolRedirecter->where('id', $id)->update($dataToolRedirecter);
+            return intended($request, route('admin.api.tools-redirecter'));
+
             return response()->json(['message' => "success", "status" => 200]);
             // Validate the incoming request data
         } catch (\Throwable $th) {
@@ -100,13 +118,14 @@ class ToolRedirecterController
         }
     }
 
-    public function delete($id)
+    public function delete( $id)
     {
 
         try {
 
             $toolRedirecterInfo = $this->toolRedirecter->findOrFail($id);
             $toolRedirecterInfo->delete();
+
             return response()->json(['message' => "success", "status" => 200]);
             // Validate the incoming request data
         } catch (\Throwable $th) {
