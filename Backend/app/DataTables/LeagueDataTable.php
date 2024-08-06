@@ -23,7 +23,12 @@ class LeagueDataTable extends BaseDatable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('logo', fn (League $league) => view('admin.leagues._tableFlag', compact('league')))
-            ->addColumn('action', 'admin.leagues._tableAction');
+            ->addColumn('action', 'admin.leagues._tableAction')
+            ->addColumn('shown_on_country_standing', fn (League $league) => view('admin.leagues._tableBXH', compact('league')))
+            ->addColumn('popular', fn (League $league) => view('admin.leagues._tablePopular', compact('league')))
+            ->addColumn('priority', fn (League $league) => view('admin.leagues._tablePriority', compact('league')))
+            ->rawColumns(['shown_on_country_standing','popular','priority','action'])
+            ;
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
             // ->rawColumns(['action']);
     }
@@ -42,8 +47,24 @@ class LeagueDataTable extends BaseDatable
             Column::make('name')->title(__('Tên')),
             Column::make('type')->title(__('Kiểu')),
             Column::make('country_code')->title(__('Mã quốc gia')),
-            Column::make('shown_on_country_standing')->title(__('Đang hiển thị trên BXH QG')),
-            Column::make('popular')->title(__('Được quan tâm')),
+            Column::computed('popular')
+                ->title(__('BXH QG'))
+                ->exportable(false)
+                ->printable(false)
+                ->width(20)
+                ->addClass('text-center'),
+            Column::computed('shown_on_country_standing')
+                ->title(__('Giải Hot'))
+                ->exportable(false)
+                ->printable(false)
+                ->width(20)
+                ->addClass('text-center'),
+            Column::computed('priority')
+                ->title(__('Mức Độ ƯT'))
+                ->exportable(false)
+                ->printable(false)
+                ->width(20)
+                ->addClass('text-center'),
             Column::make('logo')->title(__('Logo')),
             Column::computed('action')
                 ->title(__('Tác vụ'))
@@ -51,13 +72,14 @@ class LeagueDataTable extends BaseDatable
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
+
         ];
     }
 
     protected function getBuilderParameters(): array
     {
         return [
-            'order' => [5, 'desc'],
+            'order' => [6, 'desc'],
         ];
     }
 
@@ -78,6 +100,7 @@ class LeagueDataTable extends BaseDatable
             Button::make('export')->addClass('btn btn-primary')->text('<i class="fal fa-download mr-2"></i>'.__('Xuất')),
             Button::make('print')->addClass('btn bg-primary')->text('<i class="fal fa-print mr-2"></i>'.__('In')),
             Button::make('reset')->addClass('btn bg-primary')->text('<i class="fal fa-undo mr-2"></i>'.__('Thiết lập lại')),
+            Button::make('save')->addClass('btn btn-primary')->text('<i class="fal fa-save mr-2"></i>'.__('Lưu thiết lập')),
         ];
     }
 

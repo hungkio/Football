@@ -23,11 +23,17 @@ export const ROUTES = {
   NATIONAL: '/:id',
   NATIONAL_RESULTS: '/:id/results',
   NATIONAL_LIVESCORES: '/:id/livescores',
-  NATIONAL_TOURNAMENTS: '/:id/tournaments',
-  NATIONAL_ANALYSIS: '/:id/analysis',
   NATIONAL_STANDINGS: '/:id/standings',
   NATIONAL_FIXTURES: '/:id/fixtures',
+  NATIONAL_TOURNAMENTS: '/:id/tournaments',
+  NATIONAL_ANALYSIS: '/:id/analysis',
   NATIONAL_BETTING_ODDS: '/:id/betting-odds',
   NATIONAL_TOP_SCORES: '/:id/top-scorers',
-  NATIONAL_PREDICTIONS: '/:id/predictions'
+  NATIONAL_PREDICTIONS: '/:id/predictions',
+  NATIONAL_TEAM: '/:id/national-team?results',
+  NATIONAL_TEAM_RESULTS: '/:id/national-team?results',
+  NATIONAL_TEAM_LIVESCORES: '/:id/national-team?livescore',
+  NATIONAL_TEAM_STANDINGS: '/:id/national-team?standings',
+  NATIONAL_TEAM_FIXTURES: '/:id/national-team?fixtures',
+  NATIONAL_TEAM_TOP_SCORES: '/:id/national-team?top-scorers'
 }

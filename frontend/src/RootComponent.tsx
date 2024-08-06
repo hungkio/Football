@@ -6,8 +6,6 @@ import NotFoundPage from './pages/NotFoundPage'
 import { ROUTES } from './resources/routes-constants'
 import NationalOrTournament from './pages/Tournament/NationalOrTournament'
 import Result from './pages/Tournament/components/Result'
-import Identify from './pages/Tournament/components/Identify'
-import Forecast from './pages/Tournament/components/Forecast'
 import TournamentStandings from './pages/Tournament/components/Standings'
 import TopScores from './pages/Tournament/components/TopScorers'
 import Fixtures from './pages/Tournament/components/Fixtures'
@@ -21,6 +19,12 @@ import FIFAStandings from './pages/Rankings/FIFAStandings'
 import NationalList from './pages/NationalList'
 import TopScore from './pages/TopScore'
 import Tournament from './pages/Tournament/components/Tournament'
+import NationalTeamPage from './pages/National/components/NationalTeamPage'
+import NationalTeamResult from './pages/National/components/Result'
+import NationalTeamStanding from './pages/National/components/Standings'
+import NationalTeamTopScores from './pages/National/components/TopScorers'
+import NationalTeamTopFixtures from './pages/National/components/Fixtures'
+import NationalTeamLiveScore from './pages/National/components/LiveScore'
 
 const RootComponent: React.FC = () => {
   return (
@@ -39,12 +43,20 @@ const RootComponent: React.FC = () => {
         <Route path={ROUTES.FIXTURES} element={<HomePage />} />
         <Route path={ROUTES.NEWS} element={<News />} />
         <Route path={ROUTES.NATIONAL_TOURNAMENT} element={<NationalOrTournament />}>
+          <Route path={ROUTES.NATIONAL_TOURNAMENT + '/'} element={<Result />}></Route>
           <Route path={ROUTES.TOURNAMENT_RESULTS} element={<Result />}></Route>
           <Route path={ROUTES.TOURNAMENT_STANDINGS} element={<TournamentStandings />}></Route>
           <Route path={ROUTES.TOURNAMENT_TOP_SCORES} element={<TopScores />}></Route>
           <Route path={ROUTES.TOURNAMENT_FIXTURES} element={<Fixtures />}></Route>
           <Route path={ROUTES.TOURNAMENT_LIVESCORES} element={<TournamentLiveScore />}></Route>
           <Route path={ROUTES.TOURNAMENT_TOURNAMENTS} element={<Tournament />}></Route>
+        </Route>
+        <Route path={ROUTES.NATIONAL_TEAM} element={<NationalTeamResult />}>
+          <Route path={ROUTES.NATIONAL_TEAM_RESULTS} element={<NationalTeamResult />}></Route>
+          <Route path={ROUTES.NATIONAL_TEAM_STANDINGS} element={<NationalTeamStanding />}></Route>
+          <Route path={ROUTES.NATIONAL_TEAM_TOP_SCORES} element={<NationalTeamTopScores />}></Route>
+          <Route path={ROUTES.NATIONAL_TEAM_FIXTURES} element={<NationalTeamTopFixtures />}></Route>
+          <Route path={ROUTES.NATIONAL_TEAM_LIVESCORES} element={<NationalTeamLiveScore />}></Route>
         </Route>
       </Routes>
     </Router>

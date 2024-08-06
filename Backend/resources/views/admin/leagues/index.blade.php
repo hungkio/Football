@@ -30,8 +30,25 @@
 @stop
 
 @push('js')
+    <script>
+      (function ($, DataTable) {
+            "use strict";
+            DataTable.ext.buttons.save = {
+            className: 'buttons-save',
+
+            text: function (dt) {
+                return '<i class="fa fa-save"></i> ' + dt.i18n('buttons.save', 'Save');
+            },
+
+            action: function (e, dt, button, config) {
+                console.log('Test');
+            }
+            };
+        })(jQuery, jQuery.fn.dataTable);
+    </script>
     {{$dataTable->scripts()}}
     <script>
+
         $(document).on('change','#select_status', function () {
             var status = $(this).val();
             var url = $(this).attr('data-url');

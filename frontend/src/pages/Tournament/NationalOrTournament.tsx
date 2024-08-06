@@ -71,8 +71,8 @@ const NationalOrTournament = () => {
                 to={tab.url}
                 key={index}
                 end
-                className={() =>
-                  tab.url.includes(pathname)
+                className={({ isActive }) =>
+                  isActive
                     ? 'px-2.5 py-2 text-xs cursor-pointer bg-secondary text-primary hover:text-red mr-1.5 inline-block'
                     : 'px-2.5 py-2 text-xs cursor-pointer bg-[#f0f0f0] text-primary hover:text-red mr-1.5 inline-block'
                 }
