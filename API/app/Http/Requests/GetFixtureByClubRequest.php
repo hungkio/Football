@@ -25,8 +25,6 @@ class GetFixtureByClubRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'league_slug' => 'string|required',
-            'season' => 'integer|required',
             'team_slug' => 'string|required',
         ];
     }
