@@ -41,9 +41,29 @@
             },
 
             action: function (e, dt, button, config) {
-              var data = $('.popular, .shown_standing, .priority').serialize();
-              confirmAction('Bạn có muốn thực hiện những thay đổi này không ?', function (result) {
-              if (result) {
+                var data = $('.popular, .shown_standing, .priority').serialize();
+                $.each($('.popular')
+                    .filter(function(idx){
+                        return $(this).prop('checked') === false
+                    }),
+                    function(idx, el){
+                        // attach matched element names to the formData with a chosen value.
+                        var emptyVal = 0;
+                        data += '&' + $(el).attr('name') + '=' + emptyVal;
+                    }
+                );
+                $.each($('.shown_standing')
+                    .filter(function(idx){
+                        return $(this).prop('checked') === false
+                    }),
+                    function(idx, el){
+                        // attach matched element names to the formData with a chosen value.
+                        var emptyVal = 0;
+                        data += '&' + $(el).attr('name') + '=' + emptyVal;
+                    }
+                );
+                confirmAction('Bạn có muốn thực hiện những thay đổi này không ?', function (result) {
+                if (result) {
                     $.ajax({
                         url: '{{route('admin.api.league.savepsp')}}',
                         data: data,
