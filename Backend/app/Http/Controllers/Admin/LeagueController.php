@@ -82,4 +82,13 @@ class LeagueController
 
         return intended($request, route('admin.api.leagues'));
     }
+
+    public function savePriority(Request $request){
+        $league = League::find($request->league_id);
+        $league->priority = $request->priority;
+        $league->save();
+        flash()->success(__('Giải đấu ":model" đã được cập nhật thành công!', ['model' => $league->name]));
+        logActivity($league, 'update'); // log activity
+        return intended($request, route('admin.api.leagues'));
+    }
 }
