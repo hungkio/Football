@@ -72,3 +72,4 @@ Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);
 Route::get('headToHead', [Head2HeadController::class, 'index']);
 Route::get('getTeamsByPopularLeagues', [TeamController::class, 'getTeamsByPopularLeagues']);
 Route::get('getRounds', [FixtureController::class, 'getRounds']);
+Route::get('getFixtureByClub', [FixtureController::class, 'getFixtureByClub']);
