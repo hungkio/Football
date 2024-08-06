@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetFixtureByClubRequest;
 use App\Http\Requests\GetFixturesByCountryRequest;
 use App\Http\Requests\GetFixturesByLeagueRequest;
 use App\Http\Requests\GetFixturesByTeamRequest;
@@ -64,13 +65,13 @@ class FixtureController extends Controller
         ->when($request->status, function($query) use ($request){
             switch ($request->status) {
                 case Fixture::FINISHED: //2
-                    $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['FT']);
+                    $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Match Finished']);
                     break;
                 case Fixture::NOT_STARTED: //1
-                    $query->whereRaw("JSON_EXTRACT(status, '$.short') = ?", ['NS']);
+                    $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Not Started']);
                     break;
                 case Fixture::LIVE: 
-                    $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.short'))) NOT IN (?, ?)", ['NS', 'FT']);
+                    $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.long'))) NOT IN (?, ?)", ['Not Started', 'Match Finished']);
                     break;
             }
         })
@@ -158,6 +159,43 @@ class FixtureController extends Controller
             ->count(DB::raw("TRIM(BOTH ' ' FROM SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(league, '$.round')), '-', -1))"));
 
             return response()->json($roundsCount);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th,
+            ]);
+        }
+    }
+
+    public function getFixtureByClub(GetFixtureByClubRequest $request){
+        try {
+            $league = League::where('slug', $request->league_slug)->first();
+            $team = Team::where('slug', $request->team_slug)->first();
+            
+            $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.id') = ?", [$league->api_id])
+            ->where(function($query) use ($team){
+                $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
+                ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+            })
+            ->when($request->status, function($query) use ($request){
+                switch ($request->status) {
+                    case Fixture::FINISHED: //2
+                        $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Match Finished']);
+                        break;
+                    case Fixture::NOT_STARTED: //1
+                        $query->whereRaw("JSON_EXTRACT(status, '$.long') = ?", ['Not Started']);
+                        break;
+                    case Fixture::LIVE: 
+                        $query->whereRaw("TRIM(BOTH ' ' FROM JSON_UNQUOTE(JSON_EXTRACT(status, '$.long'))) NOT IN (?, ?)", ['Match Finished', 'Not Started']);
+                        break;
+                }
+            })
+            ->when($request->limit, function($query) use ($request){
+                $query->limit($request->limit);
+            })
+            ->get();
+
+            return response()->json($fixtures);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
