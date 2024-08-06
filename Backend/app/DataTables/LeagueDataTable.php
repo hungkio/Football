@@ -49,13 +49,13 @@ class LeagueDataTable extends BaseDatable
             Column::make('type')->title(__('Kiểu')),
             Column::make('country_code')->title(__('Quốc gia')),
             Column::computed('shown_on_country_standing')
-                ->title(__('Giải Hot'))
+                ->title(__('BXH QG'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(20)
                 ->addClass('text-center'),
             Column::computed('popular')
-                ->title(__('BXH QG'))
+                ->title(__('Giải Hot'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(20)

@@ -252,6 +252,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/api/leagues', [LeagueController::class, 'index'])->name('api.leagues');
             Route::post('/api/leagues/store', [LeagueController::class, 'store'])->name('api.league.store');
             Route::post('/api/leagues/priority', [LeagueController::class, 'savePriority'])->name('api.league.priority.save');
+            Route::post('/api/leagues/savepsp', [LeagueController::class, 'savePSP'])->name('api.league.savepsp');
             Route::get('/api/leagues/create', [LeagueController::class, 'create'])->name('api.league.create');
             Route::get('/api/league/{league}', [LeagueController::class, 'edit'])->name('api.league.edit');
             Route::put('/api/league/{league}', [LeagueController::class, 'update'])->name('api.league.update');
@@ -275,7 +276,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/api/tool-auto-link', [ToolAutoLinkController::class, 'store']);
             Route::put('/api/tool-auto-link/{id}', [ToolAutoLinkController::class, 'update']);
             Route::delete('/api/tool-auto-link/{id}', [ToolAutoLinkController::class, 'delete']);
-            
+
             // tool autoLink seo
             Route::get('/api/tool-meta-seo-link', [ToolMetaSeoLinkController::class, 'index']);
             Route::post('/api/tool-meta-seo-link', [ToolMetaSeoLinkController::class, 'store']);

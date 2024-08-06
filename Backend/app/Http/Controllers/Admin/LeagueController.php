@@ -96,4 +96,8 @@ class LeagueController
         logActivity($league, 'update'); // log activity
         return intended($request, route('admin.api.leagues'));
     }
+    public function savePSP(Request $request){
+        $data = $request->all();
+        var_dump($data);
+    }
 }

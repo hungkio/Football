@@ -41,16 +41,34 @@
             },
 
             action: function (e, dt, button, config) {
-                console.log('Test');
+              var data = $('.popular, .shown_standing, .priority').serialize();
+              confirmAction('Bạn có muốn thực hiện những thay đổi này không ?', function (result) {
+              if (result) {
+                    $.ajax({
+                        url: '{{route('admin.api.league.savepsp')}}',
+                        data: data,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.status == true){
+                                showMessage('success', res.message);
+                            }else{
+                                showMessage('error', res.message);
+                            }
+                            window.LaravelDataTables['{{ $dataTable->getTableAttribute('id') }}'].ajax.reload();
+                        },
+                    });
+                }else{
+                    window.LaravelDataTables['{{ $dataTable->getTableAttribute('id') }}'].ajax.reload();
+                }
+            });
             }
             };
         })(jQuery, jQuery.fn.dataTable);
     </script>
     {{$dataTable->scripts()}}
     <script>
-        $(document).on('click','.popular, .shown_standing, .priority',function(e){
-            e.preventDefault();
-        });
+
         $(document).on('change','#select_status', function () {
             var status = $(this).val();
             var url = $(this).attr('data-url');
