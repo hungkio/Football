@@ -48,7 +48,9 @@
     </script>
     {{$dataTable->scripts()}}
     <script>
-
+        $(document).on('click','.popular, .shown_standing, .priority',function(e){
+            e.preventDefault();
+        });
         $(document).on('change','#select_status', function () {
             var status = $(this).val();
             var url = $(this).attr('data-url');

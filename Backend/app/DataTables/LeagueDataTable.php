@@ -27,6 +27,7 @@ class LeagueDataTable extends BaseDatable
             ->addColumn('shown_on_country_standing', fn (League $league) => view('admin.leagues._tableBXH', compact('league')))
             ->addColumn('popular', fn (League $league) => view('admin.leagues._tablePopular', compact('league')))
             ->addColumn('priority', fn (League $league) => view('admin.leagues._tablePriority', compact('league')))
+            ->addColumn('country_code', fn (League $league) => display_country_name($league->country_code))
             ->rawColumns(['shown_on_country_standing','popular','priority','action'])
             ;
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
@@ -46,15 +47,15 @@ class LeagueDataTable extends BaseDatable
             Column::make('api_id')->title(__('Mã giải')),
             Column::make('name')->title(__('Tên')),
             Column::make('type')->title(__('Kiểu')),
-            Column::make('country_code')->title(__('Mã quốc gia')),
-            Column::computed('popular')
-                ->title(__('BXH QG'))
+            Column::make('country_code')->title(__('Quốc gia')),
+            Column::computed('shown_on_country_standing')
+                ->title(__('Giải Hot'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(20)
                 ->addClass('text-center'),
-            Column::computed('shown_on_country_standing')
-                ->title(__('Giải Hot'))
+            Column::computed('popular')
+                ->title(__('BXH QG'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(20)
