@@ -68,7 +68,7 @@
                                     <div class="col-lg-9">
                                         <select class="form-control" name="country_code">
                                             <option value="{{null}}">{{ __('Chọn mã quốc gia') }}</option>
-                                            
+
                                             @foreach ($country_codes as $country_code)
                                                 <option value="{{$country_code}}" @if ($league->country_code == $country_code)
                                                     selected
@@ -83,8 +83,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="shown_on_country_standing" class="col-lg-2 col-form-label text-right"> {{ __("Đang hiển thị trên BXH QG") }} :</label>
+                                    <label for="shown_on_country_standing" class="col-lg-2 col-form-label text-right"> {{ __("Hiển thị trên BXH QG") }} :</label>
                                     <div class="col-lg-9">
+                                        <input class="form-check-input" type="checkbox" value="1" @if ($league->shown_on_country_standing) checked @endif id="shown_on_country_standing" name="shown_on_country_standing">
                                         <select class="form-control" name="shown_on_country_standing">
                                             <option value="0" @if (!$league->shown_on_country_standing)
                                                 selected
@@ -98,6 +99,7 @@
                                 <div class="form-group row">
                                     <label for="popular" class="col-lg-2 col-form-label text-right"> {{ __("Được quan tâm") }} :</label>
                                     <div class="col-lg-9">
+                                        <input class="form-check-input" type="checkbox" value="1" @if ($league->popular) checked @endif id="popular" name="popular">
                                         <select class="form-control" name="popular">
                                             <option value="0" @if (!$league->popular)
                                                 selected

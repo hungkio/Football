@@ -45,8 +45,14 @@ class LeagueDataTable extends BaseDatable
             Column::make('name')->title(__('Tên')),
             Column::make('type')->title(__('Kiểu')),
             Column::make('country_code')->title(__('Mã quốc gia')),
-            Column::make('shown_on_country_standing')->title(__('Đang hiển thị trên BXH QG')),
-            Column::make('popular')->title(__('Được quan tâm')),
+            Column::make('shown_on_country_standing')->title(__('BXH QG')),
+            Column::make('popular')->title(__('Giải Hot')),
+            Column::computed('priority')
+                ->title(__('Mức Độ UT'))
+                ->exportable(false)
+                ->printable(false)
+                ->width(20)
+                ->addClass('text-center'),
             Column::make('logo')->title(__('Logo')),
             Column::computed('action')
                 ->title(__('Tác vụ'))
@@ -54,12 +60,7 @@ class LeagueDataTable extends BaseDatable
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
-            Column::computed('priority')
-                ->title(__('Độ ưu tiên'))
-                ->exportable(false)
-                ->printable(false)
-                ->width(20)
-                ->addClass('text-center'),
+
         ];
     }
 
@@ -87,6 +88,7 @@ class LeagueDataTable extends BaseDatable
             Button::make('export')->addClass('btn btn-primary')->text('<i class="fal fa-download mr-2"></i>'.__('Xuất')),
             Button::make('print')->addClass('btn bg-primary')->text('<i class="fal fa-print mr-2"></i>'.__('In')),
             Button::make('reset')->addClass('btn bg-primary')->text('<i class="fal fa-undo mr-2"></i>'.__('Thiết lập lại')),
+            Button::make('save')->addClass('btn btn-primary')->text('<i class="fal fa-save mr-2"></i>'.__('Lưu')),
         ];
     }
 
