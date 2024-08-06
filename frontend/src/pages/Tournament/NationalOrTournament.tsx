@@ -1,17 +1,6 @@
-import Tabs from '@/components/Tabs'
 import Default from '@/layouts/Default'
 import React from 'react'
-import Result from './components/Result'
-import LiveScore from './components/LiveScore'
-import Identify from './components/Identify'
-import Forecast from './components/Forecast'
-import Bet from './components/BettingOdds'
-import BroadcastSchedule from './components/BroadcastSchedule'
-import Standings from './components/Standings'
-import TopScores from './components/TopScorers'
-import Tournament from './components/Tournament'
 import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom'
-import Schedule from './components/Fixtures'
 import { ROUTES } from '@/resources/routes-constants'
 
 const NationalOrTournament = () => {
@@ -40,8 +29,8 @@ const NationalOrTournament = () => {
           url: ROUTES.NATIONAL_FIXTURES.replace(':id', String(id))
         },
         {
-          label: 'Livescore',
-          url: ROUTES.NATIONAL_LIVESCORES.replace(':id', String(id))
+          label: 'Giải đấu',
+          url: ROUTES.NATIONAL_TOURNAMENTS.replace(':id', String(id))
         }
       ]
     : [

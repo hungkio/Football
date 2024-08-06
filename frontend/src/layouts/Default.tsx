@@ -23,6 +23,7 @@ const Default: FC<DefaultProps> = ({ children }) => {
       )}
       <Helmet>
         <title>Kết Quả Bóng Đá Tự Động</title>
+        <base href="/" />
       </Helmet>
       <Header />
       <div>
