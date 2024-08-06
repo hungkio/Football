@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="popular" class="col-lg-2 col-form-label text-right"> {{ __("Được quan tâm") }} :</label>
+                                    <label for="popular" class="col-lg-2 col-form-label text-right"> {{ __("Giải Hot") }} :</label>
                                     <div class="col-lg-9">
                                         <div class="form-check"><input class="form-check-input" type="checkbox" value="1" @if ($league->popular) checked @endif id="popular" name="popular"></div>
                                     </div>
