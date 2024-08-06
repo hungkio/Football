@@ -69,9 +69,9 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () use ($crawlApiController) {
             $crawlApiController->crawlStandings();
         })->hourly();
-        /*$schedule->call(function () use ($crawlApiController) {
+        $schedule->call(function () use ($crawlApiController) {
             $crawlApiController->crawlFifarank();
-        })->daily();*/
+        })->daily();
     }
 
     /**
