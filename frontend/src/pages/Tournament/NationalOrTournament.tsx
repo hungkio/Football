@@ -63,9 +63,10 @@ const NationalOrTournament = () => {
     <Default>
       <h1 className="py-1 px-2.5 bg-[#f9f9f9] mb-2.5 border border-[#eee] font-bold text-secondary">Giải đấu</h1>
       <div className="border-b-2 border-secondary mt-2">
+        <ul className="py-2.5 text-nowrap whitespace-nowrap overflow-x-auto flex">
         {tabs.map((tab, index) => {
           return (
-            <>
+            <li key={index}>
               <NavLink
                 to={tab.url}
                 key={index}
@@ -78,9 +79,10 @@ const NationalOrTournament = () => {
               >
                 {tab.label}
               </NavLink>
-            </>
+            </li>
           )
         })}
+        </ul>
       </div>
       <Outlet />
     </Default>

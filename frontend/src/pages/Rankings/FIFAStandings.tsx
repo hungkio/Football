@@ -35,9 +35,9 @@ const FIFAStandings = () => {
         <div className="py-2.5 pl-1 my-2.5 bg-[#f9f9f9] border border-[#eee]">
           <h1 className="text-sm font-bold text-red">Bảng xếp hạng FIFA 2024 tháng 07 - BXH FIFA mới nhất</h1>
         </div>
-        <table className="w-full text-center">
+        <table className="w-full text-center flex sm:table">
           <thead>
-            <tr className="bg-[#edf2f7] text-xs [&>th]:p-2">
+            <tr className="bg-[#edf2f7] text-xs [&>th]:p-2 flex flex-col items-start sm:table-row w-[108px] sm:w-auto">
               <th>XHKV</th>
               <th className="text-left">ĐTQG</th>
               <th>XH FIFA</th>
@@ -48,13 +48,13 @@ const FIFAStandings = () => {
               <th className="text-right">Khu vực</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="flex flex-row sm:table-row-group overflow-auto">
             {countries.length > 0 &&
               countries.map((country, index) => {
                 return (
-                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
+                  <tr key={index} className="text-xs [&>td]:p-2 [&>td]:w-[80px] sm:[&>td]:w-auto border-b border-[#eee] flex flex-col sm:table-row">
                     <td>{index}</td>
-                    <td className="text-left">{country.name_vi ?? country.name}</td>
+                    <td className="text-center sm:text-left overflow-hidden whitespace-nowrap">{country.name_vi ?? country.name}</td>
                     <td>{index}</td>
                     <td>{Math.floor(Number(country.points))}</td>
                     <td>{Math.floor(Number(country.previous_points))}</td>
@@ -83,7 +83,7 @@ const FIFAStandings = () => {
                         ''
                       )}
                     </td>
-                    <td className="text-right">{country.region_vi ?? country.region}</td>
+                    <td className="text-center sm:text-right">{country.region_vi ?? country.region}</td>
                   </tr>
                 )
               })}

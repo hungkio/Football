@@ -38,7 +38,7 @@ const Default: FC<DefaultProps> = ({ children }) => {
           <img className="block" src={AdsLeftRight} alt="" />
         </div>
         <div className="container mx-auto pb-4">
-          <div className="w-[100%] md:w-[75%] xl:w-[70%] mb-4 md:mb-0 md:float-left">{children}</div>
+          <div className="w-[100%] md:w-[75%] xl:w-[70%] md:pr-2 mb-4 md:mb-0 md:float-left">{children}</div>
           <div className="w-[100%] md:w-[25%] xl:w-[30%] md:float-right">
             <Sidebar />
           </div>
