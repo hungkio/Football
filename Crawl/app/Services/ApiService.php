@@ -211,7 +211,7 @@ class ApiService
         return null;
     }
 
-    public function crawlPlayersByTeam($team, $season, $page)
+    public function crawlPlayersByTeam($team, $season)
     {
         $response = $this->client->request('GET', 'players', [
             'headers' => [
@@ -222,7 +222,6 @@ class ApiService
             'query' => [
                 'league' => $team,
                 'season' => $season,
-                'page'   => $page
             ]
         ]);
 
@@ -351,4 +350,5 @@ class ApiService
 
         return null;
     }
+    
 }
