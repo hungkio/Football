@@ -23,7 +23,10 @@ class LeagueDataTable extends BaseDatable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('logo', fn (League $league) => view('admin.leagues._tableFlag', compact('league')))
-            ->addColumn('action', 'admin.leagues._tableAction');
+            ->addColumn('action', 'admin.leagues._tableAction')
+            ->addColumn('priority', fn (League $league) => view('admin.leagues._tablePriority', compact('league')))
+            ->rawColumns(['priority','action'])
+            ;
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
             // ->rawColumns(['action']);
     }
@@ -51,13 +54,19 @@ class LeagueDataTable extends BaseDatable
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
+            Column::computed('priority')
+                ->title(__('Độ ưu tiên'))
+                ->exportable(false)
+                ->printable(false)
+                ->width(20)
+                ->addClass('text-center'),
         ];
     }
 
     protected function getBuilderParameters(): array
     {
         return [
-            'order' => [5, 'desc'],
+            'order' => [6, 'desc'],
         ];
     }
 

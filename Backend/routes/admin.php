@@ -251,6 +251,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             Route::get('/api/leagues', [LeagueController::class, 'index'])->name('api.leagues');
             Route::post('/api/leagues/store', [LeagueController::class, 'store'])->name('api.league.store');
+            Route::post('/api/leagues/priority', [LeagueController::class, 'savePriority'])->name('api.league.priority.save');
             Route::get('/api/leagues/create', [LeagueController::class, 'create'])->name('api.league.create');
             Route::get('/api/league/{league}', [LeagueController::class, 'edit'])->name('api.league.edit');
             Route::put('/api/league/{league}', [LeagueController::class, 'update'])->name('api.league.update');

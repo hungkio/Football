@@ -53,9 +53,13 @@
                                     <label for="type" class="col-lg-2 col-form-label text-right"> {{ __("Phân loại") }} :</label>
                                     <div class="col-lg-9">
                                         <select class="form-control" name="type">
-                                            <option>{{ __('Chọn phân loại') }}</option>
-                                            <option value="league">{{ __('League') }}</option>
-                                            <option value="cup" >{{ __('Cup') }}</option>
+                                            <option value="{{null}}">{{ __('Chọn phân loại') }}</option>
+                                            <option value="League" @if ($league->type == 'League')
+                                                selected
+                                            @endif>{{ __('League') }}</option>
+                                            <option value="Cup" @if ($league->type == 'Cup')
+                                                selected
+                                            @endif>{{ __('Cup') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -63,11 +67,17 @@
                                     <label for="country_code" class="col-lg-2 col-form-label text-right"> {{ __("Mã quốc gia") }} :</label>
                                     <div class="col-lg-9">
                                         <select class="form-control" name="country_code">
-                                            <option>{{ __('Chọn mã quốc gia') }}</option>
+                                            <option value="{{null}}">{{ __('Chọn mã quốc gia') }}</option>
+                                            
                                             @foreach ($country_codes as $country_code)
-                                                <option value="{{$country_code}}"
-                                                @if(in_array($country_code, $country_codes)) selected @endif
-                                                >{{$country_code}}</option>
+                                                <option value="{{$country_code}}" @if ($league->country_code == $country_code)
+                                                    selected
+                                                @endif>{{ $country_code }}</option>
+                                                    {{-- @if (in_array('aa', $country_codes))
+                                                        {{dd('yes')}}
+                                                    @else
+                                                        {{dd('no')}}
+                                                    @endif --}}
                                             @endforeach
                                         </select>
                                     </div>
