@@ -98,10 +98,10 @@ class LeagueDataTable extends BaseDatable
     {
         return [
             // Button::make('create')->addClass('btn btn-success d-none')->text('<i class="fal fa-plus-circle mr-2"></i>'.__('Tạo mới')),
-            Button::make('export')->addClass('btn btn-primary')->text('<i class="fal fa-download mr-2"></i>'.__('Xuất')),
-            Button::make('print')->addClass('btn bg-primary')->text('<i class="fal fa-print mr-2"></i>'.__('In')),
-            Button::make('reset')->addClass('btn bg-primary')->text('<i class="fal fa-undo mr-2"></i>'.__('Thiết lập lại')),
-            Button::make('save')->addClass('btn btn-primary')->text('<i class="fal fa-save mr-2"></i>'.__('Lưu thiết lập')),
+            //Button::make('export')->addClass('btn btn-primary')->text('<i class="fal fa-download mr-2"></i>'.__('Xuất')),
+            //Button::make('print')->addClass('btn bg-primary')->text('<i class="fal fa-print mr-2"></i>'.__('In')),
+            //Button::make('reset')->addClass('btn bg-primary')->text('<i class="fal fa-undo mr-2"></i>'.__('Thiết lập lại')),
+            Button::make('save')->addClass('btn btn-primary')->text('<i class="fal fa-save mr-2"></i>'.__('Lưu các thay đổi')),
         ];
     }
 
