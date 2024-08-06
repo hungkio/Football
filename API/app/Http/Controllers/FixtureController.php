@@ -169,11 +169,9 @@ class FixtureController extends Controller
 
     public function getFixtureByClub(GetFixtureByClubRequest $request){
         try {
-            $league = League::where('slug', $request->league_slug)->first();
             $team = Team::where('slug', $request->team_slug)->first();
             
-            $fixtures = Fixture::whereRaw("JSON_EXTRACT(league, '$.id') = ?", [$league->api_id])
-            ->where(function($query) use ($team){
+            $fixtures = Fixture::where(function($query) use ($team){
                 $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
                 ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
             })
