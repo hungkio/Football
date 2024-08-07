@@ -15,7 +15,7 @@ class FixtureController
 {
     use AuthorizesRequests;
 
-    public function index(FixtureDataTable $dataTable)
+    public function index(FixtureDataTable $dataTable, Request $request)
     {
         $this->authorize('view', Fixture::class);
         $leagues = League::orderBy('priority')->get();

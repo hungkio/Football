@@ -47,7 +47,7 @@ class FixtureDataTable extends BaseDatable
                 return $venue;
             })
             ->editColumn('league', function (Fixture $fixture){
-                $league = json_decode($fixture->league)->name;
+                $league = json_decode($fixture->league)->name.' ('.json_decode($fixture->league)->season.') - '.json_decode($fixture->league)->country;
                 return $league;
             })
             ->editColumn('team_home', function (Fixture $fixture){

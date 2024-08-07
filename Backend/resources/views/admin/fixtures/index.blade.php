@@ -39,7 +39,7 @@
                 <select id="league_filter" name="league" class="form-control">
                     <option value="">Tất cả</option>
                     @foreach($leagues as $league)
-                    <option @if($league->api_id == $league_selected) selected @endif value="{{$league->api_id}}">{{$league->name}}</option>
+                    <option @if($league->api_id == $league_selected) selected @endif value="{{$league->api_id}}">{{$league->name}} - {{$league->country_name}}</option>
                     @endforeach
                 </select>
             </form>
