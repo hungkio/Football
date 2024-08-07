@@ -98,6 +98,7 @@ const navLink = [
 
 const Header = () => {
   const [navLinks, setNavLinks] = useState<IMenu[]>([])
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [countries, setCountries] = useState<IMenu[]>([])
   const dispatch = useAppDispatch()
   const fetchMenu = async () => {
@@ -111,6 +112,11 @@ const Header = () => {
       dispatch(loadingAction.hide())
     }
   }
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   useEffect(() => {
     fetchMenu()
   }, [])
@@ -142,21 +148,42 @@ const Header = () => {
         </div>
       </div>
       <div className="w-full bg-primary border-b-1.5 border-secondary border-b-[3px]">
-        <div className="container mx-auto">
-          <ul>
-            {countries.map((item, index) => {
-              return (
-                <li key={index} className="border-r border-secondary last:border-none float-left">
-                  <Link
-                    className="p-3 uppercase bg-primary hover:bg-secondary text-white hover:text-primary float-left font-bold text-[13px] inline-block"
-                    to={item.external_url ?? item.internal_url}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
+        <div className="container mx-auto flex">
+          <nav className="flex flex-wrap items-center justify-between w-full">
+            <svg
+                onClick={toggleMenu}
+                xmlns="http://www.w3.org/2000/svg"
+                id="menu-button"
+                className="h-[44px] w-6 cursor-pointer md:hidden block text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+              <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+
+            <div className={`w-full flex md:items-center md:w-auto ${isMenuVisible ? '' : 'hidden'} md:flex`} id="menu">
+              <ul>
+                {countries.map((item, index) => {
+                  return (
+                      <li key={index} className="border-r border-secondary last:border-none md:float-left">
+                        <Link
+                            className="p-3 uppercase bg-primary hover:bg-secondary text-white hover:text-primary float-left font-bold text-[13px] inline-block"
+                            to={item.external_url ?? item.internal_url}
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </nav>
           <div className="float-right">
             <Link className="p-3.5 bg-secondary text-white block" to={'/'}>
               <Search />

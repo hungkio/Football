@@ -21,7 +21,7 @@ const Betting = () => {
           <Link className="text-primary hover:text-red text-xs font-bold" to="/">
             {' ⟩ '} Olympic Games
           </Link>
-          <span className="ml-2 text-xs ml-auto text-white bg-red px-1.5 py-0.5 rounded-3xl">
+          <span className="ml-2 text-xs text-white bg-red px-1.5 py-0.5 rounded-3xl">
             <Link to={''}>Cược</Link>
           </span>
         </div>

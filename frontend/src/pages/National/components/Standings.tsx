@@ -82,9 +82,9 @@ const Standings = () => {
           }}
           dataLength={teams.length}
         >
-          <table className="w-full text-center">
+          <table className="w-full text-center flex sm:table">
             <thead>
-              <tr className="bg-[#edf2f7] text-xs [&>th]:p-2">
+              <tr className="bg-[#edf2f7] text-xs [&>th]:p-2 flex flex-col items-start sm:table-row w-[108px] sm:w-auto">
                 <th>XH</th>
                 <th className="text-left">Đội</th>
                 <th>Trận</th>
@@ -98,10 +98,10 @@ const Standings = () => {
                 <th>Phong độ 5 trận</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="flex flex-row sm:table-row-group overflow-auto">
               {teams.map((item, index) => {
                 return (
-                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
+                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] flex flex-col sm:table-row">
                     <td>{item.rank}</td>
                     <td className="text-left">{item.team_name}</td>
                     <td>{item.all.played}</td>

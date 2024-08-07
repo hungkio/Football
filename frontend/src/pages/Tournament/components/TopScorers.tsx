@@ -66,9 +66,9 @@ const TopScores = () => {
         <h1 className="text-sm font-bold text-red">TOP GHI BÀN BÓNG ĐÁ ANH MỚI NHẤT</h1>
       </div>
       {pageType === 0 && (
-        <table className="w-full text-center">
+        <table className="w-full text-center flex sm:table">
           <thead>
-            <tr className="bg-[#edf2f7] text-xs [&>th]:p-2">
+            <tr className="bg-[#edf2f7] text-xs [&>th]:p-2 flex flex-col items-start sm:table-row w-[108px] sm:w-auto">
               <th>XH</th>
               <th className="text-left">Đội bóng</th>
               <th>Bàn thắng</th>
@@ -76,10 +76,10 @@ const TopScores = () => {
             </tr>
           </thead>
           {players && players?.length > 0 && (
-            <tbody>
+            <tbody className="flex flex-row sm:table-row-group overflow-auto">
               {players.map((item, index) => {
                 return (
-                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee]">
+                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] flex flex-col sm:table-row">
                     <td>{index + 1}</td>
                     <td className="text-left">
                       <p>{item.player_name}</p>

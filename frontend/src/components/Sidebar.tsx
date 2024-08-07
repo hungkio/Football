@@ -60,7 +60,7 @@ const listTournament = [
 const Sidebar = () => {
   return (
     <>
-      <div className="mb-4">
+      <div className="hidden md:block mb-4">
         <img className="w-1/2 inline-block" src={AdsSidebar} alt="" />
         <img className="w-1/2 inline-block" src={AdsSidebar} alt="" />
         <img className="w-1/2 inline-block" src={AdsSidebar} alt="" />
