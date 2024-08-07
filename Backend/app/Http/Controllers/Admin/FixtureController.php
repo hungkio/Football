@@ -19,6 +19,7 @@ class FixtureController
     {
         $this->authorize('view', Fixture::class);
         $leagues = League::orderBy('priority')->get();
+        $get = $request->all();
         $league_selected = isset($get['league'])?$get['league']:'';
         return $dataTable->render('admin.fixtures.index',compact('leagues','league_selected'));
     }
