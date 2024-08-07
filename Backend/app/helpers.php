@@ -116,3 +116,19 @@ if (!function_exists('site_get_mail_template')) {
         return [];
     }
 }
+
+if (!function_exists('display_country_name')) {
+    function display_country_name($code)
+    {
+        $countrie = \DB::table('countries')
+            ->where([
+                ['code', $code],
+            ])
+            ->first();
+
+        if (!empty($countrie->name)) {
+            return $countrie->name;
+        }
+        return $code;
+    }
+}

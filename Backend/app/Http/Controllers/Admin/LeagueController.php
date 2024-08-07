@@ -13,11 +13,13 @@ class LeagueController
 {
     use AuthorizesRequests;
 
-    public function index(LeagueDataTable $dataTable)
+    public function index(LeagueDataTable $dataTable, Request $request)
     {
         $this->authorize('view', League::class);
-
-        return $dataTable->render('admin.leagues.index');
+        $countries = Country::all();
+        $get = $request->all();
+        $country_selected = isset($get['country'])?$get['country']:'';
+        return $dataTable->render('admin.leagues.index', compact('countries','country_selected'));
     }
     public function create(): View
     {
@@ -29,7 +31,7 @@ class LeagueController
                 $country_codes[] = $country->code;
             }
         }
-        return view('admin.leagues.create', compact('country_codes'));
+        return view('admin.leagues.create', compact('country_codes','countries'));
     }
     public function delete($id){
         $league = League::find($id);
@@ -45,6 +47,8 @@ class LeagueController
     {
         $this->authorize('create', League::class);
         $data = $request->all();
+        $data['popular'] = isset($data['popular'])?1:0;
+        $data['shown_on_country_standing'] = isset($data['shown_on_country_standing'])?1:0;
         $league = League::create($data);
         if ($request->hasFile('logo')) {
             $league->addMedia($request->file('logo'))->toMediaCollection('league');
@@ -66,13 +70,16 @@ class LeagueController
                 $country_codes[] = $country->code;
             }
         }
-        return view('admin.leagues.edit', compact('league', 'country_codes'));
+        return view('admin.leagues.edit', compact('league', 'country_codes','countries'));
     }
 
     public function update(League $league, Request $request)
     {
         $this->authorize('update', $league);
-        $league->update($request->except('logo'));
+        $data = $request->except('logo');
+        $data['popular'] = isset($data['popular'])?1:0;
+        $data['shown_on_country_standing'] = isset($data['shown_on_country_standing'])?1:0;
+        $league->update($data);
         if ($request->hasFile('logo')) {
             $league->addMedia($request->file('logo'))->toMediaCollection('league');
         }
@@ -81,5 +88,39 @@ class LeagueController
         logActivity($league, 'update'); // log activity
 
         return intended($request, route('admin.api.leagues'));
+    }
+
+    public function savePriority(Request $request){
+        $league = League::find($request->league_id);
+        $league->priority = $request->priority;
+        $league->save();
+        flash()->success(__('Giải đấu ":model" đã được cập nhật thành công!', ['model' => $league->name]));
+        logActivity($league, 'update'); // log activity
+        return intended($request, route('admin.api.leagues'));
+    }
+    public function savePSP(Request $request){
+        $data = $request->all();
+        $priority = $data['priority'];
+        foreach ($priority as $key => $value){
+            if($value){
+                $league = League::find($key);
+                $league->priority = $value;
+                $league->save();
+            }
+        }
+        $shown_standing = $data['shown_standing'];
+        foreach ($shown_standing as $key => $value){
+            $league = League::find($key);
+            $league->shown_on_country_standing = $value;
+            $league->save();
+        }
+        $popular = $data['popular'];
+        foreach ($popular as $key => $value){
+            $league = League::find($key);
+            $league->popular = $value;
+            $league->save();
+        }
+        logActivity($league, 'update'); // log activity
+        return array('status'=>true,'message'=>__('Đã cập nhật thông tin các giải đấu thành công!'));
     }
 }

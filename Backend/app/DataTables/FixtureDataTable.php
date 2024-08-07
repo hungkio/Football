@@ -43,30 +43,35 @@ class FixtureDataTable extends BaseDatable
                 }
             })
             ->editColumn('venue', function (Fixture $fixture){
-                $venue = json_decode($fixture->venue)->id;
+                $venue = json_decode($fixture->venue)->name;
                 return $venue;
             })
             ->editColumn('league', function (Fixture $fixture){
-                $league = json_decode($fixture->league)->id;
+                $league = json_decode($fixture->league)->name.' ('.json_decode($fixture->league)->season.') - '.json_decode($fixture->league)->country;
                 return $league;
             })
-            ->editColumn('team_away', function (Fixture $fixture){
-                $team_away = json_decode($fixture->teams)->away->id;
-                return $team_away;
-            })
             ->editColumn('team_home', function (Fixture $fixture){
-                $team_home = json_decode($fixture->teams)->home->id;
+                $team_home = json_decode($fixture->teams)->home->name;
                 return $team_home;
             })
+            ->editColumn('team_away', function (Fixture $fixture){
+                $team_away = json_decode($fixture->teams)->away->name;
+                return $team_away;
+            })
+
             ->editColumn('goals', function (Fixture $fixture){
                 $goals = (json_decode($fixture->goals)->home ?? 'đang cập nhật') . ' - ' . (json_decode($fixture->goals)->away ?? 'đang cập nhật');
                 return $goals;
             })
+            ->orderColumn('date', '-date $1')
             ->rawColumns(['action']);
     }
 
     public function query(Fixture $model): Builder
     {
+        if ($this->request()->get('league')) {
+            return $model->where('league->id', $this->request()->get('league'));
+        }
         return $model->newQuery();
     }
 
@@ -76,15 +81,15 @@ class FixtureDataTable extends BaseDatable
             Column::checkbox(''),
             Column::make('id')->title(__('STT'))->data('DT_RowIndex')->searchable(false),
             Column::make('api_id')->title(__('Mã trận')),
+            Column::make('team_home')->title(__('Đội nhà'))->searchable(false),
+            Column::make('team_away')->title(__('Đội khách'))->searchable(false),
+            Column::make('league')->title(__('Giải')),
+            Column::make('goals')->title(__('Tỉ số' )),
+            Column::make('venue')->title(__('Sân')),
             Column::make('referee')->title(__('Trọng tài')),
             Column::make('date')->title(__('Bắt đầu')),
             Column::make('periods')->title(__('Hiệp 1'))->searchable(false),
             Column::make('periods2')->title(__('Hiệp 2'))->searchable(false),
-            Column::make('venue')->title(__('Sân')),
-            Column::make('league')->title(__('Giải')),
-            Column::make('team_away')->title(__('Đội khách'))->searchable(false),
-            Column::make('team_home')->title(__('Đội nhà'))->searchable(false),
-            Column::make('goals')->title(__('tỉ số (Đội nhà - đội khách)' )),
             Column::computed('action')
                 ->title(__('Tác vụ'))
                 ->exportable(false)

@@ -27,7 +27,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container mx-auto text-xs bg-white p-4">
-        <div className="mx-auto text-xs grid grid-cols-6 gap-2">
+        <div className="mx-auto text-xs grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 flex-wrap">
           <div className="col-2">
             <p className="font-bold uppercase text-lg underline-offset-[6px] underline decoration-2 decoration-[#0080c7]">Quick link</p>
             <ul className="list-disc pl-4 mt-2.5">
@@ -206,12 +206,12 @@ const Footer = () => {
         </div>
       </div>
       <div className="container py-4 mx-auto">
-        <div className="flex items-center">
+        <div className="block lg:flex items-center">
           <Link to={'/'}>
-            <img src={Logo} width={206} alt="Logo" />
+            <img src={Logo} width={206} alt="Logo" className="mx-auto"/>
           </Link>
-          <div className="text-xs">
-            <ul className="flex gap-2.5">
+          <div className="text-xs mx-auto lg:mx-0">
+            <ul className="flex gap-x-2.5 justify-center flex-wrap">
               <li>
                 <Link className="text-primary hover:text-red py-1.5 inline-block" to={''}>
                   About us
@@ -258,7 +258,7 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
-            <p>Copyright © 2018 - 2024. All rights reserved. You must be 18 years old or over to use this site. | ®</p>
+            <p className="text-center lg:text-left">Copyright © 2018 - 2024. All rights reserved. You must be 18 years old or over to use this site. | ®</p>
           </div>
         </div>
       </div>
