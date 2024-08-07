@@ -64,15 +64,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="country_code" class="col-lg-2 col-form-label text-right"> {{ __("Mã quốc gia") }} :</label>
+                                    <label for="country_name" class="col-lg-2 col-form-label text-right"> {{ __("Quốc gia") }} :</label>
                                     <div class="col-lg-9">
-                                        <select class="form-control" name="country_code">
-                                            <option value="{{null}}">{{ __('Chọn mã quốc gia') }}</option>
+                                        <select class="form-control" name="country_name" id="country_name">
+                                            <option value="{{null}}">{{ __('Chọn quốc gia') }}</option>
 
-                                            @foreach ($country_codes as $country_code)
-                                                <option value="{{$country_code}}" @if ($league->country_code == $country_code)
+                                            @foreach ($countries as $country)
+                                                <option value="{{$country->name}}" data-code="{{$country->code}}" @if ($league->country_name == $country->name)
                                                     selected
-                                                @endif>{{ $country_code }}</option>
+                                                @endif>{{ $country->name }}</option>
                                                     {{-- @if (in_array('aa', $country_codes))
                                                         {{dd('yes')}}
                                                     @else
@@ -81,6 +81,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <input type="hidden" name="country_code" id="country_code" value="{{$league->country_code}}" />
                                 </div>
                                 <div class="form-group row">
                                     <label for="shown_on_country_standing" class="col-lg-2 col-form-label text-right"> {{ __("Hiển thị trên BXH QG") }} :</label>
@@ -143,3 +144,10 @@
         <!-- /left content -->
     </div>
 </form>
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        $('#country_name').on('change',function(){
+            $('#country_code').val($(this).find(':selected').data('code'));
+        });
+    });
+</script>
