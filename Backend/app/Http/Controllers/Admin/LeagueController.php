@@ -13,11 +13,13 @@ class LeagueController
 {
     use AuthorizesRequests;
 
-    public function index(LeagueDataTable $dataTable)
+    public function index(LeagueDataTable $dataTable, Request $request)
     {
         $this->authorize('view', League::class);
-
-        return $dataTable->render('admin.leagues.index');
+        $countries = Country::all();
+        $get = $request->all();
+        $country_code = $get['country_code'];
+        return $dataTable->render('admin.leagues.index', compact('countries','country_code'));
     }
     public function create(): View
     {

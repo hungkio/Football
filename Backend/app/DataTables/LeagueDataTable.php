@@ -8,6 +8,7 @@ use App\Domain\League\Models\League;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use SingleQuote\DataTables\Filter\Dropdown;
 
 class LeagueDataTable extends BaseDatable
 {
@@ -33,9 +34,14 @@ class LeagueDataTable extends BaseDatable
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
             // ->rawColumns(['action']);
     }
-
     public function query(League $model): Builder
     {
+        //if ($this->getFilter('filter') && (int) $this->getFilter('filter') === 2) {
+            //return $query->where(); //return with deleted users
+        //}
+        if ($this->request()->get('country_code')) {
+            return $model->where('country_code', '=', $this->request()->get('country_code'));
+        }
         return $model->newQuery();
     }
 
