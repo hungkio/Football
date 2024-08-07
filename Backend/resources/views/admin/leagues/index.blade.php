@@ -25,7 +25,7 @@
         #custom_filter{
             padding-left: 15px;
         }
-        #country_code_filter{
+        #country_filter{
             width: max-content;
         }
     </style>
@@ -33,17 +33,17 @@
 
 @section('page-content')
     <x-card>
-        <label for="country_code_filter" id="custom_filter">
+        <label for="country_filter" id="custom_filter">
             <span>Quốc gia:</span>
-            <form method="get" action="" id="filter_form">
-                <select id="country_code_filter" name="country_code" class="form-control">
-                    <option value="">All</option>
+            <form method="get" action="" id="filter_form" style="width: 200px;">
+                <select id="country_filter" name="country" class="form-control">
+                    <option value="">Tất cả</option>
                     @foreach($countries as $country)
-                    <option @if($country->code==$country_code) selected @endif value="{{$country->code}}">{{$country->name}}</option>
+                    <option @if($country->name == $country_selected) selected @endif value="{{$country->name}}">{{$country->name}}</option>
                     @endforeach
                 </select>
             </form>
-            </label>
+        </label>
         {{$dataTable->table()}}
     </x-card>
 
@@ -51,7 +51,7 @@
 
 @push('js')
     <script>
-        $('#country_code_filter').on('change', function(){
+        $('#country_filter').on('change', function(){
             $('#filter_form').submit();
         });
       (function ($, DataTable) {
@@ -113,6 +113,7 @@
     {{$dataTable->scripts()}}
     <script>
         $('#LeagueDataTable_filter').append($('#custom_filter'));
+        $('#country_filter').select2();
         $(document).on('change','#select_status', function () {
             var status = $(this).val();
             var url = $(this).attr('data-url');

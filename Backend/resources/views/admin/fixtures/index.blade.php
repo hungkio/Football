@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', __('Các trận đấu'))
+@section('title', __('Danh sách các trận đấu trận đấu'))
 {{-- @section('page-header')
     <x-page-header>
         {{ Breadcrumbs::render() }}
@@ -19,11 +19,31 @@
                 margin-left: .625rem!important;
             }
         }
+        #custom_filter>*{
+            display: inline-block;
+        }
+        #custom_filter{
+            padding-left: 15px;
+        }
+        #league_filter{
+            width: max-content;
+        }
     </style>
 @endpush
 
 @section('page-content')
     <x-card>
+        <label for="league_filter" id="custom_filter">
+            <span>Giải đấu:</span>
+            <form method="get" action="" id="filter_form" style="width: 300px;">
+                <select id="league_filter" name="league" class="form-control">
+                    <option value="">Tất cả</option>
+                    @foreach($leagues as $league)
+                    <option @if($league->api_id == $league_selected) selected @endif value="{{$league->api_id}}">{{$league->name}}</option>
+                    @endforeach
+                </select>
+            </form>
+        </label>
         {{$dataTable->table()}}
     </x-card>
 
@@ -32,6 +52,11 @@
 @push('js')
     {{$dataTable->scripts()}}
     <script>
+        $('#league_filter').on('change', function(){
+            $('#filter_form').submit();
+        });
+        $('#FixtureDataTable_filter').append($('#custom_filter'));
+        $('#league_filter').select2();
         $(document).on('change','#select_status', function () {
             var status = $(this).val();
             var url = $(this).attr('data-url');

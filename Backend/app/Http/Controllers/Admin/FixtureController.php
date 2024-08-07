@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DataTables\FixtureDataTable;
 use App\Domain\Fixture\Models\Fixture;
 use App\Domain\Post\Models\Post;
+use App\Domain\League\Models\League;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
@@ -17,8 +18,9 @@ class FixtureController
     public function index(FixtureDataTable $dataTable)
     {
         $this->authorize('view', Fixture::class);
-
-        return $dataTable->render('admin.fixtures.index');
+        $leagues = League::orderBy('priority')->get();
+        $league_selected = isset($get['league'])?$get['league']:'';
+        return $dataTable->render('admin.fixtures.index',compact('leagues','league_selected'));
     }
 
     public function create(): View
@@ -68,7 +70,7 @@ class FixtureController
                 'away' => $request->goals_away,
             ])
         ];
-        
+
         $fixture = Fixture::create($data);
         if ($request->hasFile('photo')) {
             $fixture->addMedia($request->file('photo'))->toMediaCollection('fixture');

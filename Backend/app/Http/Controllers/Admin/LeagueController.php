@@ -18,8 +18,8 @@ class LeagueController
         $this->authorize('view', League::class);
         $countries = Country::all();
         $get = $request->all();
-        $country_code = $get['country_code'];
-        return $dataTable->render('admin.leagues.index', compact('countries','country_code'));
+        $country_selected = isset($get['country'])?$get['country']:'';
+        return $dataTable->render('admin.leagues.index', compact('countries','country_selected'));
     }
     public function create(): View
     {
@@ -31,7 +31,7 @@ class LeagueController
                 $country_codes[] = $country->code;
             }
         }
-        return view('admin.leagues.create', compact('country_codes'));
+        return view('admin.leagues.create', compact('country_codes','countries'));
     }
     public function delete($id){
         $league = League::find($id);
@@ -70,7 +70,7 @@ class LeagueController
                 $country_codes[] = $country->code;
             }
         }
-        return view('admin.leagues.edit', compact('league', 'country_codes'));
+        return view('admin.leagues.edit', compact('league', 'country_codes','countries'));
     }
 
     public function update(League $league, Request $request)

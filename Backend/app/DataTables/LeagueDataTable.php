@@ -36,11 +36,8 @@ class LeagueDataTable extends BaseDatable
     }
     public function query(League $model): Builder
     {
-        //if ($this->getFilter('filter') && (int) $this->getFilter('filter') === 2) {
-            //return $query->where(); //return with deleted users
-        //}
-        if ($this->request()->get('country_code')) {
-            return $model->where('country_code', '=', $this->request()->get('country_code'));
+        if ($this->request()->get('country')) {
+            return $model->where('country_name', '=', $this->request()->get('country'));
         }
         return $model->newQuery();
     }
@@ -53,7 +50,7 @@ class LeagueDataTable extends BaseDatable
             Column::make('api_id')->title(__('Mã giải')),
             Column::make('name')->title(__('Tên')),
             Column::make('type')->title(__('Kiểu')),
-            Column::make('country_code')->title(__('Quốc gia')),
+            Column::make('country_name')->title(__('Quốc gia')),
             Column::computed('shown_on_country_standing')
                 ->title(__('BXH QG'))
                 ->exportable(false)
