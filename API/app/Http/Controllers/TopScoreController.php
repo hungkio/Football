@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetTopScoresByLeagueRequest;
+use App\Http\Requests\GetTopScoresByTeamRequest;
 use App\Models\League;
 use App\Models\Player;
 use App\Models\Team;
@@ -35,7 +36,7 @@ class TopScoreController extends Controller
         }
     }
 
-    public function getTopScoresByTeam(Request $request){
+    public function getTopScoresByTeam(GetTopScoresByTeamRequest $request){
         $team = Team::where('slug', $request->team_slug)->first();
         $leagues = TopScore::select('league_id', 'season')
                 ->where('team_id', $team->api_id)
