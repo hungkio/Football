@@ -68,7 +68,10 @@ Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getF
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');
 Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
 Route::get('getFixturesByLeague', [FixtureController::class, 'getFixturesByLeague']);
+//top score
 Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);
+Route::get('getTopScoresByTeam', [TopScoreController::class, 'getTopScoresByTeam']);
+//
 Route::get('headToHead', [Head2HeadController::class, 'index']);
 Route::get('getTeamsByPopularLeagues', [TeamController::class, 'getTeamsByPopularLeagues']);
 Route::get('getRounds', [FixtureController::class, 'getRounds']);

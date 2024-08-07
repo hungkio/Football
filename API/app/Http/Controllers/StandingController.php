@@ -16,6 +16,7 @@ class StandingController extends Controller
 {
     function index(GetStandingByLeagueRequest $request) {
         $league = League::where('slug', $request->league_slug)->first();
+        dd($league);
         //main of the function - get standings
         $standings = Standing::where('league_id', $league->api_id)
         ->where('season', $request->season)

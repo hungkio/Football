@@ -34,4 +34,37 @@ class TopScoreController extends Controller
             ]);
         }
     }
+
+    public function getTopScoresByTeam(Request $request){
+        $team = Team::where('slug', $request->team_slug)->first();
+        $leagues = TopScore::select('league_id', 'season')
+                ->where('team_id', $team->api_id)
+                ->whereIn('season', function($query) use ($team) {
+                    $query->selectRaw('MAX(season)')
+                        ->from('top_scores')
+                        ->where('team_id', $team->api_id);
+                })
+                ->orderBy('goals', 'desc')
+                ->distinct()
+                ->get();
+
+        $arr = [];
+        foreach ($leagues as $league) {
+            $leagueName = League::where('api_id', $league->league_id)->pluck('name')->first();
+            $arr[$leagueName .' - '. $league->season][] = TopScore::where('league_id', $league->league_id)
+            ->where('season', $league->season)
+            ->orderBy('goals', 'desc')
+            ->where('team_id', $team->api_id)
+            ->distinct()
+            ->get();
+        }
+        
+        return response()->json($arr);
+        // $leagueNames = League::whereIn('api_id', $leagueIds)->pluck('name')->toArray();
+        // $arr = [];
+        // foreach ($leagueNames as $leagueName) {
+        //     # code...
+        //     $arr[$leagueName][] = T
+        // }
+    }
 }
