@@ -70,7 +70,7 @@ class FixtureDataTable extends BaseDatable
     public function query(Fixture $model): Builder
     {
         if ($this->request()->get('league')) {
-            return $model->whereRaw("JSON_EXTRACT(league, '$.id') = ?", [$this->request()->get('league')]);
+            return $model->where('league->id', $this->request()->get('league'));
         }
         return $model->newQuery();
     }
