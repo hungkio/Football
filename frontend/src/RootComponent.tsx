@@ -25,6 +25,7 @@ import NationalTeamStanding from './pages/National/components/Standings'
 import NationalTeamTopScores from './pages/National/components/TopScorers'
 import NationalTeamTopFixtures from './pages/National/components/Fixtures'
 import NationalTeamLiveScore from './pages/National/components/LiveScore'
+import NationalTeam from './pages/National/NationalTeam'
 
 const RootComponent: React.FC = () => {
   return (
@@ -51,7 +52,7 @@ const RootComponent: React.FC = () => {
           <Route path={ROUTES.TOURNAMENT_LIVESCORES} element={<TournamentLiveScore />}></Route>
           <Route path={ROUTES.TOURNAMENT_TOURNAMENTS} element={<Tournament />}></Route>
         </Route>
-        <Route path={ROUTES.NATIONAL_TEAM} element={<NationalTeamResult />}>
+        <Route path={ROUTES.NATIONAL_TEAM} element={<NationalTeam />}>
           <Route path={ROUTES.NATIONAL_TEAM_RESULTS} element={<NationalTeamResult />}></Route>
           <Route path={ROUTES.NATIONAL_TEAM_STANDINGS} element={<NationalTeamStanding />}></Route>
           <Route path={ROUTES.NATIONAL_TEAM_TOP_SCORES} element={<NationalTeamTopScores />}></Route>
