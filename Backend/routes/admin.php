@@ -264,7 +264,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/api/coach/{id}', [CoachController::class, 'delete'])->name('api.coach.destroy');
 
             // tool redirecter
-            Route::get('/api/tools-redirecter', [ToolRedirecterController::class, 'index'])->name('api.tools-redirecter');
+            Route::get('/api/tools-redirecter', [ToolRedirecterController::class, 'index'])->name('tools-redirecter');
             Route::get('/api/tools-redirecter/create', [ToolRedirecterController::class, 'create'])->name('api.tools-redirecter.create');
             Route::get('/api/tools-redirecter/{tool}', [ToolRedirecterController::class, 'edit'])->name('api.tools-redirecter.edit');
             Route::post('/api/tools-redirecter', [ToolRedirecterController::class, 'store'])->name('api.tools-redirecter.store');
@@ -272,7 +272,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/api/tools-redirecter/{tool}', [ToolRedirecterController::class, 'delete'])->name('api.tools-redirecter.destroy');
 
             // tool autoLink
-            Route::get('/api/tools-auto-link', [ToolAutoLinkController::class, 'index'])->name('api.tools-auto-link');
+            Route::get('/api/tools-auto-link', [ToolAutoLinkController::class, 'index'])->name('tools-auto-link');
             Route::get('/api/tools-auto-link/create', [ToolAutoLinkController::class, 'create'])->name('api.tools-auto-link.create');
             Route::get('/api/tools-auto-link/{tool}', [ToolAutoLinkController::class, 'edit'])->name('api.tools-auto-link.edit');
             Route::post('/api/tools-auto-link', [ToolAutoLinkController::class, 'store'])->name('api.tools-auto-link.store');
@@ -280,10 +280,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/api/tools-auto-link/{tool}', [ToolAutoLinkController::class, 'delete'])->name('api.tools-auto-link.destroy');
             
             // tool autoLink seo
-            Route::get('/api/tool-meta-seo-link', [ToolMetaSeoLinkController::class, 'index']);
-            Route::post('/api/tool-meta-seo-link', [ToolMetaSeoLinkController::class, 'store']);
-            Route::put('/api/tool-meta-seo-link/{id}', [ToolMetaSeoLinkController::class, 'update']);
-            Route::delete('/api/tool-meta-seo-link/{id}', [ToolMetaSeoLinkController::class, 'delete']);
+            Route::get('/api/tools-meta-seo-link', [ToolMetaSeoLinkController::class, 'index'])->name('tools-meta-seo-link');
+            Route::get('/api/tools-meta-seo-link/create', [ToolMetaSeoLinkController::class, 'create'])->name('api.tools-meta-seo-link.create');
+            Route::get('/api/tools-meta-seo-link/{tool}', [ToolMetaSeoLinkController::class, 'edit'])->name('api.tools-meta-seo-link.edit');
+            Route::post('/api/tools-meta-seo-link', [ToolMetaSeoLinkController::class, 'store'])->name('api.tools-meta-seo-link.store');
+            Route::put('/api/tools-meta-seo-link/{tool}', [ToolMetaSeoLinkController::class, 'update'])->name('api.tools-meta-seo-link.update');
+            Route::delete('/api/tools-meta-seo-link/{tool}', [ToolMetaSeoLinkController::class, 'delete'])->name('api.tools-meta-seo-link.destroy');
 
             // tool autoLink seo
             Route::get('/api/tool-text-seo-footer', [ToolTextSeoFooterController::class, 'index']);

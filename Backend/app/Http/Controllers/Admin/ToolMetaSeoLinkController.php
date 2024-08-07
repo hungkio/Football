@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-use App\Models\ToolMetaSeoLink;
+// use App\Models\ToolMetaSeoLink;
 use App\Models\ToolMetaSeoLinkTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Domain\ToolMetaSeoLink\Models\ToolMetaSeoLink;
+use App\DataTables\ToolMetaSeoLinkDataTable;
+use Illuminate\View\View;
 
 class ToolMetaSeoLinkController
 {
     //
     protected $toolMetaSeoLink;
     protected $toolMetaSeoLinkTransaction;
+    use AuthorizesRequests;
 
 
     public function __construct(ToolMetaSeoLink $toolMetaSeoLink, ToolMetaSeoLinkTransaction $toolMetaSeoLinkTransaction)
@@ -27,25 +31,29 @@ class ToolMetaSeoLinkController
      * params perpage 
      */
 
-    public function index(Request $request)
+    public function index(ToolMetaSeoLinkDataTable $dataTable)
     {
-        $page = $request->input('page', 1);
-        $perPage =  $request->input('perPage', 15);
-        $keyWord =  $request->input('key_word', null);
+        $this->authorize('view', ToolMetaSeoLink::class);
 
-        $query = $this->toolMetaSeoLink->newQuery();
-        if ($keyWord) {
-            // For example, assuming 'name' is a column you want to filter by
-            $query->whereHas('transactions', function ($query) use ($keyWord) {
-                $query->where('name', 'like', "%{$keyWord}%");
-            });    
-        }
-        $query->with('transactions');
-
-        // Fetch the paginated list of ToolRedirecters
-        $toolRedirecters = $query->paginate($perPage, ['*'], 'page', $page);
-        return response()->json($toolRedirecters);
+        return $dataTable->render('admin.tools-meta-seo-link.index');
     }
+
+
+    public function create(): View
+    {
+
+        $this->authorize('create', ToolMetaSeoLinkDataTable::class);
+        return view('admin.tools-meta-seo-link.create');
+    }
+
+
+    public function edit(ToolMetaSeoLink $tool): View
+    {
+        $this->authorize('update', $tool);
+
+        return view('admin.tools-meta-seo-link.edit', compact('tool'));
+    }
+
 
     public function store(Request $request)
     {
@@ -56,14 +64,18 @@ class ToolMetaSeoLinkController
             $validate = Validator::make($request->all(), [
                 'redirect_link' => 'required|url', // Ensures redirect_link is a valid URL
                 'meta_canonical' => 'required',
-                'language' => 'required|array',
-                'language.*.name' => 'required|string|max:255',
-                'language.*.lang' => 'required|string|max:10',
-                'language.*.meta_title' => 'required|string|max:255',
-                'language.*.meta_keyword' => 'nullable|string|max:255',
-                'language.*.meta_description' => 'nullable|string|max:1000',
-                'language.*.content_header' => 'nullable|string|max:1000',
-                'language.*.content_footer' => 'nullable|string|max:1000',
+                'name_vi' => 'required|string|max:255',
+                'meta_title_vi' => 'required|string|max:255',
+                'meta_keyword_vi' => 'nullable|string|max:255',
+                'meta_description_vi' => 'nullable|string|max:1000',
+                'content_header_vi' => 'nullable|string|max:1000',
+                'content_footer_vi' => 'nullable|string|max:1000',
+                'name_en' => 'required|string|max:255',
+                'meta_title_en' => 'required|string|max:255',
+                'meta_keyword_en' => 'nullable|string|max:255',
+                'meta_description_en' => 'nullable|string|max:1000',
+                'content_header_en' => 'nullable|string|max:1000',
+                'content_footer_en' => 'nullable|string|max:1000',
             ]);
 
             $params = $request->all();
