@@ -21,7 +21,7 @@ class League extends Model implements HasMedia
     protected $guarded = [];
 
     protected $table = 'leagues';
-    
+
     /**
      * @inheritDoc
      */

@@ -13,7 +13,7 @@ const BettingMatch = () => {
     <>
       <div className="flex items-center text-xs py-1.5">
         <div className="w-[65px] text-red">22:59</div>
-        <div className="w-[calc(100%-300px)]">
+        <div className="flex-1">
           <p>Wisla Krakow</p>
           <p>Rapid Wien</p>
         </div>
@@ -39,7 +39,7 @@ const BettingMatch = () => {
       </div>
       <div className="flex items-center text-xs py-1.5 bg-[#edf2f7]">
         <div className="w-[65px] text-red">22:59</div>
-        <div className="w-[calc(100%-300px)]">
+        <div className="flex-1">
           <p>Wisla Krakow</p>
           <p>Rapid Wien</p>
         </div>
@@ -65,7 +65,7 @@ const BettingMatch = () => {
       </div>
       <div className="flex items-center text-xs py-1.5">
         <div className="w-[65px] text-red">22:59</div>
-        <div className="w-[calc(100%-300px)]">
+        <div className="flex-1">
           <p>Wisla Krakow</p>
           <p>Rapid Wien</p>
         </div>

@@ -40,7 +40,7 @@ const Match = () => {
         </span>
       </div>
       <div className="bg-[#edf2f7] border-y border-[#e5e5e5] text-center">
-        <span className="font-bold text-xs pr-[200px]">Molde -0.75 &nbsp;&nbsp;&nbsp;&nbsp; Tài 2.75</span>
+        <span className="font-bold text-xs sm:pr-[200px]">Molde -0.75 &nbsp;&nbsp;&nbsp;&nbsp; Tài 2.75</span>
       </div>
     </>
   )
