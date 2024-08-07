@@ -45,19 +45,26 @@ class TopScoreController extends Controller
                         ->from('top_scores')
                         ->where('team_id', $team->api_id);
                 })
-                ->orderBy('goals', 'desc')
                 ->distinct()
                 ->get();
 
         $arr = [];
         foreach ($leagues as $league) {
             $leagueName = League::where('api_id', $league->league_id)->pluck('name')->first();
-            $arr[$leagueName .' - '. $league->season][] = TopScore::where('league_id', $league->league_id)
+
+            //main
+            $topScores = TopScore::where('league_id', $league->league_id)
             ->where('season', $league->season)
             ->orderBy('goals', 'desc')
             ->where('team_id', $team->api_id)
             ->distinct()
             ->get();
+            foreach ($topScores as $topScore) {
+                $topScore->player_name = Player::where('api_id', $topScore->player_id)->first()->name;
+                $topScore->team_name = Team::where('api_id', $topScore->team_id)->first()->name;
+            }
+            //
+            $arr[$leagueName .' - '. $league->season][] = $topScores;
         }
         
         return response()->json($arr);
