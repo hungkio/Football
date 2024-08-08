@@ -55,9 +55,10 @@ const TopScores = () => {
     dispatch(loadingAction.show())
     if (!id?.includes('-football')) {
       setPageType(0)
+      fetchTopScores()
+    } else {
+      fetchLeagues(page)
     }
-    fetchTopScores()
-    fetchLeagues(page)
   }, [id])
 
   return (

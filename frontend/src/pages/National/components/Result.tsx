@@ -1,14 +1,15 @@
+import Match from '@/components/Match'
 import Tournament from '@/components/Tournament'
 import { getFixturesByCountry, getFixturesByTeam } from '@/resources/api-constants'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
-import { ILeagueMatches } from '@/types/app-type'
+import { ILeagueMatches, IMatch } from '@/types/app-type'
 import React, { memo, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
 
 const Result = () => {
-  const [leagues, setLeagues] = useState<ILeagueMatches | null>(null)
+  const [matches, setMatches] = useState<IMatch[] | null>(null)
   const [isLoadMore, setIsLoadMore] = useState(true)
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
@@ -17,15 +18,15 @@ const Result = () => {
     try {
       if (id) {
         const teamSlug = id.includes('-football') ? id.replace('-football', '') : id
-        const result = await getFixturesByCountry({ countrySlug: teamSlug, status: 2, page })
+        const result = await getFixturesByTeam({ teamSlug: teamSlug, type: 0, page })
 
-        if (Object.entries(result.data).length < 15) {
+        if (result.data.length < 15) {
           setIsLoadMore(false)
         }
-        if (leagues) {
-          setLeagues({ ...leagues, ...result.data })
+        if (matches) {
+          setMatches([...matches, ...result.data])
         } else {
-          setLeagues(result.data)
+          setMatches(result.data)
         }
       }
     } catch (error) {
@@ -40,7 +41,7 @@ const Result = () => {
   }, [id])
   return (
     <div>
-      {leagues && (
+      {matches && matches.length > 0 && (
         <InfiniteScroll
           style={{
             height: 'unset',
@@ -52,10 +53,10 @@ const Result = () => {
             setPage((prev) => prev + 1)
             fetchData(page + 1)
           }}
-          dataLength={Object.entries(leagues).length}
+          dataLength={matches.length}
         >
-          {Object.entries(leagues).map((item, index) => {
-            return <Tournament key={item[0]} name={item[0]} matches={item[1]} />
+          {matches.map((match, index) => {
+            return <Match key={index} match={match} />
           })}
         </InfiniteScroll>
       )}

@@ -11,7 +11,8 @@ import {
   IPostList,
   ITeamStanding,
   ITopScorePlayerResponse,
-  PaginationResponse
+  PaginationResponse,
+  TopScoreLeagueStats
 } from '@/types/app-type'
 
 export const getMenus = (): Promise<IMenu[]> => {
@@ -28,13 +29,21 @@ export const getFixtures = (params: { date: string; perPage?: number; page?: num
   })
 }
 
-export const getFixturesByTeam = (params: { teamSlug: string; status?: number; perPage?: number; page?: number }): Promise<PaginationResponse<IMatch[]>> => {
+export const getFixturesByTeam = (params: { teamSlug: string; type?: number; perPage?: number; page?: number }): Promise<PaginationResponse<IMatch[]>> => {
   return api.get('/getFixturesByTeam', {
     params: {
-      status: params.status,
+      type: params.type,
       page: params.page,
       team_slug: params.teamSlug,
       per_page: params.perPage
+    }
+  })
+}
+
+export const getTopScoresByTeam = (params: { teamSlug: string }): Promise<TopScoreLeagueStats> => {
+  return api.get('/getTopScoresByTeam', {
+    params: {
+      team_slug: params.teamSlug
     }
   })
 }

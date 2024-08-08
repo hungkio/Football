@@ -7,6 +7,7 @@ export const ROUTES = {
   BETTING_ODDS: '/betting-odds',
   TOP_SCORES: '/top-scorers',
   NATIONAL_TEAMS: '/national-teams',
+  RESULTS: '/results',
   NEWS: '/news',
   FIFA_STANDINGS: '/fifa-rankings',
   STANDINGS: '/standings',

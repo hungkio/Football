@@ -257,6 +257,24 @@ export interface ICountry {
   subregion_vi: string
 }
 
+export interface TopScorePlayerStats {
+  id: number
+  player_id: number
+  league_id: number
+  season: number
+  created_at: string
+  updated_at: string
+  goals: number
+  penalty: number
+  team_id: number
+  player_name: string
+  team_name: string
+}
+
+export interface TopScoreLeagueStats {
+  [season: string]: TopScorePlayerStats[][]
+}
+
 export interface ICountryRegion {
   name: string
   name_vi: string

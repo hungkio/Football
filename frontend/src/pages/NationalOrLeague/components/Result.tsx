@@ -9,7 +9,7 @@ import Match from '@/components/Match'
 import Tournament from '@/components/Tournament'
 import { features } from 'process'
 
-const Fixtures: React.FC = () => {
+const Result: React.FC = () => {
   const [isLoadMore, setIsLoadMore] = useState(true)
   const [page, setPage] = useState(1)
   // Page type 1 is National page, 0 is Club page
@@ -22,9 +22,10 @@ const Fixtures: React.FC = () => {
     dispatch(loadingAction.show())
     if (!id?.includes('-football')) {
       setPageType(0)
+      fetchFixturesByLeague(1)
+    } else {
+      fetchData(1)
     }
-    fetchFixturesByLeague(1)
-    fetchData(1)
   }, [id])
 
   const fetchFixturesByLeague = async (page: number) => {
@@ -32,7 +33,7 @@ const Fixtures: React.FC = () => {
       if (!id) {
         return
       }
-      const result = await getFixturesByLeague({ leagueSlug: id, status: 1, page })
+      const result = await getFixturesByLeague({ leagueSlug: id, status: 2, page })
       if (result.data.length < 15) {
         setIsLoadMore(false)
       }
@@ -49,7 +50,7 @@ const Fixtures: React.FC = () => {
     try {
       if (id) {
         const teamSlug = id.includes('-football') ? id.replace('-football', '') : id
-        const result = await getFixturesByCountry({ countrySlug: teamSlug, status: 1, page })
+        const result = await getFixturesByCountry({ countrySlug: teamSlug, status: 2, page })
 
         if (Object.entries(result.data).length < 15) {
           setIsLoadMore(false)
@@ -111,4 +112,4 @@ const Fixtures: React.FC = () => {
   )
 }
 
-export default Fixtures
+export default Result
