@@ -46,7 +46,7 @@ class CrawlLeaguesData extends Command
                         'type'         => $item['league']['type'],
                         'logo'         => $item['league']['logo'],
                         'country_code' => $item['country']['code'],
-                        'slug'  => createSlug($item['league']['name']),
+                        'slug'  => createSlug($item['league']['name'] . '-' . $item['league']['id']),
                         'created_at'   => Carbon::now(),
                         'updated_at'   => Carbon::now(),
                         ]
