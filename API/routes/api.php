@@ -64,10 +64,7 @@ Route::get('menu/{position}', [PlayerController::class, 'details']);
 Route::post('register', [AuthController::class, 'register']);
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
-Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
 Route::get('standingByLeague', [StandingController::class, 'index'])->name('standingByLeague');
-Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
-Route::get('getFixturesByLeague', [FixtureController::class, 'getFixturesByLeague']);
 //top score
 Route::get('getTopScoresByLeague', [TopScoreController::class, 'index']);
 Route::get('getTopScoresByTeam', [TopScoreController::class, 'getTopScoresByTeam']);
@@ -77,3 +74,9 @@ Route::get('getTeamsByPopularLeagues', [TeamController::class, 'getTeamsByPopula
 Route::get('getRounds', [FixtureController::class, 'getRounds']);
 Route::get('getFixtureByClub', [FixtureController::class, 'getFixtureByClub']);
 Route::get('getHighestLeagueStanding', [StandingController::class, 'getHighestLeagueStanding']);
+//fixtures
+Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getFixturesByTeam');
+Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
+Route::get('getFixturesByLeague', [FixtureController::class, 'getFixturesByLeague']);
+Route::get('latestFixturesByteam', [FixtureController::class, 'latestFixturesByteam']);
+Route::get('fixturesByteamGroupByLeague', [FixtureController::class, 'fixturesByteamGroupByLeague']);

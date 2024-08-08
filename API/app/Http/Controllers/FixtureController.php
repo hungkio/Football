@@ -202,4 +202,75 @@ class FixtureController extends Controller
             ]);
         }
     }
+
+    public function latestFixturesByteam(GetFixturesByTeamRequest $request){
+        try {
+            $team = Team::where('slug', $request->team_slug)->first();
+            
+            $fixtures = Fixture::where(function($query) use ($team){
+                if($team->api_id){
+                    $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
+                    ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+                }
+            })
+            ->whereDate('date', '>=', Carbon::today())
+            ->orderBy('date', 'asc')
+            ->limit(10)
+            ->get();
+            return response()->json($fixtures);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'data' => $th,
+            ]);
+        }
+    }
+
+    public function fixturesByteamGroupByLeague(GetFixturesByTeamRequest $request){
+        try {
+            $team = Team::where('slug', $request->team_slug)->first();
+
+            // initial start date - end date
+            $latestFixture = Fixture::where(function($query) use ($team){
+                if($team->api_id){
+                    $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
+                        ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+                }
+            })
+            ->whereDate('date', '>=', Carbon::today())
+            ->orderBy('date', 'asc')->first();
+
+            $startDate = null;
+            if ($latestFixture) {
+                $startDate = Carbon::parse($latestFixture->date);
+                $endDate = $startDate->copy()->addDays(30);
+            }
+            
+            //main of function
+            $fixtures = Fixture::where(function($query) use ($team){
+                if($team->api_id){
+                    $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
+                        ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+                }
+            })
+            ->whereDate('date', '>=', Carbon::today())
+            ->orderBy('date', 'asc')
+            ->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()])
+            ->get();
+
+            // group by league name
+            $arr = [];
+            foreach ($fixtures as $fixture) {
+                $leagueName = $fixture->league['name'];
+                $arr[$leagueName][] = $fixture->toArray();
+            }
+            
+            return response()->json($arr);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th,
+            ]);
+        }
+    }
 }
