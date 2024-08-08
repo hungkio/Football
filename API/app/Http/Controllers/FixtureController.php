@@ -202,4 +202,28 @@ class FixtureController extends Controller
             ]);
         }
     }
+
+    public function latestFixturesByteam(Request $request){
+        try {
+            $team = Team::where('slug', $request->team_slug)->first();
+            
+            $fixtures = Fixture::where(function($query) use ($team){
+                if($team->api_id){
+                    $query->whereRaw("JSON_EXTRACT(teams, '$.home.id') = ?", [$team->api_id])
+                    ->orWhereRaw("JSON_EXTRACT(teams, '$.away.id') = ?", [$team->api_id]);
+                }
+            })
+            ->whereDate('date', '>=', Carbon::today())
+            ->orderBy('date', 'asc')
+            ->limit(10)
+            ->get();
+    
+            return response()->json($fixtures);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'data' => $th,
+            ]);
+        }
+    }
 }
