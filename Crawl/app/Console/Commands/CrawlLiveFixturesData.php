@@ -76,9 +76,7 @@ class CrawlLiveFixturesData extends Command
                         'goals'      => json_encode($item['goals']),
                         'score'      => json_encode($item['score']),
                         'slug'       => createSlug($item['teams']['home']['name']).
-                                        '-vs-' . createSlug($item['teams']['away']['name']) .
-                                        '-' .
-                                        Carbon::parse($item['fixture']['date'])->format('Y-m-d'),
+                                        '-vs-' . createSlug($item['teams']['away']['name']),
                     ]
                 );
 
