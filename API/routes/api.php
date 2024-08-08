@@ -79,3 +79,4 @@ Route::get('getFixturesByTeam', [FixtureController::class, 'index'])->name('getF
 Route::get('getFixturesByCountry', [FixtureController::class, 'getFixturesByCountry'])->name('getFixturesByCountry');
 Route::get('getFixturesByLeague', [FixtureController::class, 'getFixturesByLeague']);
 Route::get('latestFixturesByteam', [FixtureController::class, 'latestFixturesByteam']);
+Route::get('fixturesByteamGroupByLeague', [FixtureController::class, 'fixturesByteamGroupByLeague']);
