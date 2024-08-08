@@ -95,6 +95,7 @@ class FixtureController extends Controller
                     break;
             }
         })
+        ->limit(10)
         ->get();
         $arr = [];
         $arr[$country->name] = $countryTeamFixtures;
