@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetTopScoresByLeagueRequest;
+use App\Http\Requests\GetTopScoresByTeamRequest;
 use App\Models\League;
 use App\Models\Player;
 use App\Models\Team;
@@ -33,5 +34,45 @@ class TopScoreController extends Controller
                 'data' => $th,
             ]);
         }
+    }
+
+    public function getTopScoresByTeam(GetTopScoresByTeamRequest $request){
+        $team = Team::where('slug', $request->team_slug)->first();
+        $leagues = TopScore::select('league_id', 'season')
+                ->where('team_id', $team->api_id)
+                ->whereIn('season', function($query) use ($team) {
+                    $query->selectRaw('MAX(season)')
+                        ->from('top_scores')
+                        ->where('team_id', $team->api_id);
+                })
+                ->distinct()
+                ->get();
+
+        $arr = [];
+        foreach ($leagues as $league) {
+            $leagueName = League::where('api_id', $league->league_id)->pluck('name')->first();
+
+            //main
+            $topScores = TopScore::where('league_id', $league->league_id)
+            ->where('season', $league->season)
+            ->orderBy('goals', 'desc')
+            ->where('team_id', $team->api_id)
+            ->distinct()
+            ->get();
+            foreach ($topScores as $topScore) {
+                $topScore->player_name = Player::where('api_id', $topScore->player_id)->first()->name;
+                $topScore->team_name = Team::where('api_id', $topScore->team_id)->first()->name;
+            }
+            //
+            $arr[$leagueName .' - '. $league->season][] = $topScores;
+        }
+        
+        return response()->json($arr);
+        // $leagueNames = League::whereIn('api_id', $leagueIds)->pluck('name')->toArray();
+        // $arr = [];
+        // foreach ($leagueNames as $leagueName) {
+        //     # code...
+        //     $arr[$leagueName][] = T
+        // }
     }
 }

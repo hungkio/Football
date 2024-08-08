@@ -30,7 +30,7 @@ export const ROUTES = {
   NATIONAL_BETTING_ODDS: '/:id/betting-odds',
   NATIONAL_TOP_SCORES: '/:id/top-scorers',
   NATIONAL_PREDICTIONS: '/:id/predictions',
-  NATIONAL_TEAM: '/:id/national-team?results',
+  NATIONAL_TEAM: '/:id/national-team',
   NATIONAL_TEAM_RESULTS: '/:id/national-team?results',
   NATIONAL_TEAM_LIVESCORES: '/:id/national-team?livescore',
   NATIONAL_TEAM_STANDINGS: '/:id/national-team?standings',

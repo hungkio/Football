@@ -8,6 +8,7 @@ use App\Domain\League\Models\League;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use SingleQuote\DataTables\Filter\Dropdown;
 
 class LeagueDataTable extends BaseDatable
 {
@@ -33,9 +34,11 @@ class LeagueDataTable extends BaseDatable
             // ->editColumn('created_at', fn (Country $country) => formatDate($country->created_at))
             // ->rawColumns(['action']);
     }
-
     public function query(League $model): Builder
     {
+        if ($this->request()->get('country')) {
+            return $model->where('country_name', '=', $this->request()->get('country'));
+        }
         return $model->newQuery();
     }
 
@@ -47,7 +50,7 @@ class LeagueDataTable extends BaseDatable
             Column::make('api_id')->title(__('Mã giải')),
             Column::make('name')->title(__('Tên')),
             Column::make('type')->title(__('Kiểu')),
-            Column::make('country_code')->title(__('Quốc gia')),
+            Column::make('country_name')->title(__('Quốc gia')),
             Column::computed('shown_on_country_standing')
                 ->title(__('BXH QG'))
                 ->exportable(false)

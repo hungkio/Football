@@ -21,15 +21,15 @@
                             <div class="collapse show" id="general">
                                 <x-text-field name="api_id" :placeholder="__('Mã trận')" :label="__('Mã trận')" :value="isset($fixture) ? $fixture->api_id : ''" :readonly="true" > </x-text-field>
                                 <x-text-field name="referee" :placeholder="__('Trọng tài')" :label="__('Trọng tài')" :value="isset($fixture) ? $fixture->referee : ''" > </x-text-field>
-                                <x-text-field name="date" :placeholder="__('Bắt đầu')" :label="__('Bắt đầu')" :value="isset($fixture) ? $fixture->date : ''" > </x-text-field>
-                                <x-text-field name="round_1" :placeholder="__('Hiệp 1')" :label="__('Hiệp 1')" :value="(isset($fixture) && json_decode($fixture->periods)->first != null) ? Carbon::createFromTimeStamp(json_decode($fixture->periods)->first)->format('Y-m-d H:i:s') : ''" > </x-text-field>
-                                <x-text-field name="round_2" :placeholder="__('Hiệp 2')" :label="__('Hiệp 2')" :value="(isset($fixture) && json_decode($fixture->periods)->second != null) ? Carbon::createFromTimeStamp(json_decode($fixture->periods)->second)->format('Y-m-d H:i:s') : ''" > </x-text-field>
-                                <x-text-field name="venue_id" :placeholder="__('ID sân')" :label="__('ID sân')" :value="isset($fixture) ? json_decode($fixture->venue)->id  : ''" :readonly='true'> </x-text-field>
-                                <x-text-field name="league_id" :placeholder="__('ID giải')" :label="__('ID giải')" :value="isset($fixture) ? json_decode($fixture->league)->id  : ''" :readonly='true'> </x-text-field>
+                                <x-text-field name="venue_id" :placeholder="__('Sân')" :label="__('Sân')" :value="isset($fixture) ? json_decode($fixture->venue)->name  : ''" :readonly='true'> </x-text-field>
+                                <x-text-field name="league_id" :placeholder="__('Giải')" :label="__('Giải')" :value="isset($fixture) ? json_decode($fixture->league)->name  : ''" :readonly='true'> </x-text-field>
                                 <x-text-field name="team_home" :placeholder="__('Đội nhà')" :label="__('Đội nhà')" :value="isset($fixture) ? json_decode($fixture->teams)->home->name : ''" :readonly="true"> </x-text-field>
                                 <x-text-field name="team_away" :placeholder="__('Đội Khách')" :label="__('Đội Khách')" :value="isset($fixture) ? json_decode($fixture->teams)->away->name : ''" :readonly="true"> </x-text-field>
                                 <x-text-field name="goals_home" :placeholder="__('Bàn thắng đội nhà')" :label="__('Bàn thắng đội nhà')" :value="isset($fixture) ? json_decode($fixture->goals)->home : ''" > </x-text-field>
                                 <x-text-field name="goals_away" :placeholder="__('Bàn thắng đội khách')" :label="__('Bàn thắng đội khách')" :value="isset($fixture) ? json_decode($fixture->goals)->away : ''" > </x-text-field>
+                                <x-text-field name="date" :placeholder="__('Bắt đầu')" :label="__('Bắt đầu')" :value="isset($fixture) ? $fixture->date : ''" > </x-text-field>
+                                <x-text-field name="round_1" :placeholder="__('Hiệp 1')" :label="__('Hiệp 1')" :value="(isset($fixture) && json_decode($fixture->periods)->first != null) ? Carbon::createFromTimeStamp(json_decode($fixture->periods)->first)->format('Y-m-d H:i:s') : ''" > </x-text-field>
+                                <x-text-field name="round_2" :placeholder="__('Hiệp 2')" :label="__('Hiệp 2')" :value="(isset($fixture) && json_decode($fixture->periods)->second != null) ? Carbon::createFromTimeStamp(json_decode($fixture->periods)->second)->format('Y-m-d H:i:s') : ''" > </x-text-field>
                                 <x-text-field name="slug" :label="__('Đường dẫn')" type="text" :value="isset($fixture) ? $fixture->slug : ''" :placeholder="__('Đường dẫn sẽ hiển thị trên URL của trang web')" > </x-text-field>
                                 <div class="form-group row">
                                     <label for="select-taxon" class="col-lg-2 text-lg-right col-form-label">
