@@ -41,7 +41,7 @@ const Result = () => {
   }, [id])
   return (
     <div>
-      {matches && (
+      {matches && matches.length > 0 && (
         <InfiniteScroll
           style={{
             height: 'unset',

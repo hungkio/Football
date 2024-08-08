@@ -4,12 +4,12 @@ import HomePage from './pages/HomePage'
 import LiveScore from './pages/LiveScore'
 import NotFoundPage from './pages/NotFoundPage'
 import { ROUTES } from './resources/routes-constants'
-import NationalOrTournament from './pages/Tournament/NationalOrTournament'
-import Result from './pages/Tournament/components/Result'
-import TournamentStandings from './pages/Tournament/components/Standings'
-import TopScores from './pages/Tournament/components/TopScorers'
-import Fixtures from './pages/Tournament/components/Fixtures'
-import TournamentLiveScore from './pages/Tournament/components/LiveScore'
+import NationalOrTournament from './pages/NationalOrLeague/NationalOrTournament'
+import Result from './pages/NationalOrLeague/components/Result'
+import TournamentStandings from './pages/NationalOrLeague/components/Standings'
+import TopScores from './pages/NationalOrLeague/components/TopScorers'
+import Fixtures from './pages/NationalOrLeague/components/Fixtures'
+import TournamentLiveScore from './pages/NationalOrLeague/components/LiveScore'
 import Analysis from './pages/Analysis'
 import BettingOdds from './pages/BettingOdds'
 import News from './pages/News'
@@ -18,7 +18,7 @@ import Standings from './pages/Standings'
 import FIFAStandings from './pages/Rankings/FIFAStandings'
 import NationalList from './pages/NationalList'
 import TopScore from './pages/TopScore'
-import Tournament from './pages/Tournament/components/Tournament'
+import Tournament from './pages/NationalOrLeague/components/Tournament'
 import NationalTeamPage from './pages/National/components/NationalTeamPage'
 import NationalTeamResult from './pages/National/components/Result'
 import NationalTeamStanding from './pages/National/components/Standings'
@@ -26,6 +26,7 @@ import NationalTeamTopScores from './pages/National/components/TopScorers'
 import NationalTeamTopFixtures from './pages/National/components/Fixtures'
 import NationalTeamLiveScore from './pages/National/components/LiveScore'
 import NationalTeam from './pages/National/NationalTeam'
+import Results from './pages/Results'
 
 const RootComponent: React.FC = () => {
   return (
@@ -42,6 +43,7 @@ const RootComponent: React.FC = () => {
         <Route path={ROUTES.BETTING_ODDS} element={<BettingOdds />} />
         <Route path={ROUTES.NATIONAL_TEAMS} element={<NationalList />} />
         <Route path={ROUTES.FIXTURES} element={<HomePage />} />
+        <Route path={ROUTES.RESULTS} element={<Results />} />
         <Route path={ROUTES.NEWS} element={<News />} />
         <Route path={ROUTES.NATIONAL_TOURNAMENT} element={<NationalOrTournament />}>
           <Route path={ROUTES.NATIONAL_TOURNAMENT + '/'} element={<Result />}></Route>

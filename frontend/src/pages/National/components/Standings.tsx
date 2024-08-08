@@ -1,169 +1,134 @@
-import { getLeagues, getStandingByLeague } from '@/resources/api-constants'
-import { ROUTES } from '@/resources/routes-constants'
+import _ from 'lodash'
+import { getCountries } from '@/resources/api-constants'
 import { useAppDispatch } from '@/store/reducers/store'
 import { loadingAction } from '@/store/slice/loading.slice'
-import { ILeague, ITeamStanding } from '@/types/app-type'
-import { Checkmark, CheckmarkFilled, CloseFilled, SubtractAlt, SubtractFilled } from '@carbon/icons-react'
+import { ICountry } from '@/types/app-type'
+import { ChevronDownOutline, ChevronUpOutline } from '@carbon/icons-react'
 import React, { useEffect, useState } from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import { Link, useParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
+import { useParams } from 'react-router-dom'
 
 const Standings = () => {
+  const [countries, setCountries] = useState<[] | ICountry[]>([])
   const dispatch = useAppDispatch()
+  const [currentCountry, setCurrentCountry] = useState<ICountry>()
   const { id } = useParams()
-  const [isLoadMore, setIsLoadMore] = useState(true)
-  const [page, setPage] = useState(1)
-  const [leagues, setLeagues] = useState<ILeague[] | null>(null)
-  const [teams, setTeams] = useState<ITeamStanding[] | null>(null)
-  // Page type 1 is National page, 0 is Club page
-  const [pageType, setPageType] = useState(1)
-
-  const fetchStandings = async (year?: number) => {
-    try {
-      if (!id) {
-        return
-      }
-      const currentYear = new Date().getFullYear()
-      const result = await getStandingByLeague({ league_slug: id, season: year ?? currentYear })
-      if (result.data.length < 15) {
-        setIsLoadMore(false)
-      }
-
-      if (teams) {
-        setTeams([...teams, ...result.data])
-      } else {
-        setTeams(result.data)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const fetchLeagues = async (page: number) => {
+  const fetchData = async () => {
     dispatch(loadingAction.show())
+    if (!id) return
     try {
-      if (!id) {
-        return
-      }
-      const result = await getLeagues({ countrySlug: id.includes('-football') ? id.replace('-football', '') : id, countryStandingPage: 1, page })
+      const result = await getCountries({ perPage: 300 })
 
-      if (result.data.length < 15) {
-        setIsLoadMore(false)
-      }
-      setLeagues([...result.data])
+      const currentCountrySlug = id.replace('-football', '')
+      const sortedCountries = result.data.filter((country) => country.rank).sort((a, b) => Number(a.rank) - Number(b.rank))
+      const deepCopy = [...sortedCountries]
+      const currentCountry = deepCopy.filter((country) => String(country.slug) === String(currentCountrySlug))[0]
+      setCurrentCountry(currentCountry)
+      setCountries(sortedCountries)
     } catch (error) {
       console.log(error)
     } finally {
       dispatch(loadingAction.hide())
     }
   }
+
   useEffect(() => {
-    if (!id?.includes('-football')) {
-      setPageType(0)
-    }
-    fetchStandings()
-    fetchLeagues(page)
-  }, [id])
+    fetchData()
+  }, [])
   return (
     <div>
       <div className="py-2.5 pl-1 my-2.5 bg-[#f9f9f9] border border-[#eee]">
-        <h1 className="text-sm font-bold text-red">BXH NGOẠI HẠNG ANH MÙA GIẢI 2024-2025</h1>
+        <h1 className="text-sm font-bold text-red">Bảng xếp hạng FIFA 2024 tháng 07 - BXH FIFA mới nhất</h1>
       </div>
-      {pageType === 0 && teams && (
-        <InfiniteScroll
-          style={{
-            height: 'unset',
-            overflow: 'unset'
-          }}
-          hasMore={isLoadMore}
-          loader={<p>Loading...</p>}
-          next={() => {
-            setPage((prev) => prev + 1)
-            fetchStandings(page + 1)
-          }}
-          dataLength={teams.length}
-        >
-          <table className="w-full text-center flex sm:table">
-            <thead>
-              <tr className="bg-[#edf2f7] text-xs [&>th]:p-2 flex flex-col items-start sm:table-row w-[108px] sm:w-auto">
-                <th>XH</th>
-                <th className="text-left">Đội</th>
-                <th>Trận</th>
-                <th>Thắng</th>
-                <th>Hoà</th>
-                <th>Thua</th>
-                <th>Bàn thắng</th>
-                <th>Bàn thua</th>
-                <th>HS</th>
-                <th>Điểm</th>
-                <th>Phong độ 5 trận</th>
-              </tr>
-            </thead>
-            <tbody className="flex flex-row sm:table-row-group overflow-auto">
-              {teams.map((item, index) => {
-                return (
-                  <tr key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] flex flex-col sm:table-row">
-                    <td>{item.rank}</td>
-                    <td className="text-left">{item.team_name}</td>
-                    <td>{item.all.played}</td>
-                    <td>{item.all.win}</td>
-                    <td>{item.all.draw}</td>
-                    <td>{item.all.lose}</td>
-                    <td>{item.all.goals.for}</td>
-                    <td>{item.all.goals.against}</td>
-                    <td>{item.goalsDiff}</td>
-                    <td>{item.points}</td>
-                    <td>
-                      {item.five_recent_matches.map((item, index) => {
-                        return (
-                          <div key={index} className="flex">
-                            {item === 'lose' && <CheckmarkFilled className="text-primary" />}
-                            {item === 'win' && <SubtractFilled className="text-[#EEE]" />}
-                            {item === 'draw' && <CloseFilled className="text-red" />}
-                          </div>
-                        )
-                      })}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </InfiniteScroll>
-      )}
-      {pageType === 1 && leagues && (
-        <InfiniteScroll
-          style={{
-            height: 'unset',
-            overflow: 'unset'
-          }}
-          hasMore={isLoadMore}
-          loader={<p>Loading...</p>}
-          next={() => {
-            setPage((prev) => prev + 1)
-            fetchLeagues(page + 1)
-          }}
-          dataLength={leagues.length}
-        >
-          <div className="bg-[#edf2f7] text-left text-xs [&>th]:p-2 flex justify-between px-2 py-2.5">
-            <span>Giải đấu</span>
-            <span>Cập nhật</span>
-          </div>
-          {leagues.map((item, index) => {
-            return (
-              <div key={index} className="text-xs [&>td]:p-2 border-b border-[#eee] px-2 py-2.5 flex justify-between">
-                <Link
-                  className="text-primary hover:text-red font-bold flex items-center gap-4"
-                  to={ROUTES.TOURNAMENT_STANDINGS.replace(':id', item.slug ?? '')}
-                >
-                  <img className="max-w-5" src={item.logo} alt={item.name} />
-                  BXH {item.name}
-                </Link>
-                <div>{new Date(item.updated_at).toLocaleDateString()}</div>
-              </div>
-            )
-          })}
-        </InfiniteScroll>
-      )}
+      <table className="w-full text-center flex sm:table">
+        <thead>
+          <tr className="bg-[#edf2f7] text-xs [&>th]:p-2 flex flex-col items-start sm:table-row w-[108px] sm:w-auto">
+            <th>XHKV</th>
+            <th className="text-left">ĐTQG</th>
+            <th>XH FIFA</th>
+            <th>Điểm hiện tại</th>
+            <th>Điểm trước</th>
+            <th>Điểm+/-</th>
+            <th>XH+/-</th>
+            <th className="text-right">Khu vực</th>
+          </tr>
+        </thead>
+        <tbody className="flex flex-row sm:table-row-group overflow-auto">
+          {currentCountry && (
+            <tr className="text-xs [&>td]:p-2 [&>td]:w-[80px] sm:[&>td]:w-auto border-b-2 border-[#000] flex flex-col sm:table-row">
+              <td>{countries.findIndex((country) => country.slug === currentCountry.slug)}</td>
+              <td className="text-center sm:text-left overflow-hidden whitespace-nowrap">{currentCountry.name_vi ?? currentCountry.name}</td>
+              <td>{countries.findIndex((country) => country.slug === currentCountry.slug)}</td>
+              <td>{Math.floor(Number(currentCountry.points))}</td>
+              <td>{Math.floor(Number(currentCountry.previous_points))}</td>
+              <td>
+                {Math.floor(Number(currentCountry.previous_points) - Number(currentCountry.points))}
+                {Number(currentCountry.previous_points) - Number(currentCountry.points) !== 0 ? (
+                  Number(currentCountry.previous_points) - Number(currentCountry.points) > 0 ? (
+                    <ChevronDownOutline className="ml-1 text-red inline-block" />
+                  ) : (
+                    <ChevronUpOutline className="ml-1 text-primary inline-block" />
+                  )
+                ) : (
+                  ''
+                )}
+              </td>
+
+              <td>
+                {Math.floor(Number(currentCountry.previous_rank) - Number(currentCountry.rank))}
+                {Number(currentCountry.previous_rank) - Number(currentCountry.rank) !== 0 ? (
+                  Number(currentCountry.previous_rank) - Number(currentCountry.rank) > 0 ? (
+                    <ChevronDownOutline className="ml-1 text-red inline-block" />
+                  ) : (
+                    <ChevronUpOutline className="ml-1 text-primary inline-block" />
+                  )
+                ) : (
+                  ''
+                )}
+              </td>
+              <td className="text-center sm:text-right">{currentCountry.region_vi ?? currentCountry.region}</td>
+            </tr>
+          )}
+          {countries.length > 0 &&
+            countries.map((country, index) => {
+              return (
+                <tr key={index} className="text-xs [&>td]:p-2 [&>td]:w-[80px] sm:[&>td]:w-auto border-b border-[#eee] flex flex-col sm:table-row">
+                  <td>{index}</td>
+                  <td className="text-center sm:text-left overflow-hidden whitespace-nowrap">{country.name_vi ?? country.name}</td>
+                  <td>{index}</td>
+                  <td>{Math.floor(Number(country.points))}</td>
+                  <td>{Math.floor(Number(country.previous_points))}</td>
+                  <td>
+                    {Math.floor(Number(country.previous_points) - Number(country.points))}
+                    {Number(country.previous_points) - Number(country.points) !== 0 ? (
+                      Number(country.previous_points) - Number(country.points) > 0 ? (
+                        <ChevronDownOutline className="ml-1 text-red inline-block" />
+                      ) : (
+                        <ChevronUpOutline className="ml-1 text-primary inline-block" />
+                      )
+                    ) : (
+                      ''
+                    )}
+                  </td>
+
+                  <td>
+                    {Math.floor(Number(country.previous_rank) - Number(country.rank))}
+                    {Number(country.previous_rank) - Number(country.rank) !== 0 ? (
+                      Number(country.previous_rank) - Number(country.rank) > 0 ? (
+                        <ChevronDownOutline className="ml-1 text-red inline-block" />
+                      ) : (
+                        <ChevronUpOutline className="ml-1 text-primary inline-block" />
+                      )
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td className="text-center sm:text-right">{country.region_vi ?? country.region}</td>
+                </tr>
+              )
+            })}
+        </tbody>
+      </table>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import Default from '@/layouts/Default'
 import React, { useEffect, useState } from 'react'
-import { NavLink, Outlet, useParams, useSearchParams } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ROUTES } from '@/resources/routes-constants'
 import Result from './components/Result'
 import Standings from './components/Standings'
@@ -11,6 +11,25 @@ import LiveScore from './components/LiveScore'
 const NationalTeam = () => {
   const { id } = useParams()
   const [page, setPage] = useState<string | null>(null)
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleSwitchTab = (param: string) => {
+    const searchParams: Record<string, any> = new URLSearchParams(window.location.search)
+    if (searchParams.has('results')) searchParams.delete('results')
+    if (searchParams.has('livescore')) searchParams.delete('livescore')
+    if (searchParams.has('standings')) searchParams.delete('standings')
+    if (searchParams.has('top-scores')) searchParams.delete('top-scores')
+    if (searchParams.has('fixtures')) searchParams.delete('fixtures')
+    setPage(param)
+    searchParams.set(param, '')
+    navigate(
+      {
+        search: searchParams.toString()
+      },
+      { replace: true }
+    )
+  }
 
   useEffect(() => {
     const searchParams: Record<string, any> = new URLSearchParams(window.location.search)
@@ -47,7 +66,7 @@ const NationalTeam = () => {
             return (
               <li key={index}>
                 <span
-                  onClick={() => setPage(tab.url)}
+                  onClick={() => handleSwitchTab(tab.url)}
                   className={
                     tab.url === page
                       ? 'px-2.5 py-2 text-xs cursor-pointer bg-secondary text-primary hover:text-red mr-1.5 inline-block'

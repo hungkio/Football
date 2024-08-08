@@ -59,9 +59,10 @@ const Standings = () => {
   useEffect(() => {
     if (!id?.includes('-football')) {
       setPageType(0)
+      fetchLeagues(page)
+    } else {
+      fetchStandings()
     }
-    fetchStandings()
-    fetchLeagues(page)
   }, [id])
   return (
     <div>
